@@ -5,11 +5,9 @@ import SupplierRegisterFormComponent from '@/components/supplier/supplier.regist
 export default function AddressForm() {
 
   return (
-    <div>
-      <h3 className="text-center">Supplier</h3>
-      <div style={{marginTop: 50}}>
-        <SupplierRegisterFormComponent          
-        />
+    <div>      
+      <div style={{marginTop: 30}}>
+        <SupplierRegisterFormComponent />
       </div>
     </div>
   );

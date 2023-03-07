@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { ISupplier } from "@/interface/ISupplier";
-import { del, get, post, put } from "@/services/SupplierService";
+import { del, get, post, put, getSingle } from "@/services/SupplierService";
 
 export interface ISupplierContextType {
   supplierList: () => Promise<ISupplier[]>;
   create: (supplier: ISupplier) => void;
   update: (id: number, supplier:ISupplier) => Promise<ISupplier>;
   remove: (id: number) => Promise<number>;
+  getById: (id: number) => Promise<ISupplier>;
 };
 
 export const SupplierContext = React.createContext<ISupplierContextType>({} as ISupplierContextType,);
@@ -55,18 +56,25 @@ const SupplierProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }
     []
   );
 
-  // async function deleteSupplier(id: number) {
-  //   const result = await  deleteSupplier(id);
-  //   return result;
-  // }
+  const getById = React.useCallback(
+    async (id: number) => {
+      console.log('Update supplier context =', id);
+      const result = await getSingle(id);
+      console.log('result create supplier context =', result);
+      return result;
+    }, 
+    []
+  );
 
+  
   return (
     <SupplierContext.Provider 
       value={{ 
         supplierList, 
         create, 
         update, 
-        remove }}>
+        remove,
+        getById }}>
       {children}
     </SupplierContext.Provider>
   );

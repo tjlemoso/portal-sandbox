@@ -11,6 +11,16 @@ export async function get() {
   }
 }
 
+export async function getSingle(id: number) {
+  try {
+    const response = await axiosInstance.get<ISupplier>(`/supplier/${id}`);
+    console.log('response', response.data);
+    return response.data;
+  } catch(err) {
+    console.error(err);
+  }
+}
+
 export async function post(supplier: ISupplier) {
   try {
     const response = await axiosInstance.post<ISupplier>('/supplier',{...supplier});
