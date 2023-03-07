@@ -11,6 +11,8 @@ import { useWarehouse } from '@/hooks/WarehouseContext';
 import { IWarehouse } from '@/interface/IWarehouse';
 import { useSnackbar } from '@mui/base';
 import { Paper, Typography } from '@mui/material';
+import { ISupplier } from '@/interface/ISupplier';
+import { useSupplier } from '@/hooks/SupplierContext';
 
 export default function WarehouseRegisterFormComponent() {
 
@@ -32,6 +34,8 @@ export default function WarehouseRegisterFormComponent() {
       supplierId: 0;
     }
   );
+  const [selectValue, setSelectValue] = React.useState(1);
+  const [suppliers, setSuppliers] = React.useState<ISupplier[]>();  
 
   const handleSubmit= React.useCallback( 
     async (data: IWarehouse) => {
@@ -48,15 +52,16 @@ export default function WarehouseRegisterFormComponent() {
           state: data.state,
           zip: data.zip,
           country: data.country,
-          supplierId: 0,
+          supplierId: selectValue,
         }
         );
-      } else{        
-        create({...data});
+      } else {   
+        
+        create({...data, supplierId: selectValue});
       }
       router.push('/warehouse');
     },
-    [create, query.id, warehouse.warehouseId, update],
+    [create, query.id, warehouse.warehouseId, update, selectValue],
   );
 
   const handleBack = async () => {
@@ -68,11 +73,28 @@ export default function WarehouseRegisterFormComponent() {
       if (query.id) {
         const result = await getById(Number(query.id));
         setWarehouse(result);
+        setSelectValue(result.supplierId);
       }
     };
     validation();
   }, [query, getById, setWarehouse]);
 
+  const { supplierList } = useSupplier();
+
+  const getSupplierList = React.useCallback(
+    async () => {       
+      const result1 = await supplierList();  
+      console.log("suppliers mock", result1)    
+      setSuppliers(result1);       
+    },
+    [supplierList],
+  );
+
+  React.useEffect(() => {
+    getSupplierList();
+  }, 
+  [getSupplierList]
+  );
 
   return (
     <Container component="main">
@@ -105,6 +127,39 @@ export default function WarehouseRegisterFormComponent() {
                 defaultValue={warehouse?.email}
                 />
             </Grid>
+
+            <Grid item xs={12} style={{display: 'grid'}}>
+              <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+                Supplier
+                </Typography>
+            </Grid>
+            <Grid item xs={12} style={{display: 'grid'}}>
+              <label>Supplier</label>
+              <select value={selectValue} onChange={e => setSelectValue(Number(e.target.value))}>
+              {
+                suppliers && suppliers.length > 0 ? 
+                  (
+                    suppliers.map((item, index) => (
+                      <option 
+                        value={item.supplierId}
+                        key={item.supplierId}
+                        >
+                        {item.name}
+                      </option>
+                    )) 
+                  ) : 
+                  (
+                    <option 
+                    value={0}
+                    key={0}
+                    >
+                   0
+                  </option>
+                  )
+            }        
+            </select>
+            </Grid>
+
             <Grid item xs={12} style={{display: 'grid'}}>
               <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
                 Address
