@@ -1,5 +1,7 @@
 import React from 'react';
-import {SupplierProvider} from './SupplierContext';
+import { ClientProvider } from './ClientContext';
+import { SupplierProvider } from './SupplierContext';
+import { WarehouseProvider } from './WarehouseContext';
 
 interface Props {
   children: React.ReactNode;
@@ -7,7 +9,11 @@ interface Props {
 
 const AppProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) => (
   <SupplierProvider>
-    {children}
+    <ClientProvider>
+      <WarehouseProvider>
+        {children}
+      </WarehouseProvider>
+    </ClientProvider> 
   </SupplierProvider>
 );
 

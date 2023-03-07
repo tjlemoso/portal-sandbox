@@ -48,18 +48,18 @@ export default function App({ Component, pageProps }: AppProps) {
             <Link
               variant="button"
               color="text.primary"
-              href="#"
+              href="/client"
               sx={{ my: 1, mx: 1.5 }}
             >
-              Enterprise
+              Client
             </Link>
             <Link
               variant="button"
               color="text.primary"
-              href="#"
+              href="/warehouse"
               sx={{ my: 1, mx: 1.5 }}
             >
-              Support
+              Warehouse
             </Link>
           </nav>
           <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
