@@ -67,16 +67,16 @@ export default function SupplierRegisterFormComponent() {
 
 
   return (
-    <Container component="main"  sx={{ mb: 4 }}>
+    <Container component="main">
        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <Grid container spacing={3}  >          
+          <Grid container spacing={3}>          
             <Grid item xs={12} style={{display: 'grid'}}>
               <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
                 Supplier
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={6} style={{display: 'grid'}}>
+            <Grid item xs={12} style={{display: 'grid'}}>
               <label>Name</label>
               <Input name="name" 
                 autoComplete="family-name"
@@ -96,20 +96,6 @@ export default function SupplierRegisterFormComponent() {
                 autoComplete="family-name"
                 defaultValue={supplier?.email}
                 />
-            </Grid>
-            <Grid item xs={12} sm={6} style={{display: 'grid'}}>
-              <label>Identity</label>
-              <Input name="identity" 
-                autoComplete="family-name"
-                defaultValue={supplier?.identity}
-                />
-            </Grid>     
-            <Grid item xs={12} style={{display: 'grid'}}>
-              <label>Description</label>
-                <Input name="description" 
-                  autoComplete="family-name"
-                  defaultValue={supplier?.description}
-                  />
             </Grid>
             <Grid item xs={12} style={{display: 'grid'}}>
               <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>

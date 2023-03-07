@@ -5,13 +5,40 @@ import { useSupplier } from "@/hooks/SupplierContext";
 import router from "next/router";
 import { Paper } from "@mui/material";
 
+import Box from '@mui/material/Box';
+import Collapse from '@mui/material/Collapse';
+import IconButton from '@mui/material/IconButton';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+
 interface IProps {
   suppliers: ISupplier[] | undefined;
 }
 
-const SupplierTable: React.FunctionComponent<IProps> = props => {
+const mockTeste = {
+  address: "Addres 1",
+  address2: "Addres 2",
+  city: "City",
+  state: "State/Province/Region",
+  zip: "Zip / Postal code",
+  country: "country",
+}
 
+function Row(props: { row: ISupplier }) {
+  const { row } = props;
+  const [open, setOpen] = React.useState(false);
   const { remove } = useSupplier();
+
+  const handleEdit = async (id : number) => {
+    router.push(`/supplier/register?id=${id}`);
+  };
 
   const handleDelete= React.useCallback( 
     async (id : number) => {
@@ -22,48 +49,105 @@ const SupplierTable: React.FunctionComponent<IProps> = props => {
     [remove],
   );
 
-  const handleEdit = async (id : number) => {
-    router.push(`/supplier/register?id=${id}`);
-  };
+  return (
+    <React.Fragment>
+      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+        <TableCell>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {row.name}
+        </TableCell>
+        <TableCell align="left">{row.phone}</TableCell>
+        <TableCell align="left">{row.email}</TableCell>
+        <TableCell align="left">
+          <button className="btn btn-primary" onClick={() => handleEdit(row.supplierId)}>edit</button>              
+          <button className="btn btn-danger" onClick={() => handleDelete(row.supplierId)}>delete</button>          
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ margin: 1 }}>
+              <Typography variant="h6" gutterBottom component="div">
+                Address
+              </Typography>
+              <Table size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Address line 1</TableCell>
+                    <TableCell>Address line 2</TableCell>
+                    <TableCell align="left">City</TableCell>
+                    <TableCell align="left">State</TableCell>
+                    <TableCell align="left">Zip</TableCell>
+                    <TableCell align="left">Country</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>              
+                  <TableRow key={mockTeste.address}>
+                    <TableCell component="th" scope="row">
+                      {mockTeste.address}
+                    </TableCell>
+                    <TableCell>{mockTeste.address2}</TableCell>
+                    <TableCell align="left">{mockTeste.city}</TableCell>
+                    <TableCell align="left">{mockTeste.state}</TableCell>
+                    <TableCell align="left">{mockTeste.zip}</TableCell>
+                    <TableCell align="left">{mockTeste.country}</TableCell>
+                  </TableRow>                  
+                </TableBody>
+              </Table>
+            </Box>
+          </Collapse>
+        </TableCell>
+      
+      </TableRow>
+    </React.Fragment>
+  );
+}
+
+
+
+const SupplierTable: React.FunctionComponent<IProps> = props => {
 
   return (
-    <Container component="main"  sx={{ mb: 4 }}>
-      <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-        <table className="table table-striped" style={{ marginTop: 20 }}>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Email</th>
-              <th>Identity</th>
-              <th>Description</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {props.suppliers && props.suppliers.length > 0 ? (
-              props.suppliers.map(i => (
-                <tr key={i.supplierId}>
-                  <td>{i["name"]}</td>
-                  <td>{i["phone"]}</td>
-                  <td>{i["email"]}</td>
-                  <td>{i["identity"]}</td>
-                  <td>{i["description"]}</td>
-                  <td>
-                    <button className="btn btn-primary" onClick={() => handleEdit(i.supplierId)}>edit</button>                  
-                    <button className="btn btn-danger" onClick={() => handleDelete(i.supplierId)}>delete</button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={3}>no suppliers</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-    </Paper>
+    <Container component="main" >
+      <TableContainer component={Paper}>
+        <Table aria-label="collapsible table">
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell>Name</TableCell>
+              <TableCell align="left">Phone</TableCell>
+              <TableCell align="left">Email</TableCell>
+              <TableCell align="left">Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {
+              props.suppliers && props.suppliers.length > 0 ? 
+                (
+                  props.suppliers.map((row) => (
+                    <Row key={row.name} row={row} />
+                    ))
+                ):
+                (
+                  <tr>
+                    <td colSpan={3}>no suppliers</td>
+                  </tr>
+                )
+            }
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Container>
   );
 };
+
+
 export default SupplierTable;

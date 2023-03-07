@@ -1,14 +1,16 @@
 import * as React from 'react';
 import SupplierRegisterFormComponent from '@/components/supplier/supplier.register.component';
+import { Container } from '@mui/system';
 
 
 export default function AddressForm() {
 
   return (
-    <div>      
-      <div style={{marginTop: 30}}>
+    <React.Fragment>
+      <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 6 }}>
         <SupplierRegisterFormComponent />
-      </div>
-    </div>
+      </Container>
+    </React.Fragment>
+
   );
 }

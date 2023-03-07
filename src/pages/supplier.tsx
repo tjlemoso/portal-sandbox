@@ -1,8 +1,10 @@
 import SupplierTable from "@/components/supplier/supplier.table.component";
 import { useSupplier } from "@/hooks/SupplierContext";
 import { ISupplier } from "@/interface/ISupplier";
+import { Typography } from "@mui/material";
+import { Container } from "@mui/system";
 import router from 'next/router';
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 const SupplierPage: React.FC = () => {
 
@@ -29,17 +31,29 @@ const SupplierPage: React.FC = () => {
   );
 
   return(
-    <div>
-      <h3 className="text-center">Supplier List</h3>
-      <div style={{marginInline:50}}>
-        <button className="btn btn-success" onClick={handleSubmit}>Add</button>
-      </div>
-      <div>
-        <SupplierTable
-          suppliers={result}
-        />
-      </div>
-    </div>
+    <React.Fragment>
+      <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 6 }}>
+        <Typography
+          component="h1"
+          variant="h2"
+          align="center"
+          color="text.primary"
+          gutterBottom
+        >
+          Suppliers
+        </Typography>
+      </Container>    
+      <Container component="main"  sx={{ mb: 4 }}>        
+        <button 
+          className="btn btn-success" 
+          onClick={handleSubmit}
+          >Add
+        </button>   
+      </Container>     
+      <SupplierTable
+        suppliers={result}
+      />    
+    </React.Fragment>    
   );
 }
 
