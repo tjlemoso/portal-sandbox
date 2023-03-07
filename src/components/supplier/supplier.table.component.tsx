@@ -22,15 +22,6 @@ interface IProps {
   suppliers: ISupplier[] | undefined;
 }
 
-const mockTeste = {
-  address: "Addres 1",
-  address2: "Addres 2",
-  city: "City",
-  state: "State/Province/Region",
-  zip: "Zip / Postal code",
-  country: "country",
-}
-
 function Row(props: { row: ISupplier }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
@@ -90,15 +81,15 @@ function Row(props: { row: ISupplier }) {
                   </TableRow>
                 </TableHead>
                 <TableBody>              
-                  <TableRow key={mockTeste.address}>
+                  <TableRow key={row.address}>
                     <TableCell component="th" scope="row">
-                      {mockTeste.address}
+                      {row.address}
                     </TableCell>
-                    <TableCell>{mockTeste.address2}</TableCell>
-                    <TableCell align="left">{mockTeste.city}</TableCell>
-                    <TableCell align="left">{mockTeste.state}</TableCell>
-                    <TableCell align="left">{mockTeste.zip}</TableCell>
-                    <TableCell align="left">{mockTeste.country}</TableCell>
+                    <TableCell>{row.address2}</TableCell>
+                    <TableCell align="left">{row.city}</TableCell>
+                    <TableCell align="left">{row.state}</TableCell>
+                    <TableCell align="left">{row.zip}</TableCell>
+                    <TableCell align="left">{row.country}</TableCell>
                   </TableRow>                  
                 </TableBody>
               </Table>

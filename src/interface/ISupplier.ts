@@ -3,8 +3,11 @@ export interface ISupplier {
   name: string;
   phone: string;
   email: string;
-  identity: string;
-  description: string;
-  addressId: number;
+  address: string;
+  address2: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
 }
 

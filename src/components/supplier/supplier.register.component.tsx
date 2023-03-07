@@ -23,9 +23,12 @@ export default function SupplierRegisterFormComponent() {
       name: "";
       phone: "";
       email: "";
-      identity: "";
-      description: "";
-      addressId: 0;
+      address: "";
+      address2: "";
+      city: "";
+      state: "";
+      zip: "";
+      country: "";
     }
   );
 
@@ -38,9 +41,12 @@ export default function SupplierRegisterFormComponent() {
           name: data.name,
           phone: data.phone,
           email: data.email,
-          identity: data.identity,
-          description: data.description,
-          addressId: 0
+          address: data.address,
+          address2: data.address2,
+          city: data.city,
+          state: data.state,
+          zip: data.zip,
+          country: data.country,
         }
         );
       } else{        
@@ -106,36 +112,42 @@ export default function SupplierRegisterFormComponent() {
               <label>Address line 1</label>
                 <Input name="address" 
                   autoComplete="family-name"
+                  defaultValue={supplier?.address}
                   />
             </Grid>
             <Grid item xs={12} style={{display: 'grid'}}>
               <label>Address line 2</label>
                 <Input name="address2" 
                   autoComplete="family-name"
+                  defaultValue={supplier?.address2}                  
                   />
             </Grid>        
             <Grid item xs={12} sm={6} style={{display: 'grid'}}>
               <label>City</label>
               <Input name="city" 
                 autoComplete="family-name"
+                defaultValue={supplier?.city}                
                 />
             </Grid>
             <Grid item xs={12} sm={6} style={{display: 'grid'}}>
               <label>State/Province/Region</label>
               <Input name="state" 
                 autoComplete="family-name"
+                defaultValue={supplier?.state}                
                 />
             </Grid>
             <Grid item xs={12} sm={6} style={{display: 'grid'}}>
               <label>Zip / Postal code</label>
-              <Input name="zipCode" 
+              <Input name="zip" 
                 autoComplete="family-name"
+                defaultValue={supplier?.zip}                
                 />
             </Grid>
             <Grid item xs={12} sm={6} style={{display: 'grid'}}>
               <label>Country</label>
               <Input name="country" 
                 autoComplete="family-name"
+                defaultValue={supplier?.country}                
                 />
             </Grid>         
             <Grid item xs={12} style={{display: 'grid'}}>
