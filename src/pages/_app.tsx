@@ -28,14 +28,14 @@ export default function App({ Component, pageProps }: AppProps) {
           <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
             Company name
           </Typography>
-          <nav>
-          <Link
-              variant="button"
-              color="text.primary"
-              href="/"
-              sx={{ my: 1, mx: 1.5 }}
-            >
-              Home
+          <nav style={{ display: "contents"}}>
+            <Link
+                variant="button"
+                color="text.primary"
+                href="/"
+                sx={{ my: 1, mx: 1.5 }}
+              >
+                Home
             </Link>
             <Link
               variant="button"
@@ -61,6 +61,23 @@ export default function App({ Component, pageProps }: AppProps) {
             >
               Warehouse
             </Link>
+            <Link
+              variant="button"
+              color="text.primary"
+              href="/product"
+              sx={{ my: 1, mx: 1.5 }}
+            >
+              Product
+            </Link>
+            <Link
+              variant="button"
+              color="text.primary"
+              href="/delivery"
+              sx={{ my: 1, mx: 1.5 }}
+            >
+              Delivery
+            </Link>
+                                     
           </nav>
           <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
             Login
