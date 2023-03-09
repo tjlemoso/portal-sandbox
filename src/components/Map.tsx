@@ -3,7 +3,6 @@ import {
   GoogleMap,
   Marker,
   LoadScript,
-  StandaloneSearchBox,
   DirectionsService,
   DirectionsRenderer,
 } from "@react-google-maps/api";
@@ -58,6 +57,7 @@ const Map :React.FC<IMapProps> = ({ addressOrigin, addressDestiny }) => {
       };
     }, [origin, destination]);
 
+  // @ts-ignore
   const directionsCallback = React.useCallback((res) => {
     if (res !== null && res.status === "OK") {
       console.log("\n\n\n\n\n"+JSON.stringify(res));
@@ -113,7 +113,6 @@ const Map :React.FC<IMapProps> = ({ addressOrigin, addressDestiny }) => {
               callback={directionsCallback}
             />
           )}
-
           {response && directionsRendererOptions && (
             <DirectionsRenderer options={directionsRendererOptions} />
           )}
