@@ -191,7 +191,23 @@ export default function DeliveryRegisterFormComponent() {
                 Delivery
               </Typography>
             </Grid>
-   
+
+            <Grid item xs={12} sm={6} style={{display: 'grid'}}>
+              <label>Status</label>
+              <Input name="status" 
+                autoComplete="family-name"
+                defaultValue={delivery?.status}
+                />
+            </Grid> 
+
+            <Grid item xs={12} sm={6} style={{display: 'grid'}}>
+              <label>Tracking Code</label>
+              <Input name="trackingCode" 
+                autoComplete="family-name"
+                defaultValue={delivery?.trackingCode}
+                />
+            </Grid>
+
             <Grid item xs={12} style={{display: 'grid'}}>
               <label>Client</label>
               <select value={selectValueClient} onChange={e => handleGetLocationClient(Number(e.target.value))}>
@@ -212,11 +228,11 @@ export default function DeliveryRegisterFormComponent() {
                     value={0}
                     key={0}
                     >
-                   0
+                  0
                   </option>
                   )
             }        
-            </select>
+              </select>
             </Grid>
 
             <Grid item xs={6} style={{display: 'grid'}}>
@@ -306,22 +322,6 @@ export default function DeliveryRegisterFormComponent() {
                   )
             }        
             </select>
-            </Grid>
-
-            <Grid item xs={6} style={{display: 'grid'}}>
-              <label>Status</label>
-              <Input name="status" 
-                autoComplete="family-name"
-                defaultValue={delivery?.status}
-                />
-            </Grid> 
-
-            <Grid item xs={6} style={{display: 'grid'}}>
-              <label>Tracking Code</label>
-              <Input name="trackingCode" 
-                autoComplete="family-name"
-                defaultValue={delivery?.trackingCode}
-                />
             </Grid> 
 
             <Grid item xs={12}>
