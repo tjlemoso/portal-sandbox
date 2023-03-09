@@ -54,6 +54,9 @@ export default function DeliveryRegisterFormComponent() {
   const [selectValueClient, setSelectValueClient] = React.useState(1);
   const [clients, setClient] = React.useState<IClient[]>(); 
 
+  const [addressOrigin, setAddressOrigin] = React.useState<google.maps.LatLngLiteral>();
+  const [addressDestiny, setAddressDestiny] = React.useState<google.maps.LatLngLiteral>();
+
   const handleSubmit= React.useCallback( 
     async (data: IDelivery) => {
       // if (query.id) {
@@ -87,13 +90,27 @@ export default function DeliveryRegisterFormComponent() {
   );
 
   const handleGetLocationClient = async (clientId: number) => {
-
+    setSelectValueClient(clientId);
 
     const client = clients?.find(c => c.clientId === clientId);
+    const clientAddress = await processManualLocation("Praça Vicente Jorge, 57-B, Cachoeira do Norte, CEP: 39.648, Chapada do Norte - MG");
+    setAddressDestiny({
+      lat: clientAddress?.lat,
+      lng: clientAddress?.lng,
+    });
 
-    console.log("Client", client);
-    const teste = await processManualLocation("{...client}");
-    console.log("Teste location cardinal", teste);
+  };
+
+  const handleGetLocationWarehouse = async (warehouseId: number) => {
+    setSelectValueWarehouse(warehouseId);
+
+    const warehouse = warehouses?.find(c => c.warehouseId === warehouseId);
+    const warehouseAddress = await processManualLocation("Av. Cristiano Machado, 4.000 - União, Belo Horizonte - MG, 31160-900");
+    setAddressOrigin({
+      lat: warehouseAddress?.lat,
+      lng: warehouseAddress?.lng,
+    });
+
   };
 
   const handleBack = async () => {
@@ -165,31 +182,6 @@ export default function DeliveryRegisterFormComponent() {
   [getSupplierList, getWarehouseList, getProductList, getClientList]
   );
 
-// Function that will convert city & state to approximate user lat/long coordinates from manual entry
-const processManualLocation1 = (address: IClient) => {
-let city = "2930 Pearl St. Suite 100 Boulder CO"; // manual lat entry is already in store state
-  // let state = props.userPostalCode // manual long entry is already in store state
-  // This fetch uses the API key stored in your fron-end .env file "process.env.REACT_APP_googleKey"
-  let url = `https://maps.googleapis.com/maps/api/geocode/json?address=+${city}&key=AIzaSyC1LdqTsA0TtB0yEJdJg2pGZZf8pXZTnic`
-  fetch(url)
-  .then(res => res.json())
-  .then(res => {
-  if (res.status === "OK") {
-  getUserCoords(res.results)
-  } else if (res.status === "ZERO_RESULTS") {
-  alert('Unable to process this location. Please revise location fields and try submitting again.')
-  }
-  })
-};
-
-  
-  // Obtaining and dispatching lat and long coords from google geocoding API response
-  const getUserCoords = (googleRes: any) => {
-  let lat = googleRes[0].geocode.location.latitude // You have obtained latitude coordinate!
-  let long = googleRes[0].geocode.location.longitude // You have obtained longitude coordinate!
-  // props.set_lat(lat) // dispatching to store state
-  // props.set_long(long) //dispatching to store state
-  }
 
   return (
     <Container component="main">
@@ -295,7 +287,7 @@ let city = "2930 Pearl St. Suite 100 Boulder CO"; // manual lat entry is already
 
             <Grid item xs={6} style={{display: 'grid'}}>
               <label>Warehouse</label>
-              <select value={selectValueWarehouse} onChange={e => setSelectValueWarehouse(Number(e.target.value))}>
+              <select value={selectValueWarehouse} onChange={e => handleGetLocationWarehouse(Number(e.target.value))}>
               {
                 warehouses && warehouses.length > 0 ? 
                   (
@@ -338,8 +330,8 @@ let city = "2930 Pearl St. Suite 100 Boulder CO"; // manual lat entry is already
                 />
             </Grid> 
 
-            <Grid item xs={12} style={{display: 'grid'}}>
-              <Map/>
+            <Grid item xs={12}>
+              <Map addressOrigin={addressOrigin} addressDestiny={addressDestiny}/>
             </Grid>
 
             {/* <Grid item xs={12} style={{display: 'grid'}}>
