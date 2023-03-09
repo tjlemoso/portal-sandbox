@@ -9,7 +9,6 @@ import Button from '@mui/material/Button';
 import router, { useRouter } from 'next/router';
 import { useDelivery } from '@/hooks/DeliveryContext';
 import { IDelivery } from '@/interface/IDelivery';
-import { useSnackbar } from '@mui/base';
 import { Paper, Typography } from '@mui/material';
 import { ISupplier } from '@/interface/ISupplier';
 import { useSupplier } from '@/hooks/SupplierContext';
@@ -19,16 +18,20 @@ import { IProduct } from '@/interface/IProduct';
 import { IClient } from '@/interface/IClient';
 import { useProduct } from '@/hooks/ProductContext';
 import { useClient } from '@/hooks/ClientContext';
-import MapPage from '@/pages/map';
 import Map from '../Map';
 import { processManualLocation } from '@/services/MapService';
-// import Map from '../Map';
+
 
 export default function DeliveryRegisterFormComponent() {
 
   const formRef = React.useRef<FormHandles>(null); 
   const { create, getById, update } = useDelivery();
   const { query } = useRouter();
+  const { warehouseList } = useWarehouse();
+  const { supplierList } = useSupplier();
+  const { productList } = useProduct();
+  const { clientList } = useClient();
+
   const [delivery, setDelivery] = React.useState<IDelivery>({} as 
     {
       deliveryId: 0,
@@ -59,32 +62,32 @@ export default function DeliveryRegisterFormComponent() {
 
   const handleSubmit= React.useCallback( 
     async (data: IDelivery) => {
-      // if (query.id) {
-      //   update(Number(delivery.deliveryId),
-      //     {
-      //       deliveryId: delivery.deliveryId,
-      //       name: delivery.name,
-      //       quantity: delivery.quantity,
-      //       trackingCode: delivery.trackingCode,
-      //       status: delivery.status,
-      //       clientId: selectValueClient,
-      //       warehouseId: selectValueWarehouse,
-      //       productId: selectValueProduct,
-      //       supplierId: selectValueSupplier,
-      //   }
-      //   );
-      // } else {   
+      if (query.id) {
+        update(Number(delivery.deliveryId),
+          {
+            deliveryId: delivery.deliveryId,
+            name: delivery.name,
+            quantity: delivery.quantity,
+            trackingCode: delivery.trackingCode,
+            status: delivery.status,
+            clientId: selectValueClient,
+            warehouseId: selectValueWarehouse,
+            productId: selectValueProduct,
+            supplierId: selectValueSupplier,
+        }
+        );
+      } else {   
         
-      //   create(
-      //     {
-      //       ...data, 
-      //       clientId: selectValueClient,
-      //       warehouseId: selectValueWarehouse,
-      //       productId: selectValueProduct,
-      //       supplierId: selectValueSupplier,
-      //     });
-      // }
-      // router.push('/delivery');
+        create(
+          {
+            ...data, 
+            clientId: selectValueClient,
+            warehouseId: selectValueWarehouse,
+            productId: selectValueProduct,
+            supplierId: selectValueSupplier,
+          });
+      }
+      router.push('/delivery');
     },
     [create, query.id, delivery, update, selectValueWarehouse, selectValueSupplier, selectValueClient, selectValueProduct ],
   );
@@ -117,20 +120,6 @@ export default function DeliveryRegisterFormComponent() {
     router.push('/delivery');
   };
 
-  React.useEffect(() => {
-    async function validation() {
-      if (query.id) {
-        const result = await getById(Number(query.id));
-        setDelivery(result);
-        setSelectValueSupplier(result.supplierId);
-        setSelectValueWarehouse(result.warehouseId);
-      }
-    };
-    validation();
-  }, [query, getById, setDelivery]);
-
-  const { warehouseList } = useWarehouse();
-
   const getWarehouseList = React.useCallback(
     async () => {       
       const result1 = await warehouseList();  
@@ -139,8 +128,6 @@ export default function DeliveryRegisterFormComponent() {
     },
     [warehouseList],
   );
-
-  const { supplierList } = useSupplier();
 
   const getSupplierList = React.useCallback(
     async () => {       
@@ -151,8 +138,6 @@ export default function DeliveryRegisterFormComponent() {
     [supplierList],
   );
 
-  const { productList } = useProduct();
-
   const getProductList = React.useCallback(
     async () => {       
       const result1 = await productList();  
@@ -161,8 +146,6 @@ export default function DeliveryRegisterFormComponent() {
     },
     [productList],
   );
-
-  const { clientList } = useClient();
 
   const getClientList = React.useCallback(
     async () => {       
@@ -174,20 +157,35 @@ export default function DeliveryRegisterFormComponent() {
   );
 
   React.useEffect(() => {
+    async function validation() {
+      if (query.id) {
+        const result = await getById(Number(query.id));
+        setDelivery(result);
+        setSelectValueSupplier(result.supplierId);
+        setSelectValueWarehouse(result.warehouseId);
+      }
+    };
+    validation();
     getSupplierList();
     getWarehouseList();
     getProductList();
     getClientList();
   }, 
-  [getSupplierList, getWarehouseList, getProductList, getClientList]
+  [
+    getSupplierList, 
+    getWarehouseList,
+    getProductList, 
+    getClientList,
+    query, 
+    getById, 
+    setDelivery]
   );
-
 
   return (
     <Container component="main">
        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <Grid container spacing={3}>          
+          <Grid container spacing={2}>          
             <Grid item xs={12} style={{display: 'grid'}}>
               <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
                 Delivery
@@ -283,8 +281,6 @@ export default function DeliveryRegisterFormComponent() {
             </select>
             </Grid>
 
-
-
             <Grid item xs={6} style={{display: 'grid'}}>
               <label>Warehouse</label>
               <select value={selectValueWarehouse} onChange={e => handleGetLocationWarehouse(Number(e.target.value))}>
@@ -312,8 +308,6 @@ export default function DeliveryRegisterFormComponent() {
             </select>
             </Grid>
 
-
-
             <Grid item xs={6} style={{display: 'grid'}}>
               <label>Status</label>
               <Input name="status" 
@@ -334,7 +328,7 @@ export default function DeliveryRegisterFormComponent() {
               <Map addressOrigin={addressOrigin} addressDestiny={addressDestiny}/>
             </Grid>
 
-            {/* <Grid item xs={12} style={{display: 'grid'}}>
+            <Grid item xs={12} style={{display: 'grid'}}>
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', margin:1 }}>                
                   <Button  sx={{ mt: 3, ml: 1 }} onClick={handleBack}>
                     Back
@@ -346,8 +340,8 @@ export default function DeliveryRegisterFormComponent() {
                   >
                     Register
                   </Button>          
-                </Box>
-            </Grid>   */}
+              </Box>
+            </Grid>  
           </Grid>        
         </Form>
       </Paper>

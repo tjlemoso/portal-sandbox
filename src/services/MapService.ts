@@ -1,6 +1,6 @@
 export async function processManualLocation(address: string) {
   
-  let city = "Praça Vicente Jorge, 57-B, Cachoeira do Norte, CEP: 39.648, Chapada do Norte - MG"; // manual lat entry is already in store state
+  //let city = "Praça Vicente Jorge, 57-B, Cachoeira do Norte, CEP: 39.648, Chapada do Norte - MG"; // manual lat entry is already in store state
     // let state = props.userPostalCode // manual long entry is already in store state
     // This fetch uses the API key stored in your fron-end .env file "process.env.REACT_APP_googleKey"
     let url = `https://maps.googleapis.com/maps/api/geocode/json?address=+${address}&key=AIzaSyC1LdqTsA0TtB0yEJdJg2pGZZf8pXZTnic`
