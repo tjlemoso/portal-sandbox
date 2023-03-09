@@ -21,6 +21,7 @@ import { useProduct } from '@/hooks/ProductContext';
 import { useClient } from '@/hooks/ClientContext';
 import MapPage from '@/pages/map';
 import Map from '../Map';
+import { processManualLocation } from '@/services/MapService';
 // import Map from '../Map';
 
 export default function DeliveryRegisterFormComponent() {
@@ -84,6 +85,16 @@ export default function DeliveryRegisterFormComponent() {
     },
     [create, query.id, delivery, update, selectValueWarehouse, selectValueSupplier, selectValueClient, selectValueProduct ],
   );
+
+  const handleGetLocationClient = async (clientId: number) => {
+
+
+    const client = clients?.find(c => c.clientId === clientId);
+
+    console.log("Client", client);
+    const teste = await processManualLocation("{...client}");
+    console.log("Teste location cardinal", teste);
+  };
 
   const handleBack = async () => {
     router.push('/delivery');
@@ -154,6 +165,32 @@ export default function DeliveryRegisterFormComponent() {
   [getSupplierList, getWarehouseList, getProductList, getClientList]
   );
 
+// Function that will convert city & state to approximate user lat/long coordinates from manual entry
+const processManualLocation1 = (address: IClient) => {
+let city = "2930 Pearl St. Suite 100 Boulder CO"; // manual lat entry is already in store state
+  // let state = props.userPostalCode // manual long entry is already in store state
+  // This fetch uses the API key stored in your fron-end .env file "process.env.REACT_APP_googleKey"
+  let url = `https://maps.googleapis.com/maps/api/geocode/json?address=+${city}&key=AIzaSyC1LdqTsA0TtB0yEJdJg2pGZZf8pXZTnic`
+  fetch(url)
+  .then(res => res.json())
+  .then(res => {
+  if (res.status === "OK") {
+  getUserCoords(res.results)
+  } else if (res.status === "ZERO_RESULTS") {
+  alert('Unable to process this location. Please revise location fields and try submitting again.')
+  }
+  })
+};
+
+  
+  // Obtaining and dispatching lat and long coords from google geocoding API response
+  const getUserCoords = (googleRes: any) => {
+  let lat = googleRes[0].geocode.location.latitude // You have obtained latitude coordinate!
+  let long = googleRes[0].geocode.location.longitude // You have obtained longitude coordinate!
+  // props.set_lat(lat) // dispatching to store state
+  // props.set_long(long) //dispatching to store state
+  }
+
   return (
     <Container component="main">
        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
@@ -167,7 +204,7 @@ export default function DeliveryRegisterFormComponent() {
    
             <Grid item xs={12} style={{display: 'grid'}}>
               <label>Client</label>
-              <select value={selectValueClient} onChange={e => setSelectValueClient(Number(e.target.value))}>
+              <select value={selectValueClient} onChange={e => handleGetLocationClient(Number(e.target.value))}>
               {
                 clients && clients.length > 0 ? 
                   (
