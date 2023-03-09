@@ -12,20 +12,14 @@ import {
 
 export interface MapPageProps {}
 
-const Map = () => {
+const MapPage = () => {
   const [map, setMap] = React.useState<google.maps.Map>();
   const [searchBoxA, setSearchBoxA] =
     React.useState<google.maps.places.SearchBox>();
   const [searchBoxB, setSearchBoxB] =
     React.useState<google.maps.places.SearchBox>();
-  const [pointA, setPointA] = React.useState<google.maps.LatLngLiteral>({
-    lat: -19.86457662276789,
-    lng: -43.922225062216214,
-  });
-  const [pointB, setPointB] = React.useState<google.maps.LatLngLiteral>({
-    lat: -17.052071242898926,
-    lng: -42.65160969215514,
-  });
+  const [pointA, setPointA] = React.useState<google.maps.LatLngLiteral>();
+  const [pointB, setPointB] = React.useState<google.maps.LatLngLiteral>();
 
   const [origin, setOrigin] = React.useState<google.maps.LatLngLiteral | null>(
     null
@@ -67,18 +61,6 @@ const Map = () => {
     setResponse(null);
     map?.panTo(location);
   };
-  
-  const locationA = {
-    lat: -19.86457662276789,
-    lng: -43.922225062216214,
-  };
-  //setPointA(locationA);
-  
-  const locationB = {
-    lat: -17.052071242898926,
-    lng: -42.65160969215514,
-  };
-  //setPointB(locationB);
 
   const onPlacesChangedB = () => {
     const places = searchBoxB!.getPlaces();
@@ -133,18 +115,33 @@ const Map = () => {
         googleMapsApiKey={'AIzaSyC1LdqTsA0TtB0yEJdJg2pGZZf8pXZTnic'}
         libraries={["places"]}
       >
-
-          <div>
-            <button onClick={traceRoute}>Traçar rota</button>
-          </div>
-
         <GoogleMap
           onLoad={onMapLoad}
-          mapContainerStyle={{ width: "100%", height: "100%", marginTop: 10 }}
+          mapContainerStyle={{ width: "100%", height: "100%" }}
           center={position}
           zoom={15}
         >
-
+          <div className="address">
+            <StandaloneSearchBox
+              onLoad={onLoadA}
+              onPlacesChanged={onPlacesChangedA}
+            >
+              <input
+                className="addressField"
+                placeholder="Digite o endereço inicial"
+              />
+            </StandaloneSearchBox>
+            <StandaloneSearchBox
+              onLoad={onLoadB}
+              onPlacesChanged={onPlacesChangedB}
+            >
+              <input
+                className="addressField"
+                placeholder="Digite o endereço final"
+              />
+            </StandaloneSearchBox>
+            <button onClick={traceRoute}>Traçar rota</button>
+          </div>
 
           {!response && pointA && <Marker position={pointA} />}
           {!response && pointB && <Marker position={pointB} />}
@@ -165,4 +162,4 @@ const Map = () => {
   );
 };
 
-export default Map;
+export default MapPage;

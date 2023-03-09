@@ -19,7 +19,9 @@ import { IProduct } from '@/interface/IProduct';
 import { IClient } from '@/interface/IClient';
 import { useProduct } from '@/hooks/ProductContext';
 import { useClient } from '@/hooks/ClientContext';
+import MapPage from '@/pages/map';
 import Map from '../Map';
+// import Map from '../Map';
 
 export default function DeliveryRegisterFormComponent() {
 
@@ -53,32 +55,32 @@ export default function DeliveryRegisterFormComponent() {
 
   const handleSubmit= React.useCallback( 
     async (data: IDelivery) => {
-      if (query.id) {
-        update(Number(delivery.deliveryId),
-          {
-            deliveryId: delivery.deliveryId,
-            name: delivery.name,
-            quantity: delivery.quantity,
-            trackingCode: delivery.trackingCode,
-            status: delivery.status,
-            clientId: selectValueClient,
-            warehouseId: selectValueWarehouse,
-            productId: selectValueProduct,
-            supplierId: selectValueSupplier,
-        }
-        );
-      } else {   
+      // if (query.id) {
+      //   update(Number(delivery.deliveryId),
+      //     {
+      //       deliveryId: delivery.deliveryId,
+      //       name: delivery.name,
+      //       quantity: delivery.quantity,
+      //       trackingCode: delivery.trackingCode,
+      //       status: delivery.status,
+      //       clientId: selectValueClient,
+      //       warehouseId: selectValueWarehouse,
+      //       productId: selectValueProduct,
+      //       supplierId: selectValueSupplier,
+      //   }
+      //   );
+      // } else {   
         
-        create(
-          {
-            ...data, 
-            clientId: selectValueClient,
-            warehouseId: selectValueWarehouse,
-            productId: selectValueProduct,
-            supplierId: selectValueSupplier,
-          });
-      }
-      router.push('/delivery');
+      //   create(
+      //     {
+      //       ...data, 
+      //       clientId: selectValueClient,
+      //       warehouseId: selectValueWarehouse,
+      //       productId: selectValueProduct,
+      //       supplierId: selectValueSupplier,
+      //     });
+      // }
+      // router.push('/delivery');
     },
     [create, query.id, delivery, update, selectValueWarehouse, selectValueSupplier, selectValueClient, selectValueProduct ],
   );
@@ -303,7 +305,7 @@ export default function DeliveryRegisterFormComponent() {
               <Map/>
             </Grid>
 
-            <Grid item xs={12} style={{display: 'grid'}}>
+            {/* <Grid item xs={12} style={{display: 'grid'}}>
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', margin:1 }}>                
                   <Button  sx={{ mt: 3, ml: 1 }} onClick={handleBack}>
                     Back
@@ -316,7 +318,7 @@ export default function DeliveryRegisterFormComponent() {
                     Register
                   </Button>          
                 </Box>
-            </Grid>  
+            </Grid>   */}
           </Grid>        
         </Form>
       </Paper>

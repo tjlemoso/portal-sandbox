@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 
+import "./MapPage.css";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
