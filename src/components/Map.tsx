@@ -26,7 +26,8 @@ const Map :React.FC<IMapProps> = ({ addressOrigin, addressDestiny }) => {
 
   const [response, setResponse] =
     React.useState<google.maps.DistanceMatrixResponse | null>(null);
-
+  const [pointA, setPointA] = React.useState<google.maps.LatLngLiteral>();
+  const [pointB, setPointB] = React.useState<google.maps.LatLngLiteral>();
 
   const [distance, setDistance] = React.useState<string>("");
   const [duration, setDuration] = React.useState<string>("");
@@ -40,11 +41,29 @@ const Map :React.FC<IMapProps> = ({ addressOrigin, addressDestiny }) => {
     setMap(map);
   };
 
-  const traceRoute = () => {
+  const traceRoute = async () => {
+
+    setOrigin(null);
+    setDestination(null);
+    setResponse(null);
+    setPointA(addressOrigin);
+    map?.panTo({
+      lat: addressOrigin?.lat || 0,
+      lng: addressOrigin?.lng || 0,
+    });
+    setPointB(addressDestiny);
+    map?.panTo({
+      lat: addressDestiny?.lat || 0,
+      lng: addressDestiny?.lng || 0,
+    });
+
     if (addressOrigin && addressDestiny) {
       setOrigin(addressOrigin);
       setDestination(addressDestiny);
-    }
+    } else if(!addressOrigin){
+      setOrigin(null);
+      setDestination(null);
+    }   
   };
 
   const directionsServiceOptions =
@@ -102,10 +121,10 @@ const Map :React.FC<IMapProps> = ({ addressOrigin, addressDestiny }) => {
           onLoad={onMapLoad}
           mapContainerStyle={{ width: "100%", height: "80%", marginTop: 10 }}
           center={position}
-          zoom={15}
+          zoom={15}        
         >
-          {!response && addressOrigin && <Marker position={addressOrigin} />}
-          {!response && addressDestiny && <Marker position={addressDestiny} />}
+          { addressOrigin && <Marker position={addressOrigin} />}
+          { addressDestiny && <Marker position={addressDestiny} />}
 
           {origin && destination && (
             <DirectionsService

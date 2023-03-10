@@ -5,71 +5,59 @@ export async function get() {
   try {
     // const response = await axiosInstance.get<IClient[]>('/client');
     // console.log('response', response.data);
+    // return response.data;
     return [
       {
-      "clientId": 1,
-      "createData": "2023-07-03",
-      "name": "Abigail Norman",
-      "phone": "(448) 785-3677",
-      "email": "cubilia.curae.phasellus@aol.edu",
-      "address": "6592 Magna Ave",
-      "address2": null,
-      "city": "Zamboanga Peninsula",
-      "state": null,
-      "zip": "2440 HJ",
-      "country": "Peru"
+      "clientId": 8,
+      "createData": null,
+      "name": "Client DF",
+      "phone": "(568) 990-5931",
+      "email": "clientedf@email.com",
+      "address": "Lago Sul",
+      "address2": "",
+      "city": "Brasília",
+      "state": "DF",
+      "zip": "71608-900",
+      "country": "Brazil"
       },
       {
-      "clientId": 4,
-      "createData": "2023-07-03",
-      "name": "Emerald Rodriquez",
-      "phone": "1-568-850-7817",
-      "email": "sed@google.couk",
-      "address": "732-6716 Dui. Rd.",
-      "address2": null,
-      "city": "Gyeonggi",
-      "state": null,
-      "zip": "170832",
-      "country": "Pakistan"
+      "clientId": 7,
+      "createData": null,
+      "name": "Client RN",
+      "phone": "(466) 803-5955",
+      "email": "clientern@email.com",
+      "address": "Av. Dr. Ruy Pereira dos Santos, 3100",
+      "address2": "",
+      "city": " São Gonçalo do Amarante",
+      "state": " RN",
+      "zip": " 59290-000",
+      "country": "Brazil"
       },
       {
-      "clientId": 5,
-      "createData": "2023-07-03",
-      "name": "Keith Wood",
-      "phone": "(647) 145-5109",
-      "email": "maecenas@icloud.edu",
-      "address": "3533 Et Rd.",
-      "address2": null,
-      "city": "Leinster",
-      "state": null,
-      "zip": "35122",
-      "country": "Netherlands"
+      "clientId": 9,
+      "createData": null,
+      "name": "Cliente RO",
+      "phone": "(951) 417-2547",
+      "email": "clientero@email.com",
+      "address": "Av. Gov. Jorge Teixeira",
+      "address2": "",
+      "city": "Porto Velho",
+      "state": "RO",
+      "zip": "76803-970",
+      "country": "Brazil"
       },
       {
-      "clientId": 2,
-      "createData": "2023-07-03",
-      "name": "Marshall West",
-      "phone": "(645) 339-6455",
-      "email": "sit.amet@yahoo.net",
-      "address": "7519 Dapibus St.",
-      "address2": null,
-      "city": "Zaporizhzhia oblast",
-      "state": null,
-      "zip": "4791-1139",
-      "country": "Vietnam"
-      },
-      {
-      "clientId": 3,
-      "createData": "2023-07-03",
-      "name": "Zephania Ward",
-      "phone": "(649) 928-3515",
-      "email": "eu.eros@icloud.ca",
-      "address": "Ap #673-4035 Laoreet Rd.",
-      "address2": null,
-      "city": "Paraná",
-      "state": null,
-      "zip": "633855",
-      "country": "Sweden"
+      "clientId": 10,
+      "createData": null,
+      "name": "Cliente RS",
+      "phone": "(371) 856-0209",
+      "email": "clienters@email.com",
+      "address": "Av. Severo Dullius, 90.010",
+      "address2": "",
+      "city": "Porto Alegre",
+      "state": "RS",
+      "zip": "90200-310",
+      "country": "Brasil"
       }
       ];
   } catch(err) {

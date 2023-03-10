@@ -27,7 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
       >
         <Toolbar sx={{ flexWrap: 'wrap' }}>
           <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-            Company name
+            Boa Entrega
           </Typography>
           <nav style={{ display: "contents"}}>
             <Link

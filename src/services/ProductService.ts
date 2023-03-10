@@ -5,33 +5,70 @@ export async function get() {
   try {
     // const response = await axiosInstance.get<IProduct[]>('/product');
     // console.log('response', response.data);
+    // return response.data;
     return [
       {
-      "productId": 1,
-      "createData": "2023-03-08",
-      "name": "Name",
-      "description": "Description",
-      "availableQuantity": 10,
-      "warehouseId": 2,
-      "supplierId": 5
-      },
-      {
-      "productId": 2,
-      "createData": "2023-03-08",
-      "name": "Product 2",
-      "description": "Product 2",
-      "availableQuantity": 10,
-      "warehouseId": 1,
+      "productId": 5,
+      "createData": "2023-03-09",
+      "name": "Anti-inflammatory",
+      "description": "Anti-inflammatory",
+      "availableQuantity": 100,
+      "warehouseId": 14,
       "supplierId": 1
       },
       {
-      "productId": 3,
-      "createData": "2023-03-08",
-      "name": "Product 3",
-      "description": "Product 3",
+      "productId": 4,
+      "createData": "2023-03-09",
+      "name": "Dipyrone",
+      "description": "Dipyrone",
+      "availableQuantity": 100,
+      "warehouseId": 14,
+      "supplierId": 1
+      },
+      {
+      "productId": 6,
+      "createData": "2023-03-09",
+      "name": "Refrigerator",
+      "description": "Refrigerator",
       "availableQuantity": 10,
-      "warehouseId": 3,
-      "supplierId": 5
+      "warehouseId": 17,
+      "supplierId": 9
+      },
+      {
+      "productId": 7,
+      "createData": "2023-03-09",
+      "name": "Refrigerator",
+      "description": "Refrigerator",
+      "availableQuantity": 100,
+      "warehouseId": 16,
+      "supplierId": 9
+      },
+      {
+      "productId": 10,
+      "createData": "2023-03-09",
+      "name": "sofa",
+      "description": "sofa",
+      "availableQuantity": 10,
+      "warehouseId": 15,
+      "supplierId": 9
+      },
+      {
+      "productId": 8,
+      "createData": "2023-03-09",
+      "name": "Tv 32 inches",
+      "description": "Tv 32 inches",
+      "availableQuantity": 100,
+      "warehouseId": 17,
+      "supplierId": 9
+      },
+      {
+      "productId": 9,
+      "createData": "2023-03-09",
+      "name": "Tv 32 inches",
+      "description": "Tv 32 inches",
+      "availableQuantity": 10,
+      "warehouseId": 16,
+      "supplierId": 9
       }
       ];
   } catch(err) {

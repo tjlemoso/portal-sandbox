@@ -96,11 +96,12 @@ export default function DeliveryRegisterFormComponent() {
     setSelectValueClient(clientId);
 
     const client = clients?.find(c => c.clientId === clientId);
-    const clientAddress = await processManualLocation("Praça Vicente Jorge, 57-B, Cachoeira do Norte, CEP: 39.648, Chapada do Norte - MG");
+    const clientAddress = await processManualLocation(`${client?.address}${client?.address2}${client?.city}${client?.state}${client?.country}${client?.zip}`);
     setAddressDestiny({
       lat: clientAddress?.lat,
       lng: clientAddress?.lng,
     });
+    setAddressOrigin(undefined);
 
   };
 
@@ -108,7 +109,7 @@ export default function DeliveryRegisterFormComponent() {
     setSelectValueWarehouse(warehouseId);
 
     const warehouse = warehouses?.find(c => c.warehouseId === warehouseId);
-    const warehouseAddress = await processManualLocation("Av. Cristiano Machado, 4.000 - União, Belo Horizonte - MG, 31160-900");
+    const warehouseAddress = await processManualLocation(`${warehouse?.address}${warehouse?.address2}${warehouse?.city}${warehouse?.state}${warehouse?.country}${warehouse?.zip}`);
     setAddressOrigin({
       lat: warehouseAddress?.lat,
       lng: warehouseAddress?.lng,
