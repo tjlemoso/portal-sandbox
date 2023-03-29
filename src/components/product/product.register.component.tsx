@@ -42,9 +42,9 @@ export default function ProductRegisterFormComponent() {
         update(Number(product.productId),
           {
             productId: product.productId,
-            name: product.name,
-            description: product.description,
-            availableQuantity: product.availableQuantity,
+            name: data.name,
+            description: data.description,
+            availableQuantity: data.availableQuantity,
             warehouseId: selectValueWarehouse,
             supplierId: selectValueSupplier,
         }

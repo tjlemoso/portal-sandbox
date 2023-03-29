@@ -62,14 +62,16 @@ export default function DeliveryRegisterFormComponent() {
 
   const handleSubmit= React.useCallback( 
     async (data: IDelivery) => {
+
+console.log("\n\n delivery \n\n\n", delivery);
+
       if (query.id) {
         update(Number(delivery.deliveryId),
           {
             deliveryId: delivery.deliveryId,
-            name: delivery.name,
-            quantity: delivery.quantity,
-            trackingCode: delivery.trackingCode,
-            status: delivery.status,
+            quantity: data.quantity,
+            trackingCode: data.trackingCode,
+            status: data.status,
             clientId: selectValueClient,
             warehouseId: selectValueWarehouse,
             productId: selectValueProduct,
@@ -162,6 +164,8 @@ export default function DeliveryRegisterFormComponent() {
       if (query.id) {
         const result = await getById(Number(query.id));
         setDelivery(result);
+        setSelectValueClient(result.clientId);
+        setSelectValueProduct(result.productId);
         setSelectValueSupplier(result.supplierId);
         setSelectValueWarehouse(result.warehouseId);
       }

@@ -30,41 +30,28 @@ function Copyright(props: any) {
 
 const tiers = [
   {
-    title: 'Free',
-    price: '0',
+    title: 'Processing',
     description: [
-      '10 users included',
-      '2 GB of storage',
-      'Help center access',
-      'Email support',
+      '115 new deliveries',
+      '150 Total products',
+      '100 Total customers',
     ],
-    buttonText: 'Sign up for free',
-    buttonVariant: 'outlined',
   },
   {
-    title: 'Pro',
-    subheader: 'Most popular',
-    price: '15',
+    title: 'On Route',
     description: [
-      '20 users included',
-      '10 GB of storage',
-      'Help center access',
-      'Priority email support',
+      '40 deliveries',
+      '65 Total products',
+      '58 Total customers',
     ],
-    buttonText: 'Get started',
-    buttonVariant: 'contained',
   },
   {
-    title: 'Enterprise',
-    price: '30',
+    title: 'Delivered',
     description: [
-      '50 users included',
-      '30 GB of storage',
-      'Help center access',
-      'Phone & email support',
+      '1548419 Delivered',
+      '1654905 Products',
+      '1236100 Customers',
     ],
-    buttonText: 'Contact us',
-    buttonVariant: 'outlined',
   },
 ];
 const footers = [
@@ -106,12 +93,10 @@ function PricingContent() {
           color="text.primary"
           gutterBottom
         >
-          Pricing
+          Delivery
         </Typography>
         <Typography variant="h5" align="center" color="text.secondary" component="p">
-          Quickly build an effective pricing table for your potential customers with
-          this layout. It&apos;s built with default MUI components with little
-          customization.
+          Information about ongoing and completed deliveries.
         </Typography>
       </Container>
       {/* End hero unit */}
@@ -151,12 +136,12 @@ function PricingContent() {
                       mb: 2,
                     }}
                   >
-                    <Typography component="h2" variant="h3" color="text.primary">
+                    {/* <Typography component="h2" variant="h3" color="text.primary">
                       ${tier.price}
                     </Typography>
                     <Typography variant="h6" color="text.secondary">
                       /mo
-                    </Typography>
+                    </Typography> */}
                   </Box>
                   <ul>
                     {tier.description.map((line) => (
@@ -172,12 +157,6 @@ function PricingContent() {
                   </ul>
                 </CardContent>
                 <CardActions>
-                  <Button
-                    fullWidth
-                    variant={tier.buttonVariant as 'outlined' | 'contained'}
-                  >
-                    {tier.buttonText}
-                  </Button>
                 </CardActions>
               </Card>
             </Grid>
