@@ -3,6 +3,7 @@ import { ClientProvider } from './ClientContext';
 import { DeliveryProvider } from './DeliveryContext';
 import { ProductProvider } from './ProductContext';
 import { SupplierProvider } from './SupplierContext';
+import { UserProvider } from './UserContext';
 import { WarehouseProvider } from './WarehouseContext';
 
 interface Props {
@@ -10,17 +11,19 @@ interface Props {
 }
 
 const AppProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) => (
-  <SupplierProvider>
-    <ClientProvider>
-      <WarehouseProvider>
-        <ProductProvider>
-          <DeliveryProvider>
-            {children}
-          </DeliveryProvider>
-        </ProductProvider>
-      </WarehouseProvider>
-    </ClientProvider> 
-  </SupplierProvider>
+  <UserProvider>
+    <SupplierProvider>
+      <ClientProvider>
+        <WarehouseProvider>
+          <ProductProvider>
+            <DeliveryProvider>
+              {children}
+            </DeliveryProvider>
+          </ProductProvider>
+        </WarehouseProvider>
+      </ClientProvider> 
+    </SupplierProvider>
+  </UserProvider>
 );
 
 export default AppProvider;

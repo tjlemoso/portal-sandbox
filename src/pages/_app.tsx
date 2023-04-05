@@ -78,10 +78,21 @@ export default function App({ Component, pageProps }: AppProps) {
             >
               Delivery
             </Link>
+            <Link
+              variant="button"
+              color="text.primary"
+              href="/user"
+              sx={{ my: 1, mx: 1.5 }}
+            >
+              User
+            </Link>
                                      
           </nav>
           <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
             Login
+          </Button>
+          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+            Logout
           </Button>
         </Toolbar>
       </AppBar>

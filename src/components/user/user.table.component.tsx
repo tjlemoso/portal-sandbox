@@ -1,7 +1,7 @@
 import React from "react";
-import { IProduct } from "../../interface/IProduct";
+import { IUser } from "../../interface/IUser";
 import Container from '@mui/material/Container';
-import { useProduct } from "@/hooks/ProductContext";
+import { useUser } from "@/hooks/UserContext";
 import router from "next/router";
 import { Paper } from "@mui/material";
 
@@ -19,16 +19,16 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 interface IProps {
-  products: IProduct[] | undefined;
+  users: IUser[] | undefined;
 }
 
-function Row(props: { row: IProduct }) {
+function Row(props: { row: IUser }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
-  const { remove } = useProduct();
+  const { remove } = useUser();
 
   const handleEdit = async (id : number) => {
-    router.push(`/product/register?id=${id}`);
+    router.push(`/user/register?id=${id}`);
   };
 
   const handleDelete= React.useCallback( 
@@ -46,11 +46,12 @@ function Row(props: { row: IProduct }) {
         <TableCell component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell align="left">{row.description}</TableCell>
-        <TableCell align="left">{row.availableQuantity}</TableCell>
+        <TableCell component="th" scope="row">
+          {row.isAdmin? "Admin" : "Worker"}
+        </TableCell>
         <TableCell align="left">
-          <button className="btn btn-primary" onClick={() => handleEdit(row.productId)}>edit</button>              
-          <button className="btn btn-danger" onClick={() => handleDelete(row.productId)}>delete</button>          
+          <button className="btn btn-primary" onClick={() => handleEdit(row.userId)}>edit</button>              
+          <button className="btn btn-danger" onClick={() => handleDelete(row.userId)}>delete</button>          
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -59,7 +60,7 @@ function Row(props: { row: IProduct }) {
 
 
 
-const ProductTable: React.FunctionComponent<IProps> = props => {
+const UserTable: React.FunctionComponent<IProps> = props => {
 
   return (
     <Container component="main" >
@@ -68,22 +69,21 @@ const ProductTable: React.FunctionComponent<IProps> = props => {
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
-              <TableCell align="left">Description</TableCell>
-              <TableCell align="left">Quantity</TableCell>
-              <TableCell>Action</TableCell>       
+              <TableCell align="left">Is Admin</TableCell>
+              <TableCell>Action</TableCell>              
             </TableRow>
           </TableHead>
           <TableBody>
             {
-              props.products && props.products.length > 0 ? 
+              props.users && props.users.length > 0 ? 
                 (
-                  props.products.map((row) => (
+                  props.users.map((row) => (
                     <Row key={row.name} row={row} />
                   ))
                 ):
                 (
                   <tr>
-                    <td colSpan={3}>no product</td>
+                    <td colSpan={3}>no user</td>
                   </tr>
                 )
             }
@@ -95,4 +95,4 @@ const ProductTable: React.FunctionComponent<IProps> = props => {
 };
 
 
-export default ProductTable;
+export default UserTable;
