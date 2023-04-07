@@ -14,6 +14,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useUser } from '@/hooks/UserContext';
 import router, { useRouter } from 'next/router';
+import { useLogin } from '@/hooks/LoginContext';
+import { Alert } from '@mui/material';
 
 const theme = createTheme();
 
@@ -24,7 +26,9 @@ export interface ILoginType {
 
 
 export default function SignIn() {
-  const { login } = useUser();
+  
+  const { login } = useLogin();
+  const [showAlert, setShowAlert] = React.useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();    
@@ -37,13 +41,16 @@ export default function SignIn() {
 
     const result = await login(data.email, data.password);
 
+    console.log("result",result)
+
     if (result) {      
        
       router.push('/');      
 
     } else {
+
       console.log('To do create form to send email again!');
-      router.push('/');      
+      setShowAlert(true);
     }
 
   };
@@ -99,18 +106,11 @@ export default function SignIn() {
             >
               Sign In
             </Button>
-            {/* <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid> */}
+            {
+              showAlert ?
+              (<Alert severity="error">Error logging in, wrong username and password. Please enter the correct user information!</Alert>)
+              : <></>
+            }
           </Box>
         </Box>
         {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}

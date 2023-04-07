@@ -11,10 +11,26 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
+import { destroyCookie } from 'nookies';
+import React from 'react';
+import router, { useRouter } from 'next/router';
 
 import "./MapPage.css";
 
+
 export default function App({ Component, pageProps }: AppProps) {
+
+  const logout = React.useCallback(() => {
+    destroyCookie(null, 'token');
+    window.location.reload();
+  }, []);
+
+  const login = React.useCallback(() => {
+    router.push('/signIn');
+  }, []);
+
+
+
   return (
     <AppProvider>
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
@@ -88,10 +104,10 @@ export default function App({ Component, pageProps }: AppProps) {
             </Link>
                                      
           </nav>
-          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }} onClick={() =>  login()}>
             Login
           </Button>
-          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }} onClick={() => logout()}>
             Logout
           </Button>
         </Toolbar>

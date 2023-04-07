@@ -9,14 +9,8 @@ export interface IUserContextType {
   update: (id: number, user:IUser) => Promise<IUser>;
   remove: (id: number) => Promise<number>;
   getById: (id: number) => Promise<IUser>;
-  login: (email: string, password: string) => Promise<IUser>;
-  user: IUser;
-  IsAutheticated: boolean;
 };
 
-interface AuthState {
-  token: string;
-}
 
 export const UserContext = React.createContext<IUserContextType>({} as IUserContextType,);
 
@@ -25,14 +19,6 @@ interface Props {
 }
 
 const UserProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) => {
-
-  const [user, setUser] = React.useState<IUser | null>(null);
-
-  const IsAutheticated = !!user;
-  React.useEffect(() => {
-    const { 'token': token } = parseCookies();
-
-  }, [])
 
   const userList = React.useCallback(
     async () => {
@@ -81,35 +67,6 @@ const UserProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) =>
     }, 
     []
   );
-
-  const login = React.useCallback(
-    async (name: string, password: string) => {
-      console.log('Update user context =', name);
-      console.log('Update user context =', password);
-      const result = await makeLogin(name, password);      
-      console.log('result create user context =', result);
-      setCookie(undefined, 'token', result?.token!, {
-        maxAge: 60 * 60 * 1, //1 hour
-      })
-  
-      setUser(user);
-      localStorage.setItem("userInfo", JSON.stringify(user));
-      return result;
-    }, 
-    [user]
-  );
-
-  const [data, setData] = React.useState<AuthState>(
-    () =>
-      ({} as AuthState),
-  );
-
-  const logout = React.useCallback(() => {
-    localStorage.removeItem('accessToken');
-    setData({} as AuthState);
-  }, []);
-
-
   
   return (
     <UserContext.Provider 
@@ -118,10 +75,8 @@ const UserProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) =>
         create, 
         update, 
         remove,
-        getById,
-        login,
-        IsAutheticated,
-        user }}>
+        getById
+        }}>
       {children}
     </UserContext.Provider>
   );
