@@ -23,7 +23,7 @@ interface Props {
 
 const LoginProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) => {
 
-  const [userLogin, setLogin] = React.useState<IUser | null>(null);
+  const [userLogin, setLogin] = React.useState<ILogin | null>(null);
 
   const IsAutheticated = !!userLogin;
 
@@ -42,13 +42,13 @@ const LoginProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) =
         maxAge: 60 * 60 * 1, //1 hour
       })
 
-      const { ['token']: token } = parseCookies();
-
-      console.log("token",token)
+      setCookie(undefined, 'isAdmin', result?.user.isAdmin ? "yes" : "no", {
+        maxAge: 60 * 60 * 1, //1 hour
+      })
 
       if(result.authenticated){        
 
-        setLogin(result.user);
+        setLogin(result);
         localStorage.setItem("userInfo", JSON.stringify(result));
         return result;
       }
@@ -62,6 +62,7 @@ const LoginProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) =
   const logout = React.useCallback(() => {
     localStorage.removeItem('accessToken');
     setData({} as AuthState);
+    setLogin(null);
   }, []);
 
 

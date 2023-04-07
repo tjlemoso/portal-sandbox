@@ -11,11 +11,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
-import { destroyCookie } from 'nookies';
+import { destroyCookie, parseCookies } from 'nookies';
 import React from 'react';
 import router, { useRouter } from 'next/router';
 
 import "./MapPage.css";
+import { useLogin } from '@/hooks/LoginContext';
 
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -29,7 +30,9 @@ export default function App({ Component, pageProps }: AppProps) {
     router.push('/signIn');
   }, []);
 
+  const { ['token']: token } = parseCookies();
 
+  const { ['isAdmin']: isAdmin } = parseCookies();
 
   return (
     <AppProvider>
@@ -39,7 +42,8 @@ export default function App({ Component, pageProps }: AppProps) {
         position="static"
         color="default"
         elevation={0}
-        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
+        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}`, visibility:(token? "visible":"collapse") }}
+        
       >
         <Toolbar sx={{ flexWrap: 'wrap' }}>
           <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
@@ -94,19 +98,28 @@ export default function App({ Component, pageProps }: AppProps) {
             >
               Delivery
             </Link>
-            <Link
-              variant="button"
-              color="text.primary"
-              href="/user"
-              sx={{ my: 1, mx: 1.5 }}
-            >
-              User
-            </Link>
+
+            {
+                isAdmin === "yes" ?
+                (
+                  <Link
+                  variant="button"
+                  color="text.primary"
+                  href="/user"
+                  sx={{ my: 1, mx: 1.5 }}
+                  >
+                    User
+                  </Link>
+                )
+                :
+                <></>
+            }
+
                                      
           </nav>
-          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }} onClick={() =>  login()}>
+          {/* <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }} onClick={() =>  login()}>
             Login
-          </Button>
+          </Button> */}
           <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }} onClick={() => logout()}>
             Logout
           </Button>
