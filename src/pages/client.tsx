@@ -3,8 +3,10 @@ import { useClient } from "@/hooks/ClientContext";
 import { IClient } from "@/interface/IClient";
 import { Typography } from "@mui/material";
 import { Container } from "@mui/system";
-import router from 'next/router';
 import React, { useCallback, useEffect, useState } from "react";
+import router from 'next/router';
+import { parseCookies } from 'nookies';
+import { GetServerSideProps } from 'next';
 
 const ClientPage: React.FC = () => {
 
@@ -58,3 +60,22 @@ const ClientPage: React.FC = () => {
 }
 
 export default ClientPage;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
+  const { ['token']: token } = parseCookies(ctx);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: `/signIn`,
+        permanent: false,
+      }
+    }
+  }
+  return {
+    props: {
+
+    }
+  }
+}

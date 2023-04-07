@@ -4,6 +4,8 @@ import { IDelivery } from "@/interface/IDelivery";
 import { Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import router from 'next/router';
+import { parseCookies } from 'nookies';
+import { GetServerSideProps } from 'next';
 import React, { useCallback, useEffect, useState } from "react";
 
 const DeliveryPage: React.FC = () => {
@@ -58,3 +60,21 @@ const DeliveryPage: React.FC = () => {
 }
 
 export default DeliveryPage;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['token']: token } = parseCookies(ctx);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: `/signIn`,
+        permanent: false,
+      }
+    }
+  }
+  return {
+    props: {
+
+    }
+  }
+}

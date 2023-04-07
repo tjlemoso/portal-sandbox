@@ -4,6 +4,8 @@ import { IProduct } from "@/interface/IProduct";
 import { Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import router from 'next/router';
+import { parseCookies } from 'nookies';
+import { GetServerSideProps } from 'next';
 import React, { useCallback, useEffect, useState } from "react";
 
 const ProductPage: React.FC = () => {
@@ -58,3 +60,22 @@ const ProductPage: React.FC = () => {
 }
 
 export default ProductPage;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['token']: token } = parseCookies(ctx);
+
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: `/signIn`,
+        permanent: false,
+      }
+    }
+  }
+  return {
+    props: {
+
+    }
+  }
+}

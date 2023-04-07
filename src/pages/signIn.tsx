@@ -43,7 +43,7 @@ export default function SignIn() {
 
     console.log("result",result)
 
-    if (result) {      
+    if (result.authenticated) {      
        
       router.push('/');      
 

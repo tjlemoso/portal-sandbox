@@ -14,6 +14,10 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
+import router from 'next/router';
+import { parseCookies } from 'nookies';
+import { GetServerSideProps } from 'next';
+
 
 function Copyright(props: any) {
   return (
@@ -200,4 +204,23 @@ function PricingContent() {
 
 export default function Pricing() {
   return <PricingContent />;
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['token']: token } = parseCookies(ctx);
+
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: `/signIn`,
+        permanent: false,
+      }
+    }
+  }
+  return {
+    props: {
+
+    }
+  }
 }

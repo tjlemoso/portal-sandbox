@@ -1,7 +1,8 @@
 import * as React from 'react';
 import SupplierRegisterFormComponent from '@/components/supplier/supplier.register.component';
 import { Container } from '@mui/system';
-
+import { parseCookies } from 'nookies';
+import { GetServerSideProps } from 'next';
 
 export default function AddressForm() {
 
@@ -14,3 +15,23 @@ export default function AddressForm() {
 
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['token']: token } = parseCookies(ctx);
+
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: `/signIn`,
+        permanent: false,
+      }
+    }
+  }
+  return {
+    props: {
+
+    }
+  }
+}
+

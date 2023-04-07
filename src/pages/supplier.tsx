@@ -5,6 +5,8 @@ import { Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import router from 'next/router';
 import React, { useCallback, useEffect, useState } from "react";
+import { parseCookies } from 'nookies';
+import { GetServerSideProps } from 'next';
 
 const SupplierPage: React.FC = () => {
 
@@ -58,3 +60,22 @@ const SupplierPage: React.FC = () => {
 }
 
 export default SupplierPage;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['token']: token } = parseCookies(ctx);
+
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: `/signIn`,
+        permanent: false,
+      }
+    }
+  }
+  return {
+    props: {
+
+    }
+  }
+}

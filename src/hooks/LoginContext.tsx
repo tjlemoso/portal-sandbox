@@ -26,10 +26,6 @@ const LoginProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) =
   const [userLogin, setLogin] = React.useState<IUser | null>(null);
 
   const IsAutheticated = !!userLogin;
-  React.useEffect(() => {
-    const { 'token': token } = parseCookies();
-
-  }, [])
 
   const [data, setData] =  React.useState<AuthState>(
     () =>
@@ -42,11 +38,16 @@ const LoginProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) =
     async (name: string, password: string) => {
       const result = await authenticate(name, password);      
 
-      setCookie(undefined, 'token', result?.token!, {
+      setCookie(undefined, 'token', result?.token, {
         maxAge: 60 * 60 * 1, //1 hour
       })
 
-      if(result.user?.authenticate){
+      const { ['token']: token } = parseCookies();
+
+      console.log("token",token)
+
+      if(result.authenticated){        
+
         setLogin(result.user);
         localStorage.setItem("userInfo", JSON.stringify(result));
         return result;
