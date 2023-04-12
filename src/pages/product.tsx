@@ -1,7 +1,7 @@
 import ProductTable from "@/components/product/product.table.component";
 import { useProduct } from "@/hooks/ProductContext";
 import { IProduct } from "@/interface/IProduct";
-import { Typography } from "@mui/material";
+import { Backdrop, CircularProgress, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import router from 'next/router';
 import { parseCookies } from 'nookies';
@@ -18,10 +18,12 @@ const ProductPage: React.FC = () => {
   
   const { productList } = useProduct();
 
+  const [openLoadding, setOpenLoadding] = React.useState(true);
   const getProductList = useCallback(
     async () => {       
       const result1 = await productList();      
-      setResult(result1);       
+      setResult(result1);    
+      setOpenLoadding(false);       
     },
     [productList],
   );
@@ -34,6 +36,12 @@ const ProductPage: React.FC = () => {
 
   return(
     <React.Fragment>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openLoadding}
+        >
+        <CircularProgress color="inherit" />
+      </Backdrop>        
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 6 }}>
         <Typography
           component="h1"

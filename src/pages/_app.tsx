@@ -21,13 +21,12 @@ import { useLogin } from '@/hooks/LoginContext';
 
 export default function App({ Component, pageProps }: AppProps) {
 
+  const [userLogged, setUserLogged] = React.useState(false);
+  const [userLoggedAdmin, setUserLoggedAdmin] = React.useState(false);
+
   const logout = React.useCallback(() => {
     destroyCookie(null, 'token');
     window.location.reload();
-  }, []);
-
-  const login = React.useCallback(() => {
-    router.push('/signIn');
   }, []);
 
   const { ['token']: token } = parseCookies();
@@ -36,9 +35,17 @@ export default function App({ Component, pageProps }: AppProps) {
 
   React.useEffect(() => {
     if(!token){
-      login()
+      setUserLogged(false);
+    } else{
+      setUserLogged(true);
     }
-  }, [token, login]);
+
+    if(isAdmin && isAdmin === "yes"){
+      setUserLoggedAdmin(true);
+    }else{
+      setUserLoggedAdmin(false);
+    }
+  }, [token]);
 
   return (
     <AppProvider>
@@ -48,8 +55,8 @@ export default function App({ Component, pageProps }: AppProps) {
         position="static"
         color="default"
         elevation={0}
-//        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}`, visibility:(token? "visible":"collapse") }}
-sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
+        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}`, visibility:(userLogged? "visible":"collapse") }}
+
         
       >
         <Toolbar sx={{ flexWrap: 'wrap' }}>
@@ -106,22 +113,14 @@ sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
               Delivery
             </Link>
 
-            {
-                isAdmin === "yes" ?
-                (
-                  <Link
-                  variant="button"
-                  color="text.primary"
-                  href="/user"
-                  sx={{ my: 1, mx: 1.5 }}
-                  >
-                    User
-                  </Link>
-                )
-                :
-                <></>
-            }
-
+            <Link
+            variant="button"
+            color="text.primary"
+            href="/user"
+            sx={{ my: 1, mx: 1.5, visibility:(userLoggedAdmin? "visible":"collapse") }}
+            >
+              User
+            </Link>  
                                      
           </nav>
           {/* <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }} onClick={() =>  login()}>

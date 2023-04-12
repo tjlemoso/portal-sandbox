@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useUser } from '@/hooks/UserContext';
 import router, { useRouter } from 'next/router';
 import { useLogin } from '@/hooks/LoginContext';
-import { Alert } from '@mui/material';
+import { Alert, CircularProgress } from '@mui/material';
 
 const theme = createTheme();
 
@@ -29,6 +29,9 @@ export default function SignIn() {
   
   const { login } = useLogin();
   const [showAlert, setShowAlert] = React.useState(false);
+  const [athentication, setAthentication] = React.useState(false);
+
+  athentication
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();    
@@ -38,9 +41,9 @@ export default function SignIn() {
       email: formData.get('email')?.toString(),
       password: formData.get('password')?.toString(),
     };
-
+    setAthentication(true);
     const result = await login(data.email, data.password);
-
+    setAthentication(false);
     console.log("result",result)
 
     if (result.authenticated) {      
@@ -109,6 +112,15 @@ export default function SignIn() {
             {
               showAlert ?
               (<Alert severity="error">Error logging in, wrong username and password. Please enter the correct user information!</Alert>)
+              : <></>
+            }
+            {
+              athentication ?
+              (
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <CircularProgress />
+                </Box>
+              )
               : <></>
             }
           </Box>

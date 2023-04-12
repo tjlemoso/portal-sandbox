@@ -10,7 +10,7 @@ import router, { useRouter } from 'next/router';
 import { useClient } from '@/hooks/ClientContext';
 import { IClient } from '@/interface/IClient';
 import { useSnackbar } from '@mui/base';
-import { Paper, Typography } from '@mui/material';
+import { Backdrop, CircularProgress, Paper, Typography } from '@mui/material';
 
 export default function ClientRegisterFormComponent() {
 
@@ -31,11 +31,14 @@ export default function ClientRegisterFormComponent() {
       country: "";
     }
   );
-
+  const [open, setOpen] = React.useState(false);
   const handleSubmit= React.useCallback( 
     async (data: IClient) => {
+
+      setOpen(true);
+      
       if (query.id) {
-        update(Number(client.clientId),
+        await update(Number(client.clientId),
           {
           clientId: client.clientId,
           name: data.name,
@@ -50,9 +53,15 @@ export default function ClientRegisterFormComponent() {
         }
         );
       } else{        
-        create({...data});
+        await create({...data});
       }
+
+      setOpen(false);
+
       router.push('/client');
+
+
+
     },
     [create, query.id, client.clientId, update],
   );
@@ -71,10 +80,14 @@ export default function ClientRegisterFormComponent() {
     validation();
   }, [query, getById, setClient]);
 
+ 
 
   return (
     <Container component="main">
        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+
+
+
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Grid container spacing={3}>          
             <Grid item xs={12} style={{display: 'grid'}}>

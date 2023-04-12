@@ -1,7 +1,7 @@
 import UserTable from "@/components/user/user.table.component";
 import { useUser } from "@/hooks/UserContext";
 import { IUser } from "@/interface/IUser";
-import { Typography } from "@mui/material";
+import { Backdrop, CircularProgress, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import router from 'next/router';
 import { parseCookies } from 'nookies';
@@ -18,10 +18,12 @@ const UserPage: React.FC = () => {
   
   const { userList } = useUser();
 
+  const [openLoadding, setOpenLoadding] = React.useState(true);
   const getUserList = useCallback(
     async () => {       
       const result1 = await userList();      
-      setResult(result1);       
+      setResult(result1); 
+      setOpenLoadding(false);          
     },
     [userList],
   );
@@ -34,6 +36,12 @@ const UserPage: React.FC = () => {
 
   return(
     <React.Fragment>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openLoadding}
+        >
+        <CircularProgress color="inherit" />
+      </Backdrop>      
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 6 }}>
         <Typography
           component="h1"
