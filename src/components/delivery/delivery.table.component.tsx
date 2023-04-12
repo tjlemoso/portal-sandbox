@@ -33,7 +33,7 @@ function Row(props: { row: IDelivery }) {
   const handleDelete= React.useCallback( 
     async (id : number) => {
       console.log("id", id);
-      remove(id);
+      await remove(id);
       router.reload();
     },
     [remove],

@@ -2,7 +2,7 @@
 import axios, { AxiosRequestConfig, AxiosError } from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8081',
+  baseURL: '',
   // baseURL: 'https://bookres.azurewebsites.net/v1',
   headers: {
     'Content-Type': 'application/json'

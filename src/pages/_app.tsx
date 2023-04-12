@@ -34,6 +34,12 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const { ['isAdmin']: isAdmin } = parseCookies();
 
+  React.useEffect(() => {
+    if(!token){
+      login()
+    }
+  }, [token, login]);
+
   return (
     <AppProvider>
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
@@ -42,7 +48,8 @@ export default function App({ Component, pageProps }: AppProps) {
         position="static"
         color="default"
         elevation={0}
-        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}`, visibility:(token? "visible":"collapse") }}
+//        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}`, visibility:(token? "visible":"collapse") }}
+sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
         
       >
         <Toolbar sx={{ flexWrap: 'wrap' }}>

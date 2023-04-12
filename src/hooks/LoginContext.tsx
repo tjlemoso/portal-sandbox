@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { setCookie, parseCookies } from 'nookies'
+import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import { ILogin } from '@/interface/ILogin';
 import { authenticate } from '@/services/LoginService';
 import { IUser } from '@/interface/IUser';
@@ -36,6 +36,9 @@ const LoginProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) =
 
   const login = React.useCallback(
     async (name: string, password: string) => {
+
+      destroyCookie(null, 'token');
+
       const result = await authenticate(name, password);      
 
       setCookie(undefined, 'token', result?.token, {
@@ -46,7 +49,7 @@ const LoginProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) =
         maxAge: 60 * 60 * 1, //1 hour
       })
 
-      if(result.authenticated){        
+      if(result?.authenticated){        
 
         setLogin(result);
         localStorage.setItem("userInfo", JSON.stringify(result));

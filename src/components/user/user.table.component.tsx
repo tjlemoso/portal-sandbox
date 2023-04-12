@@ -34,7 +34,7 @@ function Row(props: { row: IUser }) {
   const handleDelete= React.useCallback( 
     async (id : number) => {
       console.log("id", id);
-      remove(id);
+      await remove(id);
       router.reload();
     },
     [remove],

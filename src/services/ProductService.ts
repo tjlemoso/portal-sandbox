@@ -1,76 +1,13 @@
 import { IProduct } from './../interface/IProduct';
 import axiosInstance from '../config/axios/axiosInstance';
+import { LINK_PRODUCT_SERVICE } from '@/config/constants';
 
 export async function get() {
   try {
-    // const response = await axiosInstance.get<IProduct[]>('/product');
-    // console.log('response', response.data);
-    // return response.data;
-    return [
-      {
-      "productId": 5,
-      "createData": "2023-03-09",
-      "name": "Anti-inflammatory",
-      "description": "Anti-inflammatory",
-      "availableQuantity": 100,
-      "warehouseId": 14,
-      "supplierId": 1
-      },
-      {
-      "productId": 4,
-      "createData": "2023-03-09",
-      "name": "Dipyrone",
-      "description": "Dipyrone",
-      "availableQuantity": 100,
-      "warehouseId": 14,
-      "supplierId": 1
-      },
-      {
-      "productId": 6,
-      "createData": "2023-03-09",
-      "name": "Refrigerator",
-      "description": "Refrigerator",
-      "availableQuantity": 10,
-      "warehouseId": 17,
-      "supplierId": 9
-      },
-      {
-      "productId": 7,
-      "createData": "2023-03-09",
-      "name": "Refrigerator",
-      "description": "Refrigerator",
-      "availableQuantity": 100,
-      "warehouseId": 16,
-      "supplierId": 9
-      },
-      {
-      "productId": 10,
-      "createData": "2023-03-09",
-      "name": "sofa",
-      "description": "sofa",
-      "availableQuantity": 10,
-      "warehouseId": 15,
-      "supplierId": 9
-      },
-      {
-      "productId": 8,
-      "createData": "2023-03-09",
-      "name": "Tv 32 inches",
-      "description": "Tv 32 inches",
-      "availableQuantity": 100,
-      "warehouseId": 17,
-      "supplierId": 9
-      },
-      {
-      "productId": 9,
-      "createData": "2023-03-09",
-      "name": "Tv 32 inches",
-      "description": "Tv 32 inches",
-      "availableQuantity": 10,
-      "warehouseId": 16,
-      "supplierId": 9
-      }
-      ];
+    const response = await axiosInstance.get<IProduct[]>(`${LINK_PRODUCT_SERVICE}/product`);
+    console.log('response', response.data);
+    return response.data;
+
   } catch(err) {
     console.error(err);
   }
@@ -78,7 +15,7 @@ export async function get() {
 
 export async function getSingle(id: number) {
   try {
-    const response = await axiosInstance.get<IProduct>(`/product/${id}`);
+    const response = await axiosInstance.get<IProduct>(`${LINK_PRODUCT_SERVICE}/product/${id}`);
     console.log('response', response.data);
     return response.data;
   } catch(err) {
@@ -88,7 +25,7 @@ export async function getSingle(id: number) {
 
 export async function post(product: IProduct) {
   try {
-    const response = await axiosInstance.post<IProduct>('/product',{...product});
+    const response = await axiosInstance.post<IProduct>(`${LINK_PRODUCT_SERVICE}/product`,{...product});
     console.log('response', response.data);
     return response.data;
   } catch(err) {
@@ -98,7 +35,7 @@ export async function post(product: IProduct) {
 
 export async function put(id: number, product: IProduct) {
   try {
-    const response = await axiosInstance.put<IProduct>(`/product/${id}`,{...product});
+    const response = await axiosInstance.put<IProduct>(`${LINK_PRODUCT_SERVICE}/product/${id}`,{...product});
     console.log('response', response.data);
     return response.data;
   } catch(err) {
@@ -108,7 +45,7 @@ export async function put(id: number, product: IProduct) {
 
 export async function del (id: number) {
   try {
-    const response = await axiosInstance.delete(`/product/${id}`);
+    const response = await axiosInstance.delete(`${LINK_PRODUCT_SERVICE}/product/${id}`);
     console.log('response', response.data);
     return response.status;
   } catch(err) {
