@@ -10,7 +10,7 @@ import router, { useRouter } from 'next/router';
 import { useClient } from '@/hooks/ClientContext';
 import { IClient } from '@/interface/IClient';
 import { useSnackbar } from '@mui/base';
-import { Backdrop, CircularProgress, Paper, Typography } from '@mui/material';
+import { Backdrop, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material';
 
 export default function ClientRegisterFormComponent() {
 
@@ -32,11 +32,12 @@ export default function ClientRegisterFormComponent() {
     }
   );
   const [open, setOpen] = React.useState(false);
+  const [openLoadding, setOpenLoadding] = React.useState(false);
   const handleSubmit= React.useCallback( 
     async (data: IClient) => {
+     
+      setOpenLoadding(true);
 
-      setOpen(true);
-      
       if (query.id) {
         await update(Number(client.clientId),
           {
@@ -56,11 +57,8 @@ export default function ClientRegisterFormComponent() {
         await create({...data});
       }
 
-      setOpen(false);
-
-      router.push('/client');
-
-
+      setOpenLoadding(false);
+      setOpen(true);
 
     },
     [create, query.id, client.clientId, update],
@@ -80,14 +78,47 @@ export default function ClientRegisterFormComponent() {
     validation();
   }, [query, getById, setClient]);
 
- 
+  const handleClose = () => {
+    setOpen(false);
+    router.push('/client');
+  };
 
   return (
     <Container component="main">
        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
 
-
-
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Boa entrega"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              As alterações solicitadas foram aplicadas com êxito em nosso sistema. Agradecemos pela sua atualização e pela confiança em nosso serviço.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              variant="contained"
+              type="submit"
+              sx={{ mt: 3, ml: 1 }}
+              autoFocus
+              onClick={handleClose}
+            >
+              OK
+            </Button>  
+          </DialogActions>
+        </Dialog>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={openLoadding}
+          >
+          <CircularProgress color="inherit" />
+        </Backdrop>
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Grid container spacing={3}>          
             <Grid item xs={12} style={{display: 'grid'}}>
@@ -177,7 +208,7 @@ export default function ClientRegisterFormComponent() {
                   </Button>          
                 </Box>
             </Grid>  
-          </Grid>        
+          </Grid>    
         </Form>
       </Paper>
     </Container>

@@ -98,7 +98,7 @@ const Map :React.FC<IMapProps> = ({ addressOrigin, addressDestiny }) => {
     <div className="map">
       <LoadScript
         googleMapsApiKey={'AIzaSyC1LdqTsA0TtB0yEJdJg2pGZZf8pXZTnic'}
-        libraries={["places"]}
+        libraries={["places"]}        
       >
         <Box sx={{ display: 'flex', justifyContent: 'flex-end'}}>                
           <Button variant="contained" onClick={traceRoute}>

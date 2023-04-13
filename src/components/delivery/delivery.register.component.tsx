@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import router, { useRouter } from 'next/router';
 import { useDelivery } from '@/hooks/DeliveryContext';
 import { IDelivery } from '@/interface/IDelivery';
-import { Paper, Typography } from '@mui/material';
+import { Backdrop, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material';
 import { ISupplier } from '@/interface/ISupplier';
 import { useSupplier } from '@/hooks/SupplierContext';
 import { IWarehouse } from '@/interface/IWarehouse';
@@ -60,13 +60,14 @@ export default function DeliveryRegisterFormComponent() {
   const [addressOrigin, setAddressOrigin] = React.useState<google.maps.LatLngLiteral>();
   const [addressDestiny, setAddressDestiny] = React.useState<google.maps.LatLngLiteral>();
 
+  const [open, setOpen] = React.useState(false);
+  const [openLoadding, setOpenLoadding] = React.useState(false);
   const handleSubmit= React.useCallback( 
     async (data: IDelivery) => {
 
-console.log("\n\n delivery \n\n\n", delivery);
-
+      setOpenLoadding(true);
       if (query.id) {
-        update(Number(delivery.deliveryId),
+        await update(Number(delivery.deliveryId),
           {
             deliveryId: delivery.deliveryId,
             quantity: data.quantity,
@@ -80,7 +81,7 @@ console.log("\n\n delivery \n\n\n", delivery);
         );
       } else {   
         
-        create(
+        await create(
           {
             ...data, 
             clientId: selectValueClient,
@@ -89,10 +90,18 @@ console.log("\n\n delivery \n\n\n", delivery);
             supplierId: selectValueSupplier,
           });
       }
-      router.push('/delivery');
+
+      setOpenLoadding(false);
+      setOpen(true);
+
     },
     [create, query.id, delivery, update, selectValueWarehouse, selectValueSupplier, selectValueClient, selectValueProduct ],
   );
+
+  const handleClose = () => {
+    setOpen(false);
+    router.push('/delivery');
+  };
 
   const handleGetLocationClient = async (clientId: number) => {
     setSelectValueClient(clientId);
@@ -189,6 +198,38 @@ console.log("\n\n delivery \n\n\n", delivery);
   return (
     <Container component="main">
        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+       <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Boa entrega"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              As alterações solicitadas foram aplicadas com êxito em nosso sistema. Agradecemos pela sua atualização e pela confiança em nosso serviço.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              variant="contained"
+              type="submit"
+              sx={{ mt: 3, ml: 1 }}
+              autoFocus
+              onClick={handleClose}
+            >
+              OK
+            </Button>  
+          </DialogActions>
+        </Dialog>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={openLoadding}
+          >
+          <CircularProgress color="inherit" />
+        </Backdrop>        
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Grid container spacing={2}>          
             <Grid item xs={12} style={{display: 'grid'}}>

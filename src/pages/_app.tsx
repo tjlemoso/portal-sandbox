@@ -1,3 +1,4 @@
+import "./MapPage.css";
 import '@/styles/index.css'
 import '@/styles/App.css'
 import 'bootstrap/dist/css/bootstrap.min.css'; 
@@ -15,7 +16,7 @@ import { destroyCookie, parseCookies } from 'nookies';
 import React from 'react';
 import router, { useRouter } from 'next/router';
 
-import "./MapPage.css";
+
 import { useLogin } from '@/hooks/LoginContext';
 
 
