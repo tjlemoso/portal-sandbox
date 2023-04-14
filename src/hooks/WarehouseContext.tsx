@@ -3,11 +3,11 @@ import { IWarehouse } from "@/interface/IWarehouse";
 import { del, get, post, put, getSingle } from "@/services/WarehouseService";
 
 export interface IWarehouseContextType {
-  warehouseList: () => Promise<IWarehouse[]>;
+  warehouseList: () => Promise<IWarehouse[]|undefined>;
   create: (warehouse: IWarehouse) => void;
-  update: (id: number, warehouse:IWarehouse) => Promise<IWarehouse>;
-  remove: (id: number) => Promise<number>;
-  getById: (id: number) => Promise<IWarehouse>;
+  update: (id: number, warehouse:IWarehouse) => Promise<IWarehouse|undefined>;
+  remove: (id: number) => Promise<number|undefined>;
+  getById: (id: number) => Promise<IWarehouse|undefined>;
 };
 
 export const WarehouseContext = React.createContext<IWarehouseContextType>({} as IWarehouseContextType,);
@@ -51,7 +51,7 @@ const WarehouseProvider: React.FC<React.PropsWithChildren<Props>> = ({ children 
       console.log('Update warehouse context =', id);
       const result = await del(id);
       console.log('result create warehouse context =', result);
-      //return result;
+      return id;
     }, 
     []
   );

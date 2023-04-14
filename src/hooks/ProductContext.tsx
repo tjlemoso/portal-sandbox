@@ -3,11 +3,11 @@ import { IProduct } from "@/interface/IProduct";
 import { del, get, post, put, getSingle } from "@/services/ProductService";
 
 export interface IProductContextType {
-  productList: () => Promise<IProduct[]>;
+  productList: () => Promise<IProduct[]|undefined>;
   create: (product: IProduct) => void;
-  update: (id: number, product:IProduct) => Promise<IProduct>;
-  remove: (id: number) => Promise<number>;
-  getById: (id: number) => Promise<IProduct>;
+  update: (id: number, product:IProduct) => Promise<IProduct|undefined>;
+  remove: (id: number) => Promise<number|undefined>;
+  getById: (id: number) => Promise<IProduct|undefined>;
 };
 
 export const ProductContext = React.createContext<IProductContextType>({} as IProductContextType,);
@@ -51,7 +51,7 @@ const ProductProvider: React.FC<React.PropsWithChildren<Props>> = ({ children })
       console.log('Update product context =', id);
       const result = await del(id);
       console.log('result create product context =', result);
-      //return result;
+      return id;
     }, 
     []
   );

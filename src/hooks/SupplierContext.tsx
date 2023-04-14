@@ -3,11 +3,11 @@ import { ISupplier } from "@/interface/ISupplier";
 import { del, get, post, put, getSingle } from "@/services/SupplierService";
 
 export interface ISupplierContextType {
-  supplierList: () => Promise<ISupplier[]>;
+  supplierList: () => Promise<ISupplier[]|undefined>;
   create: (supplier: ISupplier) => void;
-  update: (id: number, supplier:ISupplier) => Promise<ISupplier>;
-  remove: (id: number) => Promise<number>;
-  getById: (id: number) => Promise<ISupplier>;
+  update: (id: number, supplier:ISupplier) => Promise<ISupplier|undefined>;
+  remove: (id: number) => Promise<number|undefined>;
+  getById: (id: number) => Promise<ISupplier|undefined>;
 };
 
 export const SupplierContext = React.createContext<ISupplierContextType>({} as ISupplierContextType,);
@@ -51,7 +51,7 @@ const SupplierProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }
       console.log('Update supplier context =', id);
       const result = await del(id);
       console.log('result create supplier context =', result);
-      //return result;
+      return id;
     }, 
     []
   );

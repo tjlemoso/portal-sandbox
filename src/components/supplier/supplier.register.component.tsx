@@ -78,7 +78,9 @@ export default function SupplierRegisterFormComponent() {
     async function validation() {
       if (query.id) {
         const result = await getById(Number(query.id));
-        setSupplier(result);
+        if(result){
+          setSupplier(result);
+        }
       }
     };
     validation();

@@ -172,11 +172,13 @@ export default function DeliveryRegisterFormComponent() {
     async function validation() {
       if (query.id) {
         const result = await getById(Number(query.id));
-        setDelivery(result);
-        setSelectValueClient(result.clientId);
-        setSelectValueProduct(result.productId);
-        setSelectValueSupplier(result.supplierId);
-        setSelectValueWarehouse(result.warehouseId);
+        if(result){
+          setDelivery(result);
+          setSelectValueClient(result.clientId);
+          setSelectValueProduct(result.productId);
+          setSelectValueSupplier(result.supplierId);
+          setSelectValueWarehouse(result.warehouseId);
+        }
       }
     };
     validation();

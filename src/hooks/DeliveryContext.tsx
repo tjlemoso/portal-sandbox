@@ -3,11 +3,11 @@ import { IDelivery } from "@/interface/IDelivery";
 import { del, get, post, put, getSingle } from "@/services/DeliveryService";
 
 export interface IDeliveryContextType {
-  deliveryList: () => Promise<IDelivery[]>;
+  deliveryList: () => Promise<IDelivery[]|undefined>;
   create: (delivery: IDelivery) => void;
-  update: (id: number, delivery:IDelivery) => Promise<IDelivery>;
-  remove: (id: number) => Promise<number>;
-  getById: (id: number) => Promise<IDelivery>;
+  update: (id: number, delivery:IDelivery) => Promise<IDelivery|undefined>;
+  remove: (id: number) => Promise<number|undefined>;
+  getById: (id: number) => Promise<IDelivery|undefined>;
 };
 
 export const DeliveryContext = React.createContext<IDeliveryContextType>({} as IDeliveryContextType,);
@@ -51,7 +51,7 @@ const DeliveryProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }
       console.log('Update delivery context =', id);
       const result = await del(id);
       console.log('result create delivery context =', result);
-      //return result;
+      return id;
     }, 
     []
   );

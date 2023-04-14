@@ -82,8 +82,10 @@ export default function WarehouseRegisterFormComponent() {
     async function validation() {
       if (query.id) {
         const result = await getById(Number(query.id));
-        setWarehouse(result);
-        setSelectValue(result.supplierId);
+        if(result){
+          setWarehouse(result);
+          setSelectValue(result.supplierId);
+        }
       }
     };
     validation();

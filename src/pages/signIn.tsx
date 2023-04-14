@@ -36,9 +36,11 @@ export default function SignIn() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();    
     const formData = new FormData(event.currentTarget);
-
+      
     const data: ILoginType = {
+      // @ts-ignore
       email: formData.get('email')?.toString(),
+      // @ts-ignore
       password: formData.get('password')?.toString(),
     };
     setAthentication(true);
@@ -46,7 +48,7 @@ export default function SignIn() {
     setAthentication(false);
     console.log("result",result)
 
-    if (result.authenticated) {      
+    if (result && result.authenticated) {      
        
       router.push('/');      
 

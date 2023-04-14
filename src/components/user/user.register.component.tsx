@@ -89,7 +89,9 @@ export default function UserRegisterFormComponent() {
     async function validation() {
       if (query.id) {
         const result = await getById(Number(query.id));
-        setUser(result);
+        if(result){
+          setUser(result);
+        }
       }
     };
     validation();

@@ -4,11 +4,11 @@ import { del, get, post, put, getSingle, makeLogin } from "@/services/UserServic
 import { setCookie, parseCookies } from 'nookies'
 
 export interface IUserContextType {
-  userList: () => Promise<IUser[]>;
+  userList: () => Promise<IUser[]|undefined>;
   create: (user: IUser) => void;
-  update: (id: number, user:IUser) => Promise<IUser>;
-  remove: (id: number) => Promise<number>;
-  getById: (id: number) => Promise<IUser>;
+  update: (id: number, user:IUser) => Promise<IUser|undefined>;
+  remove: (id: number) => Promise<number|undefined>;
+  getById: (id: number) => Promise<IUser|undefined>;
 };
 
 
@@ -53,7 +53,7 @@ const UserProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) =>
       console.log('Update user context =', id);
       const result = await del(id);
       console.log('result create user context =', result);
-      //return result;
+      return id;
     }, 
     []
   );

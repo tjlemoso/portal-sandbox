@@ -118,7 +118,6 @@ function PricingContent() {
               <Card>
                 <CardHeader
                   title={tier.title}
-                  subheader={tier.subheader}
                   titleTypographyProps={{ align: 'center' }}
                   action={tier.title ===  null}
                   subheaderTypographyProps={{

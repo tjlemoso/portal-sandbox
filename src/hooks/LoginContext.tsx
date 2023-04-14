@@ -6,9 +6,9 @@ import { authenticate } from '@/services/LoginService';
 import { IUser } from '@/interface/IUser';
 
 export interface ILoginContextType {
-  login: (email: string, password: string) => Promise<ILogin>;
+  login: (email: string, password: string) => Promise<ILogin|undefined>;
   logout(): void;
-  userLogin: ILogin;
+  userLogin: ILogin| null;
 };
 
 interface AuthState {
@@ -25,8 +25,6 @@ const LoginProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) =
 
   const [userLogin, setLogin] = React.useState<ILogin | null>(null);
 
-  const IsAutheticated = !!userLogin;
-
   const [data, setData] =  React.useState<AuthState>(
     () =>
 
@@ -41,9 +39,11 @@ const LoginProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) =
 
       const result = await authenticate(name, password);      
 
-      setCookie(undefined, 'token', result?.token, {
-        maxAge: 60 * 60 * 1, //1 hour
-      })
+      if( result?.token){
+        setCookie(undefined, 'token', result?.token, {
+          maxAge: 60 * 60 * 1, //1 hour
+        })
+      }
 
       setCookie(undefined, 'isAdmin', result?.user.isAdmin ? "yes" : "no", {
         maxAge: 60 * 60 * 1, //1 hour
@@ -56,7 +56,7 @@ const LoginProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) =
         return result;
       }
 
-      return null;
+      return result;
 
     }, 
     []
@@ -75,7 +75,6 @@ const LoginProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) =
       value={{ 
         login,
         logout,
-        IsAutheticated,
         userLogin }}>
       {children}
     </LoginContext.Provider>

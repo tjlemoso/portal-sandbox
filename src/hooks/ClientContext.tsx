@@ -3,11 +3,11 @@ import { IClient } from "@/interface/IClient";
 import { del, get, post, put, getSingle } from "@/services/ClientService";
 
 export interface IClientContextType {
-  clientList: () => Promise<IClient[]>;
+  clientList: () => Promise<IClient[]|undefined>;
   create: (client: IClient) => void;
-  update: (id: number, client:IClient) => Promise<IClient>;
-  remove: (id: number) => Promise<number>;
-  getById: (id: number) => Promise<IClient>;
+  update: (id: number, client:IClient) => Promise<IClient|undefined>;
+  remove: (id: number) => Promise<number|undefined>;
+  getById: (id: number) => Promise<IClient|undefined>;
 };
 
 export const ClientContext = React.createContext<IClientContextType>({} as IClientContextType,);
@@ -51,7 +51,7 @@ const ClientProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) 
       console.log('Update client context =', id);
       const result = await del(id);
       console.log('result create client context =', result);
-      //return result;
+      return id;
     }, 
     []
   );

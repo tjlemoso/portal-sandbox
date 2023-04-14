@@ -42,9 +42,6 @@ function Row(props: { row: IDelivery }) {
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-        <TableCell component="th" scope="row">
-          {row.name}
-        </TableCell>
         <TableCell align="left">{row.trackingCode}</TableCell>
         <TableCell align="left">{row.status}</TableCell>
         <TableCell align="left">
@@ -77,7 +74,7 @@ const DeliveryTable: React.FunctionComponent<IProps> = props => {
               props.deliverys && props.deliverys.length > 0 ? 
                 (
                   props.deliverys.map((row) => (
-                    <Row key={row.name} row={row} />
+                    <Row key={row.deliveryId} row={row} />
                   ))
                 ):
                 (

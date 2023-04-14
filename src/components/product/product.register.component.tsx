@@ -81,9 +81,11 @@ export default function ProductRegisterFormComponent() {
     async function validation() {
       if (query.id) {
         const result = await getById(Number(query.id));
-        setProduct(result);
-        setSelectValueSupplier(result.supplierId);
-        setSelectValueWarehouse(result.warehouseId);
+        if(result){
+          setProduct(result);
+          setSelectValueSupplier(result.supplierId);
+          setSelectValueWarehouse(result.warehouseId);
+        }
       }
     };
     validation();

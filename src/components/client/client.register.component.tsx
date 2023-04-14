@@ -72,7 +72,8 @@ export default function ClientRegisterFormComponent() {
     async function validation() {
       if (query.id) {
         const result = await getById(Number(query.id));
-        setClient(result);
+        if(result)
+          setClient(result);
       }
     };
     validation();

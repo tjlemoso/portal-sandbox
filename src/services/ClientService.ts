@@ -2,7 +2,7 @@ import { IClient } from './../interface/IClient';
 import axiosInstance from '../config/axios/axiosInstance';
 import { LINK_CLIENT_SERVICE } from '@/config/constants';
 
-export async function get() {
+export async function get(){
   try {
     const response = await axiosInstance.get<IClient[]>(`${LINK_CLIENT_SERVICE}/client`);
     console.log('response', response.data);

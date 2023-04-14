@@ -1,0 +1,13 @@
+env: standard
+runtime: nodejs18
+instance_class: F4
+service: portal
+inbound_services:
+- warmup
+automatic_scaling:
+    min_idle_instances: 1
+    min_instances: 1
+handlers:
+  - url: /.*
+    secure: always
+    script: auto

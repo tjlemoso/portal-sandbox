@@ -7,41 +7,20 @@ import React, { useCallback, useEffect, useState } from "react";
 import router from 'next/router';
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
+import { get } from '../services/ClientService';
 
-const ClientPage: React.FC = () => {
+interface Props {
+  clients: IClient[];
+}
 
-  const [result, setResult] = useState<IClient[]>();
-  const [openLoadding, setOpenLoadding] = React.useState(true);
+const ClientPage: React.FC<Props> = (props:Props) => {
 
   const handleSubmit = async () => {
     router.push('/client/register');
-  };
-  
-  const { clientList } = useClient();
-
-  const getClientList = useCallback(
-    async () => {       
-      const result1 = await clientList();      
-      setResult(result1); 
-      setOpenLoadding(false);
-    },
-    [clientList],
-  );
-
-  useEffect(() => {
-    getClientList();
-  }, 
-  [getClientList]
-  );
+  };  
 
   return(
     <React.Fragment>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={openLoadding}
-        >
-        <CircularProgress color="inherit" />
-      </Backdrop>
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 6 }}>
         <Typography
           component="h1"
@@ -61,7 +40,7 @@ const ClientPage: React.FC = () => {
         </button>   
       </Container>     
       <ClientTable
-        clients={result}
+        clients={props.clients}
       />    
     </React.Fragment>    
   );
@@ -70,9 +49,8 @@ const ClientPage: React.FC = () => {
 export default ClientPage;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-
+  
   const { ['token']: token } = parseCookies(ctx);
-
   if (!token) {
     return {
       redirect: {
@@ -81,9 +59,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     }
   }
+
+  const clients = await get();      
   return {
     props: {
-
+      clients
     }
   }
+
 }

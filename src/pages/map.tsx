@@ -94,6 +94,7 @@ const MapPage = () => {
       };
     }, [origin, destination]);
 
+      // @ts-ignore
   const directionsCallback = React.useCallback((res) => {
     if (res !== null && res.status === "OK") {
       console.log("\n\n\n\n\n"+JSON.stringify(res));
