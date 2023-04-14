@@ -1,47 +1,25 @@
 import ProductTable from "@/components/product/product.table.component";
-import { useProduct } from "@/hooks/ProductContext";
 import { IProduct } from "@/interface/IProduct";
-import { Backdrop, CircularProgress, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import router from 'next/router';
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
+import { getProducts } from "@/services/ProductService";
 
-const ProductPage: React.FC = () => {
+interface Props {
+  products: IProduct[];
+}
 
-  const [result, setResult] = useState<IProduct[]>();
+const ProductPage: React.FC<Props> = (props:Props) => {
 
   const handleSubmit = async () => {
     router.push('/product/register');
   };
   
-  const { productList } = useProduct();
-
-  const [openLoadding, setOpenLoadding] = React.useState(true);
-  const getProductList = useCallback(
-    async () => {       
-      const result1 = await productList();      
-      setResult(result1);    
-      setOpenLoadding(false);       
-    },
-    [productList],
-  );
-
-  useEffect(() => {
-    getProductList();
-  }, 
-  [getProductList]
-  );
-
   return(
-    <React.Fragment>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={openLoadding}
-        >
-        <CircularProgress color="inherit" />
-      </Backdrop>        
+    <React.Fragment>        
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 6 }}>
         <Typography
           component="h1"
@@ -61,7 +39,7 @@ const ProductPage: React.FC = () => {
         </button>   
       </Container>     
       <ProductTable
-        products={result}
+        products={props.products}
       />    
     </React.Fragment>    
   );
@@ -70,8 +48,8 @@ const ProductPage: React.FC = () => {
 export default ProductPage;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { ['token']: token } = parseCookies(ctx);
 
+  const { ['token']: token } = parseCookies(ctx);
 
   if (!token) {
     return {
@@ -81,9 +59,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     }
   }
+
+  const products = await getProducts();
   return {
     props: {
-
+      products
     }
   }
 }

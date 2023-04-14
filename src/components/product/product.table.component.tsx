@@ -1,22 +1,15 @@
 import React from "react";
 import { IProduct } from "../../interface/IProduct";
 import Container from '@mui/material/Container';
-import { useProduct } from "@/hooks/ProductContext";
 import router from "next/router";
 import { Paper } from "@mui/material";
-
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { deleteProduct } from "@/services/ProductService";
 
 interface IProps {
   products: IProduct[] | undefined;
@@ -24,8 +17,6 @@ interface IProps {
 
 function Row(props: { row: IProduct }) {
   const { row } = props;
-  const [open, setOpen] = React.useState(false);
-  const { remove } = useProduct();
 
   const handleEdit = async (id : number) => {
     router.push(`/product/register?id=${id}`);
@@ -34,10 +25,10 @@ function Row(props: { row: IProduct }) {
   const handleDelete= React.useCallback( 
     async (id : number) => {
       console.log("id", id);
-      await remove(id);
+      await deleteProduct(id);
       router.reload();
     },
-    [remove],
+    [],
   );
 
   return (

@@ -1,6 +1,5 @@
 import React from 'react';
 import { LoginProvider } from './LoginContext';
-import { ProductProvider } from './ProductContext';
 import { SupplierProvider } from './SupplierContext';
 import { UserProvider } from './UserContext';
 import { WarehouseProvider } from './WarehouseContext';
@@ -14,9 +13,7 @@ const AppProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) => 
     <UserProvider>
       <SupplierProvider>
           <WarehouseProvider>
-            <ProductProvider>
                 {children}
-            </ProductProvider>
           </WarehouseProvider>
       </SupplierProvider>
     </UserProvider>

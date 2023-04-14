@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import { Form } from "@unform/web";
-import { FormHandles, SubmitHandler } from "@unform/core";
+import { FormHandles } from "@unform/core";
 import Input from '../Input';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -15,11 +15,11 @@ import { IWarehouse } from '@/interface/IWarehouse';
 import { useWarehouse } from '@/hooks/WarehouseContext';
 import { IProduct } from '@/interface/IProduct';
 import { ICustomer } from '@/interface/ICustomer';
-import { useProduct } from '@/hooks/ProductContext';
 import Map from '../Map';
 import { processManualLocation } from '@/services/MapService';
 import { getCustomers } from '@/services/CustomerService';
 import { createDelivery, getDeliveryById, updateDelivery } from '@/services/DeliveryService';
+import { getProducts } from '@/services/ProductService';
 
 
 export default function DeliveryRegister() {
@@ -28,7 +28,7 @@ export default function DeliveryRegister() {
   const { query } = useRouter();
   const { warehouseList } = useWarehouse();
   const { supplierList } = useSupplier();
-  const { productList } = useProduct();
+
 
   const [delivery, setDelivery] = React.useState<IDelivery>({} as 
     {
@@ -150,11 +150,11 @@ export default function DeliveryRegister() {
 
   const getProductList = React.useCallback(
     async () => {       
-      const result1 = await productList();  
+      const result1 = await getProducts();  
       console.log("productList mock", result1)    
       setProduct(result1);       
     },
-    [productList],
+    [],
   );
 
   const getCustomerList = React.useCallback(

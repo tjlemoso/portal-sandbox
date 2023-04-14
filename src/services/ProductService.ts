@@ -2,7 +2,7 @@ import { IProduct } from './../interface/IProduct';
 import axiosInstance from '../config/axios/axiosInstance';
 import { LINK_PRODUCT_SERVICE } from '@/config/constants';
 
-export async function get() {
+export async function getProducts() {
   try {
     const response = await axiosInstance.get<IProduct[]>(`${LINK_PRODUCT_SERVICE}/product`);
     console.log('response', response.data);
@@ -13,7 +13,7 @@ export async function get() {
   }
 }
 
-export async function getSingle(id: number) {
+export async function getSProductById(id: number) {
   try {
     const response = await axiosInstance.get<IProduct>(`${LINK_PRODUCT_SERVICE}/product/${id}`);
     console.log('response', response.data);
@@ -23,7 +23,7 @@ export async function getSingle(id: number) {
   }
 }
 
-export async function post(product: IProduct) {
+export async function createProduct(product: IProduct) {
   try {
     const response = await axiosInstance.post<IProduct>(`${LINK_PRODUCT_SERVICE}/product`,{...product});
     console.log('response', response.data);
@@ -33,7 +33,7 @@ export async function post(product: IProduct) {
   }
 }
 
-export async function put(id: number, product: IProduct) {
+export async function updateProduct(id: number, product: IProduct) {
   try {
     const response = await axiosInstance.put<IProduct>(`${LINK_PRODUCT_SERVICE}/product/${id}`,{...product});
     console.log('response', response.data);
@@ -43,7 +43,7 @@ export async function put(id: number, product: IProduct) {
   }
 }
 
-export async function del (id: number) {
+export async function deleteProduct (id: number) {
   try {
     const response = await axiosInstance.delete(`${LINK_PRODUCT_SERVICE}/product/${id}`);
     console.log('response', response.data);

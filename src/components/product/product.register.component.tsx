@@ -1,25 +1,23 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import { Form } from "@unform/web";
-import { FormHandles, SubmitHandler } from "@unform/core";
+import { FormHandles } from "@unform/core";
 import Input from '../Input';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import router, { useRouter } from 'next/router';
-import { useProduct } from '@/hooks/ProductContext';
 import { IProduct } from '@/interface/IProduct';
-import { useSnackbar } from '@mui/base';
 import { Backdrop, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material';
 import { ISupplier } from '@/interface/ISupplier';
 import { useSupplier } from '@/hooks/SupplierContext';
 import { IWarehouse } from '@/interface/IWarehouse';
 import { useWarehouse } from '@/hooks/WarehouseContext';
+import { createProduct, getSProductById, updateProduct } from '@/services/ProductService';
 
 export default function ProductRegister() {
 
   const formRef = React.useRef<FormHandles>(null); 
-  const { create, getById, update } = useProduct();
   const { query } = useRouter();
   const [product, setProduct] = React.useState<IProduct>({} as 
     {
@@ -42,7 +40,7 @@ export default function ProductRegister() {
     async (data: IProduct) => {
       setOpenLoadding(true);
       if (query.id) {
-        await update(Number(product.productId),
+        await updateProduct(Number(product.productId),
           {
             productId: product.productId,
             name: data.name,
@@ -54,7 +52,7 @@ export default function ProductRegister() {
         );
       } else {   
         
-        await create(
+        await createProduct(
           {
             ...data, 
             warehouseId: selectValueWarehouse,
@@ -64,7 +62,7 @@ export default function ProductRegister() {
       setOpenLoadding(false);
       setOpen(true);
     },
-    [create, query.id, product, update, selectValueWarehouse, selectValueSupplier ],
+    [query.id, product, selectValueWarehouse, selectValueSupplier],
   );
 
   const handleBack = async () => {
@@ -80,7 +78,7 @@ export default function ProductRegister() {
   React.useEffect(() => {
     async function validation() {
       if (query.id) {
-        const result = await getById(Number(query.id));
+        const result = await getSProductById(Number(query.id));
         if(result){
           setProduct(result);
           setSelectValueSupplier(result.supplierId);
@@ -89,7 +87,7 @@ export default function ProductRegister() {
       }
     };
     validation();
-  }, [query, getById, setProduct]);
+  }, [query, setProduct]);
 
   const { warehouseList } = useWarehouse();
 
