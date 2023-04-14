@@ -7,17 +7,14 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import router, { useRouter } from 'next/router';
-import { useUser } from '@/hooks/UserContext';
 import { IUser } from '@/interface/IUser';
 import {Backdrop, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material';
-
-
+import { createUser, getUserById, updateUser } from '@/services/UserService';
 
 
 export default function UserRegister() {
 
   const formRef = React.useRef<FormHandles>(null); 
-  const { create, getById, update } = useUser();
   const { query } = useRouter();
   const [user, setUser] = React.useState<IUser>({} as 
     {
@@ -53,7 +50,7 @@ export default function UserRegister() {
 
       setOpenLoadding(true);
       if (query.id) {
-        await update(Number(user.userId),
+        await updateUser(Number(user.userId),
           {
             userId: user.userId,
             name: data.name,
@@ -63,7 +60,7 @@ export default function UserRegister() {
         );
       } else {   
         
-        await create(
+        await createUser(
           {
             ...data,
             isAdmin: selectUser === 1 ? true : false,
@@ -72,7 +69,7 @@ export default function UserRegister() {
       setOpenLoadding(false);
       setOpen(true);
     },
-    [selectUser, query.id, update, user.userId, create],
+    [selectUser, query.id, user.userId],
   );
 
   const handleClose = () => {
@@ -88,14 +85,14 @@ export default function UserRegister() {
   React.useEffect(() => {
     async function validation() {
       if (query.id) {
-        const result = await getById(Number(query.id));
+        const result = await getUserById(Number(query.id));
         if(result){
           setUser(result);
         }
       }
     };
     validation();
-  }, [query, getById, setUser]);
+  }, [query, setUser]);
 
 
   return (

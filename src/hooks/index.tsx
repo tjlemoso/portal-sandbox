@@ -1,6 +1,5 @@
 import React from 'react';
 import { LoginProvider } from './LoginContext';
-import { UserProvider } from './UserContext';
 
 interface Props {
   children: React.ReactNode;
@@ -8,11 +7,7 @@ interface Props {
 
 const AppProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) => (
   <LoginProvider>
-    <UserProvider>
-
-                {children}
-
-    </UserProvider>
+    {children}
   </LoginProvider>
 );
 

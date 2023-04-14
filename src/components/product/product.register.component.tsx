@@ -11,9 +11,9 @@ import { IProduct } from '@/interface/IProduct';
 import { Backdrop, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material';
 import { ISupplier } from '@/interface/ISupplier';
 import { IWarehouse } from '@/interface/IWarehouse';
-import { useWarehouse } from '@/hooks/WarehouseContext';
 import { createProduct, getSProductById, updateProduct } from '@/services/ProductService';
 import { getSuppliers } from '@/services/SupplierService';
+import { getWarehouses } from '@/services/WarehouseService';
 
 export default function ProductRegister() {
 
@@ -89,15 +89,14 @@ export default function ProductRegister() {
     validation();
   }, [query, setProduct]);
 
-  const { warehouseList } = useWarehouse();
 
   const getWarehouseList = React.useCallback(
     async () => {       
-      const result1 = await warehouseList();  
+      const result1 = await getWarehouses();  
       console.log("warehouse mock", result1)    
       setWarehouses(result1);       
     },
-    [warehouseList],
+    [],
   );
 
 
