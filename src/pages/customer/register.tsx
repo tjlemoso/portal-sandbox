@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { Container } from '@mui/system';
-import ClientRegisterFormComponent from '@/components/client/client.register.component';
+import CustomerRegister from '@/components/customer/customer.register.component';
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
 
-export default function AddressForm() {
+export default function Customer() {
 
   return (
     <React.Fragment>
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 6 }}>
-        <ClientRegisterFormComponent />
+        <CustomerRegister />
       </Container>
     </React.Fragment>
   );

@@ -1,10 +1,10 @@
-import { IClient } from './../interface/IClient';
+import { ICustomer } from '../interface/ICustomer';
 import axiosInstance from '../config/axios/axiosInstance';
 import { LINK_CLIENT_SERVICE } from '@/config/constants';
 
-export async function get(){
+export async function getCustomers(){
   try {
-    const response = await axiosInstance.get<IClient[]>(`${LINK_CLIENT_SERVICE}/client`);
+    const response = await axiosInstance.get<ICustomer[]>(`${LINK_CLIENT_SERVICE}/client`);
     console.log('response', response.data);
     return response.data;
   } catch(err) {
@@ -12,9 +12,9 @@ export async function get(){
   }
 }
 
-export async function getSingle(id: number) {
+export async function getCustomerById(id: number) {
   try {
-    const response = await axiosInstance.get<IClient>(`${LINK_CLIENT_SERVICE}/client/${id}`);
+    const response = await axiosInstance.get<ICustomer>(`${LINK_CLIENT_SERVICE}/client/${id}`);
     console.log('response', response.data);
     return response.data;
   } catch(err) {
@@ -22,9 +22,9 @@ export async function getSingle(id: number) {
   }
 }
 
-export async function post(client: IClient) {
+export async function createCustomer(client: ICustomer) {
   try {
-    const response = await axiosInstance.post<IClient>(`${LINK_CLIENT_SERVICE}/client`,{...client});
+    const response = await axiosInstance.post<ICustomer>(`${LINK_CLIENT_SERVICE}/client`,{...client});
     console.log('response', response.data);
     return response.data;
   } catch(err) {
@@ -32,9 +32,9 @@ export async function post(client: IClient) {
   }
 }
 
-export async function put(id: number, client: IClient) {
+export async function updateCustomer(id: number, client: ICustomer) {
   try {
-    const response = await axiosInstance.put<IClient>(`${LINK_CLIENT_SERVICE}/client/${id}`,{...client});
+    const response = await axiosInstance.put<ICustomer>(`${LINK_CLIENT_SERVICE}/client/${id}`,{...client});
     console.log('response', response.data);
     return response.data;
   } catch(err) {
@@ -42,7 +42,7 @@ export async function put(id: number, client: IClient) {
   }
 }
 
-export async function del (id: number) {
+export async function deleteCustomer (id: number) {
   try {
     const response = await axiosInstance.delete(`${LINK_CLIENT_SERVICE}/client/${id}`);
     console.log('response', response.data);

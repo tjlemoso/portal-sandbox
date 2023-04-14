@@ -15,14 +15,14 @@ import { useSupplier } from '@/hooks/SupplierContext';
 import { IWarehouse } from '@/interface/IWarehouse';
 import { useWarehouse } from '@/hooks/WarehouseContext';
 import { IProduct } from '@/interface/IProduct';
-import { IClient } from '@/interface/IClient';
+import { ICustomer } from '@/interface/ICustomer';
 import { useProduct } from '@/hooks/ProductContext';
-import { useClient } from '@/hooks/ClientContext';
+import { useCustomer } from '@/hooks/CustomerContext';
 import Map from '../Map';
 import { processManualLocation } from '@/services/MapService';
 
 
-export default function DeliveryRegisterFormComponent() {
+export default function DeliveryRegister() {
 
   const formRef = React.useRef<FormHandles>(null); 
   const { create, getById, update } = useDelivery();
@@ -30,7 +30,7 @@ export default function DeliveryRegisterFormComponent() {
   const { warehouseList } = useWarehouse();
   const { supplierList } = useSupplier();
   const { productList } = useProduct();
-  const { clientList } = useClient();
+  const { clientList } = useCustomer();
 
   const [delivery, setDelivery] = React.useState<IDelivery>({} as 
     {
@@ -54,8 +54,8 @@ export default function DeliveryRegisterFormComponent() {
   const [selectValueProduct, setSelectValueProduct] = React.useState(1);
   const [products, setProduct] = React.useState<IProduct[]>(); 
 
-  const [selectValueClient, setSelectValueClient] = React.useState(1);
-  const [clients, setClient] = React.useState<IClient[]>(); 
+  const [selectValueCustomer, setSelectValueCustomer] = React.useState(1);
+  const [clients, setCustomer] = React.useState<ICustomer[]>(); 
 
   const [addressOrigin, setAddressOrigin] = React.useState<google.maps.LatLngLiteral>();
   const [addressDestiny, setAddressDestiny] = React.useState<google.maps.LatLngLiteral>();
@@ -73,7 +73,7 @@ export default function DeliveryRegisterFormComponent() {
             quantity: data.quantity,
             trackingCode: data.trackingCode,
             status: data.status,
-            clientId: selectValueClient,
+            clientId: selectValueCustomer,
             warehouseId: selectValueWarehouse,
             productId: selectValueProduct,
             supplierId: selectValueSupplier,
@@ -84,7 +84,7 @@ export default function DeliveryRegisterFormComponent() {
         await create(
           {
             ...data, 
-            clientId: selectValueClient,
+            clientId: selectValueCustomer,
             warehouseId: selectValueWarehouse,
             productId: selectValueProduct,
             supplierId: selectValueSupplier,
@@ -95,7 +95,7 @@ export default function DeliveryRegisterFormComponent() {
       setOpen(true);
 
     },
-    [create, query.id, delivery, update, selectValueWarehouse, selectValueSupplier, selectValueClient, selectValueProduct ],
+    [create, query.id, delivery, update, selectValueWarehouse, selectValueSupplier, selectValueCustomer, selectValueProduct ],
   );
 
   const handleClose = () => {
@@ -103,8 +103,8 @@ export default function DeliveryRegisterFormComponent() {
     router.push('/delivery');
   };
 
-  const handleGetLocationClient = async (clientId: number) => {
-    setSelectValueClient(clientId);
+  const handleGetLocationCustomer = async (clientId: number) => {
+    setSelectValueCustomer(clientId);
 
     const client = clients?.find(c => c.clientId === clientId);
     const clientAddress = await processManualLocation(`${client?.address}${client?.address2}${client?.city}${client?.state}${client?.country}${client?.zip}`);
@@ -159,11 +159,11 @@ export default function DeliveryRegisterFormComponent() {
     [productList],
   );
 
-  const getClientList = React.useCallback(
+  const getCustomerList = React.useCallback(
     async () => {       
       const result1 = await clientList();  
       console.log("clientList mock", result1)    
-      setClient(result1);       
+      setCustomer(result1);       
     },
     [clientList],
   );
@@ -174,7 +174,7 @@ export default function DeliveryRegisterFormComponent() {
         const result = await getById(Number(query.id));
         if(result){
           setDelivery(result);
-          setSelectValueClient(result.clientId);
+          setSelectValueCustomer(result.clientId);
           setSelectValueProduct(result.productId);
           setSelectValueSupplier(result.supplierId);
           setSelectValueWarehouse(result.warehouseId);
@@ -185,13 +185,13 @@ export default function DeliveryRegisterFormComponent() {
     getSupplierList();
     getWarehouseList();
     getProductList();
-    getClientList();
+    getCustomerList();
   }, 
   [
     getSupplierList, 
     getWarehouseList,
     getProductList, 
-    getClientList,
+    getCustomerList,
     query, 
     getById, 
     setDelivery]
@@ -257,8 +257,8 @@ export default function DeliveryRegisterFormComponent() {
             </Grid>
 
             <Grid item xs={12} style={{display: 'grid'}}>
-              <label>Client</label>
-              <select value={selectValueClient} onChange={e => handleGetLocationClient(Number(e.target.value))}>
+              <label>Customer</label>
+              <select value={selectValueCustomer} onChange={e => handleGetLocationCustomer(Number(e.target.value))}>
               {
                 clients && clients.length > 0 ? 
                   (

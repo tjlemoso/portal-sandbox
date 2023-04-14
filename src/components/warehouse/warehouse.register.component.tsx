@@ -14,7 +14,7 @@ import { Backdrop, CircularProgress, Dialog, DialogActions, DialogContent, Dialo
 import { ISupplier } from '@/interface/ISupplier';
 import { useSupplier } from '@/hooks/SupplierContext';
 
-export default function WarehouseRegisterFormComponent() {
+export default function WarehouseRegister() {
 
   const formRef = React.useRef<FormHandles>(null); 
   const { create, getById, update } = useWarehouse();

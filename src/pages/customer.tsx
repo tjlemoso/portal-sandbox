@@ -1,22 +1,21 @@
-import ClientTable from "@/components/client/client.table.component";
-import { useClient } from "@/hooks/ClientContext";
-import { IClient } from "@/interface/IClient";
+import CustomerTable from "@/components/customer/customer.table.component";
+import { ICustomer } from "@/interface/ICustomer";
 import { Backdrop, CircularProgress, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import React, { useCallback, useEffect, useState } from "react";
 import router from 'next/router';
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
-import { get } from '../services/ClientService';
+import { getCustomers } from '../services/CustomerService';
 
 interface Props {
-  clients: IClient[];
+  customers: ICustomer[];
 }
 
-const ClientPage: React.FC<Props> = (props:Props) => {
+const CustomerPage: React.FC<Props> = (props:Props) => {
 
   const handleSubmit = async () => {
-    router.push('/client/register');
+    router.push('/customer/register');
   };  
 
   return(
@@ -29,7 +28,7 @@ const ClientPage: React.FC<Props> = (props:Props) => {
           color="text.primary"
           gutterBottom
         >
-          Clients
+          Customers
         </Typography>
       </Container>    
       <Container component="main"  sx={{ mb: 4 }}>        
@@ -39,14 +38,14 @@ const ClientPage: React.FC<Props> = (props:Props) => {
           >Add
         </button>   
       </Container>     
-      <ClientTable
-        clients={props.clients}
+      <CustomerTable
+        customers={props.customers}
       />    
     </React.Fragment>    
   );
 }
 
-export default ClientPage;
+export default CustomerPage;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   
@@ -60,10 +59,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
 
-  const clients = await get();      
+  const customers = await getCustomers();      
   return {
     props: {
-      clients
+      customers
     }
   }
 

@@ -7,17 +7,15 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import router, { useRouter } from 'next/router';
-import { useClient } from '@/hooks/ClientContext';
-import { IClient } from '@/interface/IClient';
-import { useSnackbar } from '@mui/base';
+import { ICustomer } from '@/interface/ICustomer';
 import { Backdrop, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material';
+import { createCustomer, getCustomerById, updateCustomer } from '@/services/CustomerService';
 
-export default function ClientRegisterFormComponent() {
+export default function CustomerRegister() {
 
   const formRef = React.useRef<FormHandles>(null); 
-  const { create, getById, update } = useClient();
   const { query } = useRouter();
-  const [client, setClient] = React.useState<IClient>({} as 
+  const [client, setCustomer] = React.useState<ICustomer>({} as 
     {
       clientId: 0;
       name: "";
@@ -34,12 +32,12 @@ export default function ClientRegisterFormComponent() {
   const [open, setOpen] = React.useState(false);
   const [openLoadding, setOpenLoadding] = React.useState(false);
   const handleSubmit= React.useCallback( 
-    async (data: IClient) => {
+    async (data: ICustomer) => {
      
       setOpenLoadding(true);
 
       if (query.id) {
-        await update(Number(client.clientId),
+        await updateCustomer(Number(client.clientId),
           {
           clientId: client.clientId,
           name: data.name,
@@ -54,34 +52,34 @@ export default function ClientRegisterFormComponent() {
         }
         );
       } else{        
-        await create({...data});
+        await createCustomer({...data});
       }
 
       setOpenLoadding(false);
       setOpen(true);
 
     },
-    [create, query.id, client.clientId, update],
+    [query.id, client.clientId],
   );
 
   const handleBack = async () => {
-    router.push('/client');
+    router.push('/customer');
   };
 
   React.useEffect(() => {
     async function validation() {
       if (query.id) {
-        const result = await getById(Number(query.id));
+        const result = await getCustomerById(Number(query.id));
         if(result)
-          setClient(result);
+          setCustomer(result);
       }
     };
     validation();
-  }, [query, getById, setClient]);
+  }, [query, setCustomer]);
 
   const handleClose = () => {
     setOpen(false);
-    router.push('/client');
+    router.push('/customer');
   };
 
   return (
@@ -124,7 +122,7 @@ export default function ClientRegisterFormComponent() {
           <Grid container spacing={3}>          
             <Grid item xs={12} style={{display: 'grid'}}>
               <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                Client
+                Customer
               </Typography>
             </Grid>
             <Grid item xs={12} style={{display: 'grid'}}>

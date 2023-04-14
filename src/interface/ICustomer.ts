@@ -1,4 +1,4 @@
-export interface IClient {
+export interface ICustomer {
   clientId: number;
   name: string;
   phone: string;

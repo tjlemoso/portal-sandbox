@@ -1,5 +1,4 @@
 import React from 'react';
-import { ClientProvider } from './ClientContext';
 import { DeliveryProvider } from './DeliveryContext';
 import { LoginProvider } from './LoginContext';
 import { ProductProvider } from './ProductContext';
@@ -15,7 +14,6 @@ const AppProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) => 
   <LoginProvider>
     <UserProvider>
       <SupplierProvider>
-        <ClientProvider>
           <WarehouseProvider>
             <ProductProvider>
               <DeliveryProvider>
@@ -23,7 +21,6 @@ const AppProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) => 
               </DeliveryProvider>
             </ProductProvider>
           </WarehouseProvider>
-        </ClientProvider> 
       </SupplierProvider>
     </UserProvider>
   </LoginProvider>

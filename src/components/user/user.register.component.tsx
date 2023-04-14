@@ -14,7 +14,7 @@ import {Backdrop, CircularProgress, Dialog, DialogActions, DialogContent, Dialog
 
 
 
-export default function UserRegisterFormComponent() {
+export default function UserRegister() {
 
   const formRef = React.useRef<FormHandles>(null); 
   const { create, getById, update } = useUser();

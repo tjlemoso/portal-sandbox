@@ -1,10 +1,8 @@
 import React from "react";
-import { IClient } from "../../interface/IClient";
+import { ICustomer } from "../../interface/ICustomer";
 import Container from '@mui/material/Container';
-import { useClient } from "@/hooks/ClientContext";
 import router from "next/router";
 import { Paper } from "@mui/material";
-
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -17,27 +15,26 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { deleteCustomer } from "@/services/CustomerService";
 
 interface IProps {
-  clients: IClient[] | undefined;
+  customers: ICustomer[] | undefined;
 }
 
-function Row(props: { row: IClient }) {
+function Row(props: { row: ICustomer }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
-  const { remove } = useClient();
 
   const handleEdit = async (id : number) => {
-    router.push(`/client/register?id=${id}`);
+    router.push(`/customer/register?id=${id}`);
   };
 
   const handleDelete= React.useCallback( 
     async (id : number) => {
-      console.log("id", id);
-      await remove(id);
+      await deleteCustomer(id);
       router.reload();
     },
-    [remove],
+    [],
   );
 
   return (
@@ -103,7 +100,7 @@ function Row(props: { row: IClient }) {
 
 
 
-const ClientTable: React.FunctionComponent<IProps> = props => {
+const CustomerTable: React.FunctionComponent<IProps> = props => {
 
   return (
     <Container component="main" >
@@ -120,15 +117,15 @@ const ClientTable: React.FunctionComponent<IProps> = props => {
           </TableHead>
           <TableBody>
             {
-              props.clients && props.clients.length > 0 ? 
+              props.customers && props.customers.length > 0 ? 
                 (
-                  props.clients.map((row) => (
+                  props.customers.map((row) => (
                     <Row key={row.name} row={row} />
                   ))
                 ):
                 (
                   <tr>
-                    <td colSpan={3}>no clients</td>
+                    <td colSpan={3}>no customers</td>
                   </tr>
                 )
             }
@@ -140,4 +137,4 @@ const ClientTable: React.FunctionComponent<IProps> = props => {
 };
 
 
-export default ClientTable;
+export default CustomerTable;

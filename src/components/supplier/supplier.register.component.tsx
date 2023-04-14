@@ -12,7 +12,7 @@ import { ISupplier } from '@/interface/ISupplier';
 import { useSnackbar } from '@mui/base';
 import { Backdrop, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material';
 
-export default function SupplierRegisterFormComponent() {
+export default function SupplierRegister() {
 
   const formRef = React.useRef<FormHandles>(null); 
   const { create, getById, update } = useSupplier();

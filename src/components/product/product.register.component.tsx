@@ -16,7 +16,7 @@ import { useSupplier } from '@/hooks/SupplierContext';
 import { IWarehouse } from '@/interface/IWarehouse';
 import { useWarehouse } from '@/hooks/WarehouseContext';
 
-export default function ProductRegisterFormComponent() {
+export default function ProductRegister() {
 
   const formRef = React.useRef<FormHandles>(null); 
   const { create, getById, update } = useProduct();

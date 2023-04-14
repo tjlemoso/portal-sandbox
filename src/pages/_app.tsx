@@ -84,10 +84,10 @@ export default function App({ Component, pageProps }: AppProps) {
             <Link
               variant="button"
               color="text.primary"
-              href="/client"
+              href="/customer"
               sx={{ my: 1, mx: 1.5 }}
             >
-              Client
+              Customer
             </Link>
             <Link
               variant="button"

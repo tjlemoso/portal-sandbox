@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Container } from '@mui/system';
-import WarehouseRegisterFormComponent from '@/components/warehouse/warehouse.register.component';
+import WarehouseRegister from '@/components/warehouse/warehouse.register.component';
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
 
@@ -9,7 +9,7 @@ export default function AddressForm() {
   return (
     <React.Fragment>
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 6 }}>
-        <WarehouseRegisterFormComponent />
+        <WarehouseRegister />
       </Container>
     </React.Fragment>
   );
