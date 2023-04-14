@@ -1,47 +1,25 @@
 import WarehouseTable from "@/components/warehouse/warehouse.table.component";
-import { useWarehouse } from "@/hooks/WarehouseContext";
 import { IWarehouse } from "@/interface/IWarehouse";
-import { Backdrop, CircularProgress, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import router from 'next/router';
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
+import { getWarehouses } from "@/services/WarehouseService";
 
-const WarehousePage: React.FC = () => {
-
-  const [result, setResult] = useState<IWarehouse[]>();
+interface Props{
+  warehouses: IWarehouse[],
+}
+const WarehousePage: React.FC<Props> = (props:Props) => {
 
   const handleSubmit = async () => {
     router.push('/warehouse/register');
   };
   
-  const { warehouseList } = useWarehouse();
-
-  const [openLoadding, setOpenLoadding] = React.useState(true);
-  const getWarehouseList = useCallback(
-    async () => {       
-      const result1 = await warehouseList();      
-      setResult(result1); 
-      setOpenLoadding(false);         
-    },
-    [warehouseList],
-  );
-
-  useEffect(() => {
-    getWarehouseList();
-  }, 
-  [getWarehouseList]
-  );
 
   return(
-    <React.Fragment>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={openLoadding}
-        >
-        <CircularProgress color="inherit" />
-      </Backdrop>       
+    <React.Fragment>    
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 6 }}>
         <Typography
           component="h1"
@@ -61,7 +39,7 @@ const WarehousePage: React.FC = () => {
         </button>   
       </Container>     
       <WarehouseTable
-        warehouses={result}
+        warehouses={props.warehouses}
       />    
     </React.Fragment>    
   );
@@ -81,9 +59,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     }
   }
+
+  const warehouses = await getWarehouses();
   return {
     props: {
-
+      warehouses
     }
   }
 }

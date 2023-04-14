@@ -1,10 +1,8 @@
 import React from "react";
 import { IWarehouse } from "../../interface/IWarehouse";
 import Container from '@mui/material/Container';
-import { useWarehouse } from "@/hooks/WarehouseContext";
 import router from "next/router";
 import { Paper } from "@mui/material";
-
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -17,6 +15,7 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { deleteWarehouse } from "@/services/WarehouseService";
 
 interface IProps {
   warehouses: IWarehouse[] | undefined;
@@ -25,7 +24,6 @@ interface IProps {
 function Row(props: { row: IWarehouse }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
-  const { remove } = useWarehouse();
 
   const handleEdit = async (id : number) => {
     router.push(`/warehouse/register?id=${id}`);
@@ -34,10 +32,10 @@ function Row(props: { row: IWarehouse }) {
   const handleDelete= React.useCallback( 
     async (id : number) => {
       console.log("id", id);
-      await remove(id);
+      await deleteWarehouse(id);
       router.reload();
     },
-    [remove],
+    [],
   );
 
   return (

@@ -1,23 +1,21 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import { Form } from "@unform/web";
-import { FormHandles, SubmitHandler } from "@unform/core";
+import { FormHandles } from "@unform/core";
 import Input from '../Input';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import router, { useRouter } from 'next/router';
-import { useWarehouse } from '@/hooks/WarehouseContext';
 import { IWarehouse } from '@/interface/IWarehouse';
-import { useSnackbar } from '@mui/base';
 import { Backdrop, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material';
 import { ISupplier } from '@/interface/ISupplier';
-import { useSupplier } from '@/hooks/SupplierContext';
+import { createWarehouse, getWarehouseById, updateWarehouse } from '@/services/WarehouseService';
+import { getSuppliers } from '@/services/SupplierService';
 
 export default function WarehouseRegister() {
 
   const formRef = React.useRef<FormHandles>(null); 
-  const { create, getById, update } = useWarehouse();
   const { query } = useRouter();
   const [warehouse, setWarehouse] = React.useState<IWarehouse>({} as 
     {
@@ -42,8 +40,9 @@ export default function WarehouseRegister() {
   const handleSubmit= React.useCallback( 
     async (data: IWarehouse) => {
       setOpenLoadding(true);
+      console.log("selectValue",selectValue)
       if (query.id) {
-        await update(Number(warehouse.warehouseId),
+        await updateWarehouse(Number(warehouse.warehouseId),
           {
           warehouseId: warehouse.warehouseId,
           name: data.name,
@@ -60,12 +59,12 @@ export default function WarehouseRegister() {
         );
       } else {   
         
-        await create({...data, supplierId: selectValue});
+        await createWarehouse({...data, supplierId: selectValue});
       }
       setOpenLoadding(false);
       setOpen(true);
     },
-    [create, query.id, warehouse.warehouseId, update, selectValue],
+    [query.id, warehouse.warehouseId, selectValue],
   );
 
   const handleBack = async () => {
@@ -81,7 +80,7 @@ export default function WarehouseRegister() {
   React.useEffect(() => {
     async function validation() {
       if (query.id) {
-        const result = await getById(Number(query.id));
+        const result = await getWarehouseById(Number(query.id));
         if(result){
           setWarehouse(result);
           setSelectValue(result.supplierId);
@@ -89,17 +88,15 @@ export default function WarehouseRegister() {
       }
     };
     validation();
-  }, [query, getById, setWarehouse]);
-
-  const { supplierList } = useSupplier();
+  }, [query, setWarehouse]);
 
   const getSupplierList = React.useCallback(
     async () => {       
-      const result1 = await supplierList();  
+      const result1 = await getSuppliers();  
       console.log("suppliers mock", result1)    
       setSuppliers(result1);       
     },
-    [supplierList],
+    [],
   );
 
   React.useEffect(() => {

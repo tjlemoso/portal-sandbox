@@ -2,7 +2,7 @@ import { IWarehouse } from './../interface/IWarehouse';
 import axiosInstance from '../config/axios/axiosInstance';
 import { LINK_WAREHOUSE_SERVICE } from '@/config/constants';
 
-export async function get() {
+export async function getWarehouses() {
   try {
     const response = await axiosInstance.get<IWarehouse[]>(`${LINK_WAREHOUSE_SERVICE}/warehouse`);
     console.log('response', response.data);
@@ -13,7 +13,7 @@ export async function get() {
   }
 }
 
-export async function getSingle(id: number) {
+export async function getWarehouseById(id: number) {
   try {
     const response = await axiosInstance.get<IWarehouse>(`${LINK_WAREHOUSE_SERVICE}/warehouse/${id}`);
     console.log('response', response.data);
@@ -23,7 +23,7 @@ export async function getSingle(id: number) {
   }
 }
 
-export async function post(warehouse: IWarehouse) {
+export async function createWarehouse(warehouse: IWarehouse) {
   try {
     const response = await axiosInstance.post<IWarehouse>(`${LINK_WAREHOUSE_SERVICE}/warehouse`,{...warehouse});
     console.log('response', response.data);
@@ -33,7 +33,7 @@ export async function post(warehouse: IWarehouse) {
   }
 }
 
-export async function put(id: number, warehouse: IWarehouse) {
+export async function updateWarehouse(id: number, warehouse: IWarehouse) {
   try {
     const response = await axiosInstance.put<IWarehouse>(`${LINK_WAREHOUSE_SERVICE}/warehouse/${id}`,{...warehouse});
     console.log('response', response.data);
@@ -43,7 +43,7 @@ export async function put(id: number, warehouse: IWarehouse) {
   }
 }
 
-export async function del (id: number) {
+export async function deleteWarehouse(id: number) {
   try {
     const response = await axiosInstance.delete(`${LINK_WAREHOUSE_SERVICE}/warehouse/${id}`);
     console.log('response', response.data);

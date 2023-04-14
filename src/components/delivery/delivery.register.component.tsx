@@ -11,7 +11,6 @@ import { IDelivery } from '@/interface/IDelivery';
 import { Backdrop, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material';
 import { ISupplier } from '@/interface/ISupplier';
 import { IWarehouse } from '@/interface/IWarehouse';
-import { useWarehouse } from '@/hooks/WarehouseContext';
 import { IProduct } from '@/interface/IProduct';
 import { ICustomer } from '@/interface/ICustomer';
 import Map from '../Map';
@@ -20,13 +19,13 @@ import { getCustomers } from '@/services/CustomerService';
 import { createDelivery, getDeliveryById, updateDelivery } from '@/services/DeliveryService';
 import { getProducts } from '@/services/ProductService';
 import { getSuppliers } from '@/services/SupplierService';
+import { getWarehouses } from '@/services/WarehouseService';
 
 
 export default function DeliveryRegister() {
 
   const formRef = React.useRef<FormHandles>(null); 
   const { query } = useRouter();
-  const { warehouseList } = useWarehouse();
 
   const [delivery, setDelivery] = React.useState<IDelivery>({} as 
     {
@@ -130,11 +129,11 @@ export default function DeliveryRegister() {
 
   const getWarehouseList = React.useCallback(
     async () => {       
-      const result1 = await warehouseList();  
+      const result1 = await getWarehouses();  
       console.log("warehouse mock", result1)    
       setWarehouses(result1);       
     },
-    [warehouseList],
+    [],
   );
 
   const getSupplierList = React.useCallback(
