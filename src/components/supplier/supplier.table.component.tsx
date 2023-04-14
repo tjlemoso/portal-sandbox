@@ -1,10 +1,8 @@
 import React from "react";
 import { ISupplier } from "../../interface/ISupplier";
 import Container from '@mui/material/Container';
-import { useSupplier } from "@/hooks/SupplierContext";
 import router from "next/router";
 import { Paper } from "@mui/material";
-
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -17,6 +15,7 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { deleteSupplier } from "@/services/SupplierService";
 
 interface IProps {
   suppliers: ISupplier[] | undefined;
@@ -25,7 +24,6 @@ interface IProps {
 function Row(props: { row: ISupplier }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
-  const { remove } = useSupplier();
 
   const handleEdit = async (id : number) => {
     router.push(`/supplier/register?id=${id}`);
@@ -34,10 +32,10 @@ function Row(props: { row: ISupplier }) {
   const handleDelete= React.useCallback( 
     async (id : number) => {
       console.log("id", id);
-      await remove(id);
+      await deleteSupplier(id);
       router.reload();
     },
-    [remove],
+    [],
   );
 
   return (

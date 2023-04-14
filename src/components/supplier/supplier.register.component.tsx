@@ -1,21 +1,19 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import { Form } from "@unform/web";
-import { FormHandles, SubmitHandler } from "@unform/core";
+import { FormHandles } from "@unform/core";
 import Input from '../Input';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import router, { useRouter } from 'next/router';
-import { useSupplier } from '@/hooks/SupplierContext';
 import { ISupplier } from '@/interface/ISupplier';
-import { useSnackbar } from '@mui/base';
 import { Backdrop, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material';
+import { createSupplier, getSupplierById, updateSupplier } from '@/services/SupplierService';
 
 export default function SupplierRegister() {
 
   const formRef = React.useRef<FormHandles>(null); 
-  const { create, getById, update } = useSupplier();
   const { query } = useRouter();
   const [supplier, setSupplier] = React.useState<ISupplier>({} as 
     {
@@ -41,7 +39,7 @@ export default function SupplierRegister() {
       setOpenLoadding(true);
 
       if (query.id) {
-        await update(Number(supplier.supplierId),
+        await updateSupplier(Number(supplier.supplierId),
           {
           supplierId: supplier.supplierId,
           name: data.name,
@@ -56,13 +54,13 @@ export default function SupplierRegister() {
         }
         );
       } else{        
-        await create({...data});
+        await createSupplier({...data});
       }
 
       setOpenLoadding(false);
       setOpen(true);
     },
-    [create, query.id, supplier.supplierId, update],
+    [query.id, supplier.supplierId],
   );
 
   const handleClose = () => {
@@ -77,14 +75,14 @@ export default function SupplierRegister() {
   React.useEffect(() => {
     async function validation() {
       if (query.id) {
-        const result = await getById(Number(query.id));
+        const result = await getSupplierById(Number(query.id));
         if(result){
           setSupplier(result);
         }
       }
     };
     validation();
-  }, [query, getById, setSupplier]);
+  }, [query, setSupplier]);
 
 
   return (

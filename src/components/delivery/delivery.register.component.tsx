@@ -10,7 +10,6 @@ import router, { useRouter } from 'next/router';
 import { IDelivery } from '@/interface/IDelivery';
 import { Backdrop, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material';
 import { ISupplier } from '@/interface/ISupplier';
-import { useSupplier } from '@/hooks/SupplierContext';
 import { IWarehouse } from '@/interface/IWarehouse';
 import { useWarehouse } from '@/hooks/WarehouseContext';
 import { IProduct } from '@/interface/IProduct';
@@ -20,6 +19,7 @@ import { processManualLocation } from '@/services/MapService';
 import { getCustomers } from '@/services/CustomerService';
 import { createDelivery, getDeliveryById, updateDelivery } from '@/services/DeliveryService';
 import { getProducts } from '@/services/ProductService';
+import { getSuppliers } from '@/services/SupplierService';
 
 
 export default function DeliveryRegister() {
@@ -27,8 +27,6 @@ export default function DeliveryRegister() {
   const formRef = React.useRef<FormHandles>(null); 
   const { query } = useRouter();
   const { warehouseList } = useWarehouse();
-  const { supplierList } = useSupplier();
-
 
   const [delivery, setDelivery] = React.useState<IDelivery>({} as 
     {
@@ -141,11 +139,11 @@ export default function DeliveryRegister() {
 
   const getSupplierList = React.useCallback(
     async () => {       
-      const result1 = await supplierList();  
+      const result1 = await getSuppliers();  
       console.log("suppliers mock", result1)    
       setSuppliers(result1);       
     },
-    [supplierList],
+    [],
   );
 
   const getProductList = React.useCallback(

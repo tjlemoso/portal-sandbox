@@ -10,10 +10,10 @@ import router, { useRouter } from 'next/router';
 import { IProduct } from '@/interface/IProduct';
 import { Backdrop, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material';
 import { ISupplier } from '@/interface/ISupplier';
-import { useSupplier } from '@/hooks/SupplierContext';
 import { IWarehouse } from '@/interface/IWarehouse';
 import { useWarehouse } from '@/hooks/WarehouseContext';
 import { createProduct, getSProductById, updateProduct } from '@/services/ProductService';
+import { getSuppliers } from '@/services/SupplierService';
 
 export default function ProductRegister() {
 
@@ -29,8 +29,8 @@ export default function ProductRegister() {
       supplierId: 0,
     }
   );
-  const [selectValueSupplier, setSelectValueSupplier] = React.useState(1);
-  const [selectValueWarehouse, setSelectValueWarehouse] = React.useState(1);
+  const [selectValueSupplier, setSelectValueSupplier] = React.useState(0);
+  const [selectValueWarehouse, setSelectValueWarehouse] = React.useState(0);
   const [suppliers, setSuppliers] = React.useState<ISupplier[]>();
   const [warehouses, setWarehouses] = React.useState<IWarehouse[]>();  
 
@@ -100,15 +100,14 @@ export default function ProductRegister() {
     [warehouseList],
   );
 
-  const { supplierList } = useSupplier();
 
   const getSupplierList = React.useCallback(
     async () => {       
-      const result1 = await supplierList();  
+      const result1 = await getSuppliers();  
       console.log("suppliers mock", result1)    
       setSuppliers(result1);       
     },
-    [supplierList],
+    [],
   );
 
   React.useEffect(() => {

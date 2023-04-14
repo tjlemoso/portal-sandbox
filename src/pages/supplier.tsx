@@ -1,47 +1,25 @@
 import SupplierTable from "@/components/supplier/supplier.table.component";
-import { useSupplier } from "@/hooks/SupplierContext";
 import { ISupplier } from "@/interface/ISupplier";
-import { Backdrop, CircularProgress, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import router from 'next/router';
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
+import { getSuppliers } from "@/services/SupplierService";
 
-const SupplierPage: React.FC = () => {
+interface Props {
+  suppliers: ISupplier[];
+}
 
-  const [result, setResult] = useState<ISupplier[]>();
+const SupplierPage: React.FC<Props> = (props:Props) => {
 
   const handleSubmit = async () => {
     router.push('/supplier/register');
   };
   
-  const { supplierList } = useSupplier();
-
-  const [openLoadding, setOpenLoadding] = React.useState(true);
-  const getSupplierList = useCallback(
-    async () => {       
-      const result1 = await supplierList();      
-      setResult(result1);
-      setOpenLoadding(false);       
-    },
-    [supplierList],
-  );
-
-  useEffect(() => {
-    getSupplierList();
-  }, 
-  [getSupplierList]
-  );
-
   return(
-    <React.Fragment>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={openLoadding}
-        >
-        <CircularProgress color="inherit" />
-      </Backdrop>      
+    <React.Fragment>     
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 6 }}>
         <Typography
           component="h1"
@@ -61,7 +39,7 @@ const SupplierPage: React.FC = () => {
         </button>   
       </Container>     
       <SupplierTable
-        suppliers={result}
+        suppliers={props.suppliers}
       />    
     </React.Fragment>    
   );
@@ -70,8 +48,8 @@ const SupplierPage: React.FC = () => {
 export default SupplierPage;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { ['token']: token } = parseCookies(ctx);
 
+  const { ['token']: token } = parseCookies(ctx);
 
   if (!token) {
     return {
@@ -81,9 +59,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     }
   }
+
+  const suppliers = await getSuppliers();
   return {
     props: {
-
+      suppliers
     }
   }
 }

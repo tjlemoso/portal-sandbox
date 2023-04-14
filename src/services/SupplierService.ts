@@ -2,7 +2,7 @@ import { ISupplier } from './../interface/ISupplier';
 import axiosInstance from '../config/axios/axiosInstance';
 import { LINK_SUPPLIER_SERVICE } from '@/config/constants';
 
-export async function get() {
+export async function getSuppliers() {
   try {
 
     const response = await axiosInstance.get<ISupplier[]>(`${LINK_SUPPLIER_SERVICE}/supplier`);
@@ -14,7 +14,7 @@ export async function get() {
   }
 }
 
-export async function getSingle(id: number) {
+export async function getSupplierById(id: number) {
   try {
     const response = await axiosInstance.get<ISupplier>(`${LINK_SUPPLIER_SERVICE}/supplier/${id}`);
     console.log('response', response.data);
@@ -24,7 +24,7 @@ export async function getSingle(id: number) {
   }
 }
 
-export async function post(supplier: ISupplier) {
+export async function createSupplier(supplier: ISupplier) {
   try {
     const response = await axiosInstance.post<ISupplier>(`${LINK_SUPPLIER_SERVICE}/supplier`,{...supplier});
     console.log('response', response.data);
@@ -34,7 +34,7 @@ export async function post(supplier: ISupplier) {
   }
 }
 
-export async function put(id: number, supplier: ISupplier) {
+export async function updateSupplier(id: number, supplier: ISupplier) {
   try {
     const response = await axiosInstance.put<ISupplier>(`${LINK_SUPPLIER_SERVICE}/supplier/${id}`,{...supplier});
     console.log('response', response.data);
@@ -44,7 +44,7 @@ export async function put(id: number, supplier: ISupplier) {
   }
 }
 
-export async function del (id: number) {
+export async function deleteSupplier (id: number) {
   try {
     const response = await axiosInstance.delete(`${LINK_SUPPLIER_SERVICE}/supplier/${id}`);
     console.log('response', response.data);
