@@ -2,7 +2,7 @@ import { IDelivery } from './../interface/IDelivery';
 import axiosInstance from '../config/axios/axiosInstance';
 import { LINK_DELIVERY_SERVICE } from '@/config/constants';
 
-export async function get() {
+export async function getDeliveries() {
   try {
     const response = await axiosInstance.get<IDelivery[]>(`${LINK_DELIVERY_SERVICE}/delivery`);
     console.log('response', response.data);
@@ -12,7 +12,7 @@ export async function get() {
   }
 }
 
-export async function getSingle(id: number) {
+export async function getDeliveryById(id: number) {
   try {
     const response = await axiosInstance.get<IDelivery>(`${LINK_DELIVERY_SERVICE}/delivery/${id}`);
     console.log('response', response.data);
@@ -22,7 +22,7 @@ export async function getSingle(id: number) {
   }
 }
 
-export async function post(delivery: IDelivery) {
+export async function createDelivery(delivery: IDelivery) {
   try {
     const response = await axiosInstance.post<IDelivery>(`${LINK_DELIVERY_SERVICE}/delivery`,{...delivery});
     console.log('response', response.data);
@@ -32,7 +32,7 @@ export async function post(delivery: IDelivery) {
   }
 }
 
-export async function put(id: number, delivery: IDelivery) {
+export async function updateDelivery(id: number, delivery: IDelivery) {
   try {
     const response = await axiosInstance.put<IDelivery>(`${LINK_DELIVERY_SERVICE}/delivery/${id}`,{...delivery});
     console.log('response', response.data);
@@ -42,7 +42,7 @@ export async function put(id: number, delivery: IDelivery) {
   }
 }
 
-export async function del (id: number) {
+export async function deleteDelivery(id: number) {
   try {
     const response = await axiosInstance.delete(`${LINK_DELIVERY_SERVICE}/delivery/${id}`);
     console.log('response', response.data);

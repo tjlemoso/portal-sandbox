@@ -1,47 +1,25 @@
 import DeliveryTable from "@/components/delivery/delivery.table.component";
-import { useDelivery } from "@/hooks/DeliveryContext";
 import { IDelivery } from "@/interface/IDelivery";
-import { Backdrop, CircularProgress, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import router from 'next/router';
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
+import { getDeliveries } from "@/services/DeliveryService";
 
-const DeliveryPage: React.FC = () => {
+interface Props {
+  deliveries: IDelivery[];
+}
 
-  const [result, setResult] = useState<IDelivery[]>();
+const DeliveryPage: React.FC<Props> = (props:Props) => {
 
   const handleSubmit = async () => {
     router.push('/delivery/register');
   };
   
-  const { deliveryList } = useDelivery();
-
-  const [openLoadding, setOpenLoadding] = React.useState(true);
-  const getDeliveryList = useCallback(
-    async () => {       
-      const result1 = await deliveryList();      
-      setResult(result1);   
-      setOpenLoadding(false);                 
-    },
-    [deliveryList],
-  );
-
-  useEffect(() => {
-    getDeliveryList();
-  }, 
-  [getDeliveryList]
-  );
-
   return(
-    <React.Fragment>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={openLoadding}
-        >
-        <CircularProgress color="inherit" />
-      </Backdrop>        
+    <React.Fragment>    
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 6 }}>
         <Typography
           component="h1"
@@ -61,7 +39,7 @@ const DeliveryPage: React.FC = () => {
         </button>   
       </Container>     
       <DeliveryTable
-        deliverys={result}
+        deliveries={props.deliveries}
       />    
     </React.Fragment>    
   );
@@ -80,9 +58,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     }
   }
+  
+  const deliveries = await getDeliveries();
   return {
     props: {
-
+      deliveries
     }
   }
 }

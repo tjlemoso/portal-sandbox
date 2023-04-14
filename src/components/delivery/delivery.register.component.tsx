@@ -7,7 +7,6 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import router, { useRouter } from 'next/router';
-import { useDelivery } from '@/hooks/DeliveryContext';
 import { IDelivery } from '@/interface/IDelivery';
 import { Backdrop, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material';
 import { ISupplier } from '@/interface/ISupplier';
@@ -17,20 +16,19 @@ import { useWarehouse } from '@/hooks/WarehouseContext';
 import { IProduct } from '@/interface/IProduct';
 import { ICustomer } from '@/interface/ICustomer';
 import { useProduct } from '@/hooks/ProductContext';
-import { useCustomer } from '@/hooks/CustomerContext';
 import Map from '../Map';
 import { processManualLocation } from '@/services/MapService';
+import { getCustomers } from '@/services/CustomerService';
+import { createDelivery, getDeliveryById, updateDelivery } from '@/services/DeliveryService';
 
 
 export default function DeliveryRegister() {
 
   const formRef = React.useRef<FormHandles>(null); 
-  const { create, getById, update } = useDelivery();
   const { query } = useRouter();
   const { warehouseList } = useWarehouse();
   const { supplierList } = useSupplier();
   const { productList } = useProduct();
-  const { clientList } = useCustomer();
 
   const [delivery, setDelivery] = React.useState<IDelivery>({} as 
     {
@@ -67,7 +65,7 @@ export default function DeliveryRegister() {
 
       setOpenLoadding(true);
       if (query.id) {
-        await update(Number(delivery.deliveryId),
+        await updateDelivery(Number(delivery.deliveryId),
           {
             deliveryId: delivery.deliveryId,
             quantity: data.quantity,
@@ -81,7 +79,7 @@ export default function DeliveryRegister() {
         );
       } else {   
         
-        await create(
+        await createDelivery(
           {
             ...data, 
             clientId: selectValueCustomer,
@@ -95,7 +93,7 @@ export default function DeliveryRegister() {
       setOpen(true);
 
     },
-    [create, query.id, delivery, update, selectValueWarehouse, selectValueSupplier, selectValueCustomer, selectValueProduct ],
+    [query.id, delivery, selectValueWarehouse, selectValueSupplier, selectValueCustomer, selectValueProduct],
   );
 
   const handleClose = () => {
@@ -161,17 +159,17 @@ export default function DeliveryRegister() {
 
   const getCustomerList = React.useCallback(
     async () => {       
-      const result1 = await clientList();  
+      const result1 = await getCustomers();  
       console.log("clientList mock", result1)    
       setCustomer(result1);       
     },
-    [clientList],
+    [],
   );
 
   React.useEffect(() => {
     async function validation() {
       if (query.id) {
-        const result = await getById(Number(query.id));
+        const result = await getDeliveryById(Number(query.id));
         if(result){
           setDelivery(result);
           setSelectValueCustomer(result.clientId);
@@ -187,14 +185,7 @@ export default function DeliveryRegister() {
     getProductList();
     getCustomerList();
   }, 
-  [
-    getSupplierList, 
-    getWarehouseList,
-    getProductList, 
-    getCustomerList,
-    query, 
-    getById, 
-    setDelivery]
+  [getSupplierList, getWarehouseList, getProductList, getCustomerList, query, setDelivery]
   );
 
   return (
