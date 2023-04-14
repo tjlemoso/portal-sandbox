@@ -15,7 +15,7 @@ export default function CustomerRegister() {
 
   const formRef = React.useRef<FormHandles>(null); 
   const { query } = useRouter();
-  const [client, setCustomer] = React.useState<ICustomer>({} as 
+  const [customer, setCustomer] = React.useState<ICustomer>({} as 
     {
       clientId: 0;
       name: "";
@@ -37,9 +37,9 @@ export default function CustomerRegister() {
       setOpenLoadding(true);
 
       if (query.id) {
-        await updateCustomer(Number(client.clientId),
+        await updateCustomer(Number(customer.clientId),
           {
-          clientId: client.clientId,
+          clientId: customer.clientId,
           name: data.name,
           phone: data.phone,
           email: data.email,
@@ -59,7 +59,7 @@ export default function CustomerRegister() {
       setOpen(true);
 
     },
-    [query.id, client.clientId],
+    [query.id, customer.clientId],
   );
 
   const handleBack = async () => {
@@ -129,21 +129,21 @@ export default function CustomerRegister() {
               <label>Name</label>
               <Input name="name" 
                 autoComplete="family-name"
-                defaultValue={client?.name}
+                defaultValue={customer?.name}
                 />
             </Grid>
             <Grid item xs={12} sm={6} style={{display: 'grid'}}>
               <label>Phone Number</label>
               <Input name="phone" 
                 autoComplete="family-name"
-                defaultValue={client?.phone}
+                defaultValue={customer?.phone}
                 />
             </Grid>
             <Grid item xs={12} sm={6} style={{display: 'grid'}}>
               <label>Email</label>
               <Input name="email" 
                 autoComplete="family-name"
-                defaultValue={client?.email}
+                defaultValue={customer?.email}
                 />
             </Grid>
             <Grid item xs={12} style={{display: 'grid'}}>
@@ -155,42 +155,42 @@ export default function CustomerRegister() {
               <label>Address line 1</label>
                 <Input name="address" 
                   autoComplete="family-name"
-                  defaultValue={client?.address}
+                  defaultValue={customer?.address}
                   />
             </Grid>
             <Grid item xs={12} style={{display: 'grid'}}>
               <label>Address line 2</label>
                 <Input name="address2" 
                   autoComplete="family-name"
-                  defaultValue={client?.address2}                  
+                  defaultValue={customer?.address2}                  
                   />
             </Grid>        
             <Grid item xs={12} sm={6} style={{display: 'grid'}}>
               <label>City</label>
               <Input name="city" 
                 autoComplete="family-name"
-                defaultValue={client?.city}                
+                defaultValue={customer?.city}                
                 />
             </Grid>
             <Grid item xs={12} sm={6} style={{display: 'grid'}}>
               <label>State/Province/Region</label>
               <Input name="state" 
                 autoComplete="family-name"
-                defaultValue={client?.state}                
+                defaultValue={customer?.state}                
                 />
             </Grid>
             <Grid item xs={12} sm={6} style={{display: 'grid'}}>
               <label>Zip / Postal code</label>
               <Input name="zip" 
                 autoComplete="family-name"
-                defaultValue={client?.zip}                
+                defaultValue={customer?.zip}                
                 />
             </Grid>
             <Grid item xs={12} sm={6} style={{display: 'grid'}}>
               <label>Country</label>
               <Input name="country" 
                 autoComplete="family-name"
-                defaultValue={client?.country}                
+                defaultValue={customer?.country}                
                 />
             </Grid>         
             <Grid item xs={12} style={{display: 'grid'}}>
