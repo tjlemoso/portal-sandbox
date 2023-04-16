@@ -245,7 +245,7 @@ export default function DeliveryRegister() {
 
             <Grid item xs={6} style={{display: 'grid'}}>
               <label>Product</label>
-              <select value={selectValueProduct} onChange={e => setSelectValueProduct(Number(e.target.value))}>
+              <select value={selectValueProduct} onChange={e => setSelectValueProduct(Number(e.target.value))} style={{ width: '100%'}}>
               {
                 products && products.length > 0 ? 
                   (
@@ -275,6 +275,7 @@ export default function DeliveryRegister() {
               <Input name="quantity" 
                 autoComplete="family-name"
                 defaultValue={delivery?.quantity}
+                style={{ width: '100%'}}
                 />
             </Grid> 
             
