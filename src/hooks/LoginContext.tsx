@@ -66,6 +66,8 @@ const LoginProvider: React.FC<React.PropsWithChildren<Props>> = ({ children }) =
     localStorage.removeItem('accessToken');
     setData({} as AuthState);
     setLogin(null);
+    destroyCookie(null, 'token');
+    destroyCookie(null, 'isAdmin');
   }, []);
 
 

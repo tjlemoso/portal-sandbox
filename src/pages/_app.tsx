@@ -27,6 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const logout = React.useCallback(() => {
     destroyCookie(null, 'token');
+    destroyCookie(null, 'isAdmin');
     window.location.reload();
   }, []);
 
@@ -46,7 +47,7 @@ export default function App({ Component, pageProps }: AppProps) {
     }else{
       setUserLoggedAdmin(false);
     }
-  }, [token]);
+  }, [isAdmin, token]);
 
   return (
     <AppProvider>
@@ -56,7 +57,7 @@ export default function App({ Component, pageProps }: AppProps) {
         position="static"
         color="default"
         elevation={0}
-        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}`, visibility:(userLogged? "visible":"collapse") }}
+        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}`, visibility:(userLogged? "visible":"collapse"), height:(userLogged? "auto":0) }}
 
         
       >
@@ -115,6 +116,15 @@ export default function App({ Component, pageProps }: AppProps) {
             </Link>
 
             <Link
+              variant="button"
+              color="text.primary"
+              href="/tracking"
+              sx={{ my: 1, mx: 1.5 }}
+            >
+              Tracking
+            </Link>
+
+            <Link
             variant="button"
             color="text.primary"
             href="/user"
@@ -124,9 +134,6 @@ export default function App({ Component, pageProps }: AppProps) {
             </Link>  
                                      
           </nav>
-          {/* <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }} onClick={() =>  login()}>
-            Login
-          </Button> */}
           <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }} onClick={() => logout()}>
             Logout
           </Button>

@@ -51,3 +51,13 @@ export async function deleteDelivery(id: number) {
     console.error(err);
   }
 }
+
+export async function getDeliveryByCode(code: string) {
+  try {
+    const response = await axiosInstance.get<IDelivery>(`${LINK_DELIVERY_SERVICE}/delivery/tracking/${code}`);
+    console.log('response', response.data);
+    return response.data;
+  } catch(err) {
+    console.error(err);
+  }
+}
