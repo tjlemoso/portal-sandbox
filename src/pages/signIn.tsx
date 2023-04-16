@@ -12,7 +12,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useUser } from '@/hooks/UserContext';
 import router, { useRouter } from 'next/router';
 import { useLogin } from '@/hooks/LoginContext';
 import { Alert, CircularProgress } from '@mui/material';

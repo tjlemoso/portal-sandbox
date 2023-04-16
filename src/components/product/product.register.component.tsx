@@ -14,6 +14,8 @@ import { IWarehouse } from '@/interface/IWarehouse';
 import { createProduct, getSProductById, updateProduct } from '@/services/ProductService';
 import { getSuppliers } from '@/services/SupplierService';
 import { getWarehouses } from '@/services/WarehouseService';
+import AlertDialog from '../share/message';
+import SimpleBackdrop from '../share/backdrop';
 
 export default function ProductRegister() {
 
@@ -78,12 +80,14 @@ export default function ProductRegister() {
   React.useEffect(() => {
     async function validation() {
       if (query.id) {
+        setOpenLoadding(true);
         const result = await getSProductById(Number(query.id));
         if(result){
           setProduct(result);
           setSelectValueSupplier(result.supplierId);
           setSelectValueWarehouse(result.warehouseId);
         }
+        setOpenLoadding(false);
       }
     };
     validation();
@@ -119,38 +123,8 @@ export default function ProductRegister() {
   return (
     <Container component="main">
        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-       <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {"Boa entrega"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              As alterações solicitadas foram aplicadas com êxito em nosso sistema. Agradecemos pela sua atualização e pela confiança em nosso serviço.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              variant="contained"
-              type="submit"
-              sx={{ mt: 3, ml: 1 }}
-              autoFocus
-              onClick={handleClose}
-            >
-              OK
-            </Button>  
-          </DialogActions>
-        </Dialog>
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={openLoadding}
-          >
-          <CircularProgress color="inherit" />
-        </Backdrop>         
+       <AlertDialog openDialog={open} handleClose={handleBack}/>
+        <SimpleBackdrop openComponent={openLoadding} />          
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Grid container spacing={3}>          
             <Grid item xs={12} style={{display: 'grid'}}>
