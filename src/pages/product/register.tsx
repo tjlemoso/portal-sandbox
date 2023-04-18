@@ -4,7 +4,7 @@ import ProductRegister from '@/components/product/product.register.component';
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
 
-export default function AddressForm() {
+export default function Form() {
 
   return (
     <React.Fragment>

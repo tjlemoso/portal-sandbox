@@ -28,7 +28,7 @@ const CustomerPage: React.FC<Props> = (props:Props) => {
           color="text.primary"
           gutterBottom
         >
-          Customers
+          Clientes
         </Typography>
       </Container>    
       <Container component="main"  sx={{ mb: 4 }}>        

@@ -2,7 +2,7 @@ import React from "react";
 import { IWarehouse } from "../../interface/IWarehouse";
 import Container from '@mui/material/Container';
 import router from "next/router";
-import { Paper } from "@mui/material";
+import { Grid, Paper } from "@mui/material";
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -16,6 +16,9 @@ import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { deleteWarehouse } from "@/services/WarehouseService";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 interface IProps {
   warehouses: IWarehouse[] | undefined;
@@ -56,8 +59,8 @@ function Row(props: { row: IWarehouse }) {
         <TableCell align="left">{row.phone}</TableCell>
         <TableCell align="left">{row.email}</TableCell>
         <TableCell align="left">
-          <button className="btn btn-primary" onClick={() => handleEdit(row.warehouseId)}>edit</button>              
-          <button className="btn btn-danger" onClick={() => handleDelete(row.warehouseId)}>delete</button>          
+          <button className="btn btn-primary" onClick={() => handleEdit(row.warehouseId)}>{<EditIcon/>}</button>            
+          <button className="btn btn-danger" onClick={() => handleDelete(row.warehouseId)}>{<DeleteIcon />}</button>          
         </TableCell>
       </TableRow>
       <TableRow>
@@ -65,17 +68,17 @@ function Row(props: { row: IWarehouse }) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                Address
+                Endereço
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Address line 1</TableCell>
-                    <TableCell>Address line 2</TableCell>
-                    <TableCell align="left">City</TableCell>
-                    <TableCell align="left">State</TableCell>
-                    <TableCell align="left">Zip</TableCell>
-                    <TableCell align="left">Country</TableCell>
+                    <TableCell>Endereço</TableCell>
+                    <TableCell>Complemento</TableCell>
+                    <TableCell align="left">Cidade</TableCell>
+                    <TableCell align="left">Estado</TableCell>
+                    <TableCell align="left">Código Postal</TableCell>
+                    <TableCell align="left">País</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>              
@@ -110,10 +113,10 @@ const WarehouseTable: React.FunctionComponent<IProps> = props => {
           <TableHead>
             <TableRow>
               <TableCell />
-              <TableCell>Name</TableCell>
-              <TableCell align="left">Phone</TableCell>
+              <TableCell>Nome</TableCell>
+              <TableCell align="left">Telefone</TableCell>
               <TableCell align="left">Email</TableCell>
-              <TableCell align="left">Action</TableCell>
+              <TableCell align="left"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

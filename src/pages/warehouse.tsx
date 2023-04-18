@@ -28,7 +28,7 @@ const WarehousePage: React.FC<Props> = (props:Props) => {
           color="text.primary"
           gutterBottom
         >
-          Warehouses
+          Depósitos
         </Typography>
       </Container>    
       <Container component="main"  sx={{ mb: 4 }}>        

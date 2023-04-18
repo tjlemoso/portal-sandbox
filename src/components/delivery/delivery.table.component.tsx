@@ -10,6 +10,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { deleteDelivery } from "@/services/DeliveryService";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 interface IProps {
   deliveries: IDelivery[] | undefined;
@@ -37,8 +40,8 @@ function Row(props: { row: IDelivery }) {
         <TableCell>{row.status}</TableCell>
         <TableCell align="left">{row.trackingCode}</TableCell>
         <TableCell align="left">
-          <button className="btn btn-primary" onClick={() => handleEdit(row.deliveryId)}>edit</button>              
-          <button className="btn btn-danger" onClick={() => handleDelete(row.deliveryId)}>delete</button>          
+          <button className="btn btn-primary" onClick={() => handleEdit(row.deliveryId)}>{<EditIcon/>}</button>              
+          <button className="btn btn-danger" onClick={() => handleDelete(row.deliveryId)}>{<DeleteIcon />}</button>          
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -56,8 +59,8 @@ const DeliveryTable: React.FunctionComponent<IProps> = props => {
           <TableHead>
             <TableRow>
               <TableCell>Status</TableCell>
-              <TableCell align="left">Tracking Code</TableCell>
-              <TableCell align="left">Action</TableCell>
+              <TableCell align="left">Código de Rastreio</TableCell>
+              <TableCell align="left"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

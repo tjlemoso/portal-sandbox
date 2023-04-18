@@ -112,7 +112,7 @@ export default function SignIn() {
             </Button>
             {
               showAlert ?
-              (<Alert severity="error">Error logging in, wrong username and password. Please enter the correct user information!</Alert>)
+              (<Alert severity="error">Erro ao fazer login, nome de usuário e senha incorretos. Insira as informações de usuário corretas!</Alert>)
               : <></>
             }
             {

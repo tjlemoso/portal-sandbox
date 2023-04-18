@@ -10,6 +10,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { deleteProduct } from "@/services/ProductService";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 interface IProps {
   products: IProduct[] | undefined;
@@ -40,15 +43,13 @@ function Row(props: { row: IProduct }) {
         <TableCell align="left">{row.description}</TableCell>
         <TableCell align="left">{row.availableQuantity}</TableCell>
         <TableCell align="left">
-          <button className="btn btn-primary" onClick={() => handleEdit(row.productId)}>edit</button>              
-          <button className="btn btn-danger" onClick={() => handleDelete(row.productId)}>delete</button>          
+          <button className="btn btn-primary" onClick={() => handleEdit(row.productId)}>{<EditIcon/>}</button>              
+          <button className="btn btn-danger" onClick={() => handleDelete(row.productId)}>{<DeleteIcon />}</button>          
         </TableCell>
       </TableRow>
     </React.Fragment>
   );
 }
-
-
 
 const ProductTable: React.FunctionComponent<IProps> = props => {
 
@@ -58,10 +59,10 @@ const ProductTable: React.FunctionComponent<IProps> = props => {
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="left">Description</TableCell>
-              <TableCell align="left">Quantity</TableCell>
-              <TableCell>Action</TableCell>       
+              <TableCell>Nome</TableCell>
+              <TableCell align="left">Descrição</TableCell>
+              <TableCell align="left">Quantidade</TableCell>
+              <TableCell></TableCell>       
             </TableRow>
           </TableHead>
           <TableBody>

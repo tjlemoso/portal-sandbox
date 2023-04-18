@@ -102,17 +102,17 @@ const Map :React.FC<IMapProps> = ({ addressOrigin, addressDestiny }) => {
       >
         <Box sx={{ display: 'flex', justifyContent: 'flex-end'}}>                
           <Button variant="contained" onClick={traceRoute}>
-            Trace Route
+            Tracar Rota
           </Button>                                   
         </Box>
 
         <div>
           <div>
-            <label>Distance: </label>
+            <label>Distância: </label>
             <label> {distance}</label>
           </div>
           <div>
-            <label>Duration: </label>
+            <label>Duração: </label>
             <label> {duration}</label>
           </div>
         </div>

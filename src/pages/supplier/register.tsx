@@ -4,7 +4,7 @@ import { Container } from '@mui/system';
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
 
-export default function AddressForm() {
+export default function Form() {
 
   return (
     <React.Fragment>

@@ -231,7 +231,7 @@ const DeliveryRegister: React.FunctionComponent<any> = props => {
       setLoadData(false);
       setOpenLoadding(false);
     },
-    [query.id, warehouses],
+    [query.id],
   );
 
   React.useEffect(() => {
@@ -255,7 +255,7 @@ const DeliveryRegister: React.FunctionComponent<any> = props => {
           <Grid container spacing={2}>          
             <Grid item xs={12} style={{display: 'grid'}}>
               <Typography variant="h6" gutterBottom sx={{ mt: 0 }}>
-                Entrega
+                Delivery
               </Typography>
             </Grid>
 
@@ -276,7 +276,7 @@ const DeliveryRegister: React.FunctionComponent<any> = props => {
             </Grid>
 
             <Grid item xs={12} style={{display: 'grid'}}>
-              <label>Cliente</label>
+              <label>Customer</label>
               <select value={selectValueCustomer} onChange={e => handleGetLocationCustomer(Number(e.target.value))}>
               {
                 clients && clients.length > 0 ? 
@@ -303,7 +303,7 @@ const DeliveryRegister: React.FunctionComponent<any> = props => {
             </Grid>
 
             <Grid item xs={6} style={{display: 'grid'}}>
-              <label>Produto</label>
+              <label>Product</label>
               <select value={selectValueProduct} onChange={e => setSelectValueProduct(Number(e.target.value))} style={{ width: '100%'}}>
               {
                 products && products.length > 0 ? 
@@ -339,7 +339,7 @@ const DeliveryRegister: React.FunctionComponent<any> = props => {
             </Grid> 
             
             <Grid item xs={6} style={{display: 'grid'}}>
-              <label>Fornecedor</label>
+              <label>Supplier</label>
               <select value={selectValueSupplier} onChange={e => setSelectValueSupplier(Number(e.target.value))}>
               {
                 suppliers && suppliers.length > 0 ? 
@@ -366,7 +366,7 @@ const DeliveryRegister: React.FunctionComponent<any> = props => {
             </Grid>
 
             <Grid item xs={6} style={{display: 'grid'}}>
-              <label>Depósito</label>
+              <label>Warehouse</label>
               <select value={selectValueWarehouse} onChange={e => handleGetLocationWarehouse(Number(e.target.value))}>
               {
                 warehouses && warehouses.length > 0 ? 

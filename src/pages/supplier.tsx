@@ -28,7 +28,7 @@ const SupplierPage: React.FC<Props> = (props:Props) => {
           color="text.primary"
           gutterBottom
         >
-          Suppliers
+          Fornecedores
         </Typography>
       </Container>    
       <Container component="main"  sx={{ mb: 4 }}>        

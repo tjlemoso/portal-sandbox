@@ -128,26 +128,26 @@ export default function ProductRegister() {
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Grid container spacing={3}>          
             <Grid item xs={12} style={{display: 'grid'}}>
-              <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                Product
+              <Typography variant="h6" gutterBottom sx={{ mt: 0 }}>
+                Produto
               </Typography>
             </Grid>
             <Grid item xs={12} style={{display: 'grid'}}>
-              <label>Name</label>
+              <label>Nome</label>
               <Input name="name" 
                 autoComplete="family-name"
                 defaultValue={product?.name}
                 />
             </Grid>
             <Grid item xs={12} sm={6} style={{display: 'grid'}}>
-              <label>Description</label>
+              <label>Descrição</label>
               <Input name="description" 
                 autoComplete="family-name"
                 defaultValue={product?.description}
                 />
             </Grid>
             <Grid item xs={12} sm={6} style={{display: 'grid'}}>
-              <label>Quantity</label>
+              <label>Quantidade</label>
               <Input name="availableQuantity" 
                 autoComplete="family-name"
                 defaultValue={product?.availableQuantity}
@@ -155,12 +155,12 @@ export default function ProductRegister() {
             </Grid>
 
             <Grid item xs={12} style={{display: 'grid'}}>
-              <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                Supplier
+              <Typography variant="h6" gutterBottom sx={{ mt: 0 }}>
+                Fornecedor
                 </Typography>
             </Grid>
             <Grid item xs={12} style={{display: 'grid'}}>
-              <label>Supplier</label>
+              <label>Fornecedor</label>
               <select value={selectValueSupplier} onChange={e => setSelectValueSupplier(Number(e.target.value))}>
               {
                 suppliers && suppliers.length > 0 ? 
@@ -187,12 +187,12 @@ export default function ProductRegister() {
             </Grid>
 
             <Grid item xs={12} style={{display: 'grid'}}>
-              <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                Warehouse
+              <Typography variant="h6" gutterBottom sx={{ mt: 0 }}>
+                Depósito
                 </Typography>
             </Grid>
             <Grid item xs={12} style={{display: 'grid'}}>
-              <label>Warehouse</label>
+              <label>Depósito</label>
               <select value={selectValueWarehouse} onChange={e => setSelectValueWarehouse(Number(e.target.value))}>
               {
                 warehouses && warehouses.length > 0 ? 
@@ -221,14 +221,14 @@ export default function ProductRegister() {
             <Grid item xs={12} style={{display: 'grid'}}>
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', margin:1 }}>                
                   <Button  sx={{ mt: 3, ml: 1 }} onClick={handleBack}>
-                    Back
+                    Voltar
                   </Button>        
                   <Button
                     variant="contained"
                     type="submit"
                     sx={{ mt: 3, ml: 1 }}
                   >
-                    Register
+                   Confirmar
                   </Button>          
                 </Box>
             </Grid>  

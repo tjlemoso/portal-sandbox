@@ -96,7 +96,7 @@ export default function Tracking() {
             }}
           >
             <Typography component="h1" variant="h5">
-              Traking
+              Rastreio
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
@@ -104,7 +104,7 @@ export default function Tracking() {
                 required
                 fullWidth
                 id="code"
-                label="Tracking Code"
+                label="Código de Rastreio"
                 name="code"
                 autoComplete="code"
                 autoFocus
@@ -115,11 +115,11 @@ export default function Tracking() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Search
+                Buscar
               </Button>
                 {
                 showAlert ?
-                (<Alert severity="error">Invalid tracking code!</Alert>)
+                (<Alert severity="error">Código de rastreamento inválido</Alert>)
                 : <></>
                 }
                 {
@@ -137,37 +137,37 @@ export default function Tracking() {
                         <Grid  spacing={2}>
                             <Grid item xs={12} >
                                 <Typography variant="h6" gutterBottom>
-                                Tracking Code
+                                  Código
                                 </Typography>
                                 <Typography gutterBottom>{delivery?.trackingCode}</Typography>
                             </Grid>
                             <Grid item xs={12} >
                                 <Typography variant="h6" gutterBottom >
-                                Status
+                                  Status
                                 </Typography>
                                 <Typography gutterBottom>{delivery?.status}</Typography>
                             </Grid>
                             <Grid item xs={12} >
                                 <Typography variant="h6" gutterBottom >
-                                Product
+                                  Produto
                                 </Typography>
                                 <Typography gutterBottom>{product?.name}</Typography>
                             </Grid> 
                             <Grid item xs={12} >
                                 <Typography variant="h6" gutterBottom >
-                                Quantity
+                                  Quantidade
                                 </Typography>
                                 <Typography gutterBottom>{delivery?.quantity}</Typography>
                             </Grid>                                                          
                             <Grid item xs={12} >
                                 <Typography variant="h6" gutterBottom >
-                                Customer
+                                  Cliente
                                 </Typography>
                                 <Typography gutterBottom>{`${customer?.name}`}</Typography>
                             </Grid>
                             <Grid item xs={12} >
                                 <Typography variant="h6" gutterBottom >
-                                Origin
+                                  Depósito Origem
                                 </Typography>
                                 <Typography gutterBottom>{`${warehouse?.name}`}</Typography>
                             </Grid>                                                              
@@ -184,7 +184,7 @@ export default function Tracking() {
                         sx={{ mt: 3, mb: 2 }}
                         onClick={() => { window.location.reload();}}
                       >
-                        New Tracking
+                        Novo Rastreio
                       </Button>
                     ) :<></>
                 }

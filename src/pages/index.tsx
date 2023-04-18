@@ -34,27 +34,27 @@ function Copyright(props: any) {
 
 const tiers = [
   {
-    title: 'Processing',
+    title: 'Em processamento',
     description: [
-      '115 new deliveries',
-      '150 Total products',
-      '100 Total customers',
+      '115 Novas entregas',
+      '150 Total produtos',
+      '100 Total clientes',
     ],
   },
   {
-    title: 'On Route',
+    title: 'Em Rota',
     description: [
-      '40 deliveries',
-      '65 Total products',
-      '58 Total customers',
+      '40 Entregas',
+      '65 Total produtos',
+      '58 Total clientes',
     ],
   },
   {
-    title: 'Delivered',
+    title: 'Entreges',
     description: [
-      '1548419 Delivered',
-      '1654905 Products',
-      '1236100 Customers',
+      '1548419 Entreges',
+      '1654905 Produtos',
+      '1236100 Clientes',
     ],
   },
 ];
@@ -97,10 +97,10 @@ function PricingContent() {
           color="text.primary"
           gutterBottom
         >
-          Delivery
+          Entregas
         </Typography>
         <Typography variant="h5" align="center" color="text.secondary" component="p">
-          Information about ongoing and completed deliveries.
+          Informações sobre entregas em andamento e concluídas.
         </Typography>
       </Container>
       {/* End hero unit */}
@@ -167,7 +167,7 @@ function PricingContent() {
         </Grid>
       </Container>
       {/* Footer */}
-      <Container
+      {/* <Container
         maxWidth="md"
         component="footer"
         sx={{
@@ -195,7 +195,7 @@ function PricingContent() {
           ))}
         </Grid>
         <Copyright sx={{ mt: 5 }} />
-      </Container>
+      </Container> */}
       {/* End footer */}
     </React.Fragment>
   );

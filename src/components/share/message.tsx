@@ -30,7 +30,7 @@ const AlertDialog: React.FunctionComponent<Props> = props => {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              The requested changes have been successfully applied to our system. Thank you for your update and for trusting our service.
+            As alterações solicitadas foram aplicadas com sucesso em nosso sistema. Obrigado por sua atualização e por confiar em nosso serviço.
             </DialogContentText>
           </DialogContent>
           <DialogActions>

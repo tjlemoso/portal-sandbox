@@ -80,7 +80,7 @@ export default function App({ Component, pageProps }: AppProps) {
               href="/supplier"
               sx={{ my: 1, mx: 1.5 }}
             >
-              Supplier
+              Fornecedor
             </Link>
             <Link
               variant="button"
@@ -88,7 +88,7 @@ export default function App({ Component, pageProps }: AppProps) {
               href="/warehouse"
               sx={{ my: 1, mx: 1.5 }}
             >
-              Warehouse
+              Depósito
             </Link>
             <Link
               variant="button"
@@ -96,7 +96,7 @@ export default function App({ Component, pageProps }: AppProps) {
               href="/product"
               sx={{ my: 1, mx: 1.5 }}
             >
-              Product
+              Produto
             </Link>
             <Link
               variant="button"
@@ -104,7 +104,7 @@ export default function App({ Component, pageProps }: AppProps) {
               href="/customer"
               sx={{ my: 1, mx: 1.5 }}
             >
-              Customer
+              Cliente
             </Link>            
             <Link
               variant="button"
@@ -112,7 +112,7 @@ export default function App({ Component, pageProps }: AppProps) {
               href="/delivery"
               sx={{ my: 1, mx: 1.5 }}
             >
-              Delivery
+              Entrega
             </Link>
 
             <Link
@@ -121,7 +121,7 @@ export default function App({ Component, pageProps }: AppProps) {
               href="/tracking"
               sx={{ my: 1, mx: 1.5 }}
             >
-              Tracking
+              Rastreio
             </Link>
 
             <Link
@@ -130,7 +130,7 @@ export default function App({ Component, pageProps }: AppProps) {
             href="/user"
             sx={{ my: 1, mx: 1.5, visibility:(userLoggedAdmin? "visible":"collapse") }}
             >
-              User
+              Usuário
             </Link>  
                                      
           </nav>

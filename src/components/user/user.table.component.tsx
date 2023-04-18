@@ -10,6 +10,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { deleteUser } from "@/services/UserService";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 interface IProps {
   users: IUser[] | undefined;
@@ -38,11 +40,11 @@ function Row(props: { row: IUser }) {
           {row.name}
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.isAdmin? "Admin" : "Worker"}
+          {row.isAdmin? "Administrador" : "Operador"}
         </TableCell>
         <TableCell align="left">
-          <button className="btn btn-primary" onClick={() => handleEdit(row.userId)}>edit</button>              
-          <button className="btn btn-danger" onClick={() => handleDelete(row.userId)}>delete</button>          
+          <button className="btn btn-primary" onClick={() => handleEdit(row.userId)}>{<EditIcon/>}</button>              
+          <button className="btn btn-danger" onClick={() => handleDelete(row.userId)}>{<DeleteIcon />}</button>          
         </TableCell>
       </TableRow>
     </React.Fragment>
@@ -59,9 +61,9 @@ const UserTable: React.FunctionComponent<IProps> = props => {
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="left">Is Admin</TableCell>
-              <TableCell>Action</TableCell>              
+              <TableCell>Nome</TableCell>
+              <TableCell align="left">Tipo de Usuário</TableCell>
+              <TableCell></TableCell>              
             </TableRow>
           </TableHead>
           <TableBody>

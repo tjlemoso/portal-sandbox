@@ -28,7 +28,7 @@ const DeliveryPage: React.FC<Props> = (props:Props) => {
           color="text.primary"
           gutterBottom
         >
-          Deliverys
+          Entregas
         </Typography>
       </Container>    
       <Container component="main"  sx={{ mb: 4 }}>        

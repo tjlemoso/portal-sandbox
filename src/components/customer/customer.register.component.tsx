@@ -90,19 +90,19 @@ export default function CustomerRegister() {
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Grid container spacing={3}>          
             <Grid item xs={12} style={{display: 'grid'}}>
-              <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                Customer
+              <Typography variant="h6" gutterBottom sx={{ mt: 0 }}>
+                Cliente
               </Typography>
             </Grid>
             <Grid item xs={12} style={{display: 'grid'}}>
-              <label>Name</label>
+              <label>Nome</label>
               <Input name="name" 
                 autoComplete="family-name"
                 defaultValue={customer?.name}
                 />
             </Grid>
             <Grid item xs={12} sm={6} style={{display: 'grid'}}>
-              <label>Phone Number</label>
+              <label>Telefone</label>
               <Input name="phone" 
                 autoComplete="family-name"
                 defaultValue={customer?.phone}
@@ -116,47 +116,47 @@ export default function CustomerRegister() {
                 />
             </Grid>
             <Grid item xs={12} style={{display: 'grid'}}>
-              <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                Address
+              <Typography variant="h6" gutterBottom sx={{ mt: 0 }}>
+                Endereço
                 </Typography>
             </Grid>
             <Grid item xs={12} style={{display: 'grid'}}>
-              <label>Address line 1</label>
+              <label>Endereço</label>
                 <Input name="address" 
                   autoComplete="family-name"
                   defaultValue={customer?.address}
                   />
             </Grid>
             <Grid item xs={12} style={{display: 'grid'}}>
-              <label>Address line 2</label>
+              <label>Complemento</label>
                 <Input name="address2" 
                   autoComplete="family-name"
                   defaultValue={customer?.address2}                  
                   />
             </Grid>        
             <Grid item xs={12} sm={6} style={{display: 'grid'}}>
-              <label>City</label>
+              <label>Cidade</label>
               <Input name="city" 
                 autoComplete="family-name"
                 defaultValue={customer?.city}                
                 />
             </Grid>
             <Grid item xs={12} sm={6} style={{display: 'grid'}}>
-              <label>State/Province/Region</label>
+              <label>Estado</label>
               <Input name="state" 
                 autoComplete="family-name"
                 defaultValue={customer?.state}                
                 />
             </Grid>
             <Grid item xs={12} sm={6} style={{display: 'grid'}}>
-              <label>Zip / Postal code</label>
+              <label>Código postal</label>
               <Input name="zip" 
                 autoComplete="family-name"
                 defaultValue={customer?.zip}                
                 />
             </Grid>
             <Grid item xs={12} sm={6} style={{display: 'grid'}}>
-              <label>Country</label>
+              <label>País</label>
               <Input name="country" 
                 autoComplete="family-name"
                 defaultValue={customer?.country}                
@@ -165,14 +165,14 @@ export default function CustomerRegister() {
             <Grid item xs={12} style={{display: 'grid'}}>
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', margin:1 }}>                
                   <Button  sx={{ mt: 3, ml: 1 }} onClick={handleBack}>
-                    Back
+                    Voltar
                   </Button>        
                   <Button
                     variant="contained"
                     type="submit"
                     sx={{ mt: 3, ml: 1 }}
                   >
-                    Register
+                   Confirmar
                   </Button>          
                 </Box>
             </Grid>  

@@ -4,7 +4,7 @@ import DeliveryRegister from '@/components/delivery/delivery.register.component'
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
 
-export default function AddressForm() {
+export default function Form() {
 
   return (
     <React.Fragment>

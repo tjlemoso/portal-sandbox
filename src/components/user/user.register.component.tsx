@@ -29,7 +29,7 @@ export default function UserRegister() {
   );
   const optionsUser = [
     { id: 1, label: 'Admin' },
-    { id: 2, label: 'Worker' }
+    { id: 2, label: 'Operador' }
   ]
   const [selectUser, setSelectUser] = React.useState(1);
   const handleSetSelectUser = async (userId: number) => {
@@ -107,19 +107,19 @@ export default function UserRegister() {
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Grid container spacing={3}>          
             <Grid item xs={12} style={{display: 'grid'}}>
-              <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                User
+              <Typography variant="h6" gutterBottom sx={{ mt: 0 }}>
+                Usuário
               </Typography>
             </Grid>
             <Grid item xs={12} style={{display: 'grid'}}>
-              <label>Name</label>
+              <label>Nome</label>
               <Input name="name" 
                 autoComplete="family-name"
                 defaultValue={user?.name}
                 />
             </Grid>
             <Grid item xs={12} style={{display: 'grid'}}>
-              <label>Passwaord</label>
+              <label>Password</label>
               <Input name="password"
                 type={"password"} 
                 autoComplete="family-name"
@@ -127,7 +127,7 @@ export default function UserRegister() {
                 />
             </Grid>
             <Grid item xs={12} style={{display: 'grid'}}>
-            <label>User type</label>
+            <label>Tipo de usuário</label>
             <select value={selectUser} onChange={e => setSelectUser(Number(e.target.value))}>
               {
                 optionsUser && optionsUser.length > 0 ? 
@@ -155,14 +155,14 @@ export default function UserRegister() {
             <Grid item xs={12} style={{display: 'grid'}}>
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', margin:1 }}>                
                   <Button  sx={{ mt: 3, ml: 1 }} onClick={handleBack}>
-                    Back
+                    Voltar
                   </Button>        
                   <Button
                     variant="contained"
                     type="submit"
                     sx={{ mt: 3, ml: 1 }}
                   >
-                    Register
+                   Confirmar
                   </Button>          
                 </Box>
             </Grid>  
