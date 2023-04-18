@@ -252,7 +252,7 @@ const DeliveryRegister: React.FunctionComponent<any> = props => {
         <AlertDialog openDialog={open} handleClose={handleBack}/>
         <SimpleBackdrop openComponent={openLoadding} />         
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <Grid container spacing={2}>          
+          <Grid container spacing={1}>          
             <Grid item xs={12} style={{display: 'grid'}}>
               <Typography variant="h6" gutterBottom sx={{ mt: 0 }}>
                 Entrega

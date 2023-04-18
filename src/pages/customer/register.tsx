@@ -8,7 +8,7 @@ export default function Customer() {
 
   return (
     <React.Fragment>
-      <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 6 }}>
+      <Container disableGutters maxWidth="sm" component="main" >
         <CustomerRegister />
       </Container>
     </React.Fragment>

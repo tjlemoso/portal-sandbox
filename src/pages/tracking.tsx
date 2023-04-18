@@ -134,7 +134,7 @@ export default function Tracking() {
                 {
                     deliveryFound ?
                     (        
-                        <Grid  spacing={2}>
+                        <Grid  spacing={1}>
                             <Grid item xs={12} >
                                 <Typography variant="h6" gutterBottom>
                                   Código

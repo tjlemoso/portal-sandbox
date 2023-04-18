@@ -8,7 +8,7 @@ export default function Form() {
 
   return (
     <React.Fragment>
-      <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 6 }}>
+      <Container disableGutters maxWidth="sm" component="main" >
         <UserRegister />
       </Container>
     </React.Fragment>

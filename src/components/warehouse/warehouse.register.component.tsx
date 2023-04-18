@@ -141,7 +141,7 @@ export default function WarehouseRegister() {
           <CircularProgress color="inherit" />
         </Backdrop>         
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <Grid container spacing={3}>          
+          <Grid container spacing={1}>          
             <Grid item xs={12} style={{display: 'grid'}}>
               <Typography variant="h6" gutterBottom sx={{ mt: 0 }}>
                 Depósito
