@@ -14,36 +14,20 @@ import AlertDialog from '../share/message';
 import SimpleBackdrop from '../share/backdrop';
 
 
-export default function UserRegister() {
+export interface IProsUser {
+  user: IUser;
+}
+
+const UserRegisterForm: React.FunctionComponent<IProsUser> = props => {
 
   const formRef = React.useRef<FormHandles>(null); 
   const { query } = useRouter();
-  const [user, setUser] = React.useState<IUser>({} as 
-    {
-      userId: 0,
-      name: "",
-      password: "",
-      isAdmin: false,
-      token: ""
-    }
-  );
+  const [user, setUser] = React.useState<IUser>(props.user);
   const optionsUser = [
     { id: 1, label: 'Admin' },
     { id: 2, label: 'Operador' }
   ]
-  const [selectUser, setSelectUser] = React.useState(1);
-  const handleSetSelectUser = async (userId: number) => {
-    console.log("\n\n user userId {} \n\n", userId)
-    setSelectUser(userId);
-    console.log("\n\n user selectUser {} \n\n", selectUser)
-  };
-
-  React.useEffect(() => {
-    if (query.id) {
-    setSelectUser(user.isAdmin? 1 : 2);
-    }
-  }, [query.id, user.isAdmin])
-
+  const [selectUser, setSelectUser] = React.useState(props.user.isAdmin? 1 : 2);
   const [open, setOpen] = React.useState(false);
   const [openLoadding, setOpenLoadding] = React.useState(false);
 
@@ -74,30 +58,9 @@ export default function UserRegister() {
     [selectUser, query.id, user.userId],
   );
 
-  const handleClose = () => {
-    setOpen(false);
-    router.push('/user');
-  };
-
-
   const handleBack = async () => {
     router.push('/user');
   };
-
-  React.useEffect(() => {
-    async function validation() {
-      if (query.id) {
-        setOpenLoadding(true);
-        const result = await getUserById(Number(query.id));
-        if(result){
-          setUser(result);
-        }
-        setOpenLoadding(false);
-      }
-    };
-    validation();
-  }, [query, setUser]);
-
 
   return (
     <Container component="main">
@@ -172,3 +135,5 @@ export default function UserRegister() {
     </Container>
   );
 }
+
+export default UserRegisterForm;

@@ -40,7 +40,8 @@ function Row(props: { row: IDelivery }) {
         <TableCell>{row.status}</TableCell>
         <TableCell align="left">{row.trackingCode}</TableCell>
         <TableCell align="left">
-          <button className="btn btn-primary" onClick={() => handleEdit(row.deliveryId)}>{<EditIcon/>}</button>              
+          <button className="btn btn-primary" onClick={() => handleEdit(row.deliveryId)}>{<EditIcon/>}</button>
+          <label style={{width: "10px"}}/>              
           <button className="btn btn-danger" onClick={() => handleDelete(row.deliveryId)}>{<DeleteIcon />}</button>          
         </TableCell>
       </TableRow>

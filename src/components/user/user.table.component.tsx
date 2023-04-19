@@ -43,7 +43,8 @@ function Row(props: { row: IUser }) {
           {row.isAdmin? "Administrador" : "Operador"}
         </TableCell>
         <TableCell align="left">
-          <button className="btn btn-primary" onClick={() => handleEdit(row.userId)}>{<EditIcon/>}</button>              
+          <button className="btn btn-primary" onClick={() => handleEdit(row.userId)}>{<EditIcon/>}</button>
+          <label style={{width: "10px"}}/>              
           <button className="btn btn-danger" onClick={() => handleDelete(row.userId)}>{<DeleteIcon />}</button>          
         </TableCell>
       </TableRow>

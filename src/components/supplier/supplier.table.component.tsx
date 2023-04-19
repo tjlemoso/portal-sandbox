@@ -58,7 +58,8 @@ function Row(props: { row: ISupplier }) {
         <TableCell align="left">{row.phone}</TableCell>
         <TableCell align="left">{row.email}</TableCell>
         <TableCell align="left">
-          <button className="btn btn-primary" onClick={() => handleEdit(row.supplierId)}>{<EditIcon/>}</button>              
+          <button className="btn btn-primary" onClick={() => handleEdit(row.supplierId)}>{<EditIcon/>}</button>
+          <label style={{width: "10px"}}/>              
           <button className="btn btn-danger" onClick={() => handleDelete(row.supplierId)}>{<DeleteIcon />}</button>          
         </TableCell>
       </TableRow>
