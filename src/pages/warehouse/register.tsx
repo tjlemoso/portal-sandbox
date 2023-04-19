@@ -35,6 +35,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   console.log("\n\n warehouseId", id);
   let result  ;
 
+  const suppliersResult = await getSuppliers();  
+
   if(id)
   {
     result = await getWarehouseById(Number(id));
@@ -52,12 +54,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       state: "",
       zip: "",
       country: "",
-      supplierId: 0,
+      supplierId: suppliersResult? suppliersResult[0].supplierId : 0,
     }
     
   }
-  
-  const suppliersResult = await getSuppliers();  
 
   return { 
       props : {

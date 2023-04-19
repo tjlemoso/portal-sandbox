@@ -37,6 +37,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   console.log("is produto ", id);
   let productResult  ;
 
+  const suppliersResult = await getSuppliers(); 
+  const warehousesResult = await getWarehouses(); 
+
   if(id)
   {
     productResult = await getProductById(Number(id));
@@ -48,14 +51,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       name: "",
       description: "",
       availableQuantity: 0,
-      warehouseId: 0,
-      supplierId: 0,
+      warehouseId: warehousesResult? warehousesResult[0].warehouseId : 0,
+      supplierId: suppliersResult? suppliersResult[0].supplierId : 0,
     }
     
   }
   
-  const suppliersResult = await getSuppliers(); 
-  const warehousesResult = await getWarehouses();  
+ 
 
   return { 
       props : {
