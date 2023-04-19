@@ -8,4 +8,3 @@ export interface IDelivery {
   productId: number;
   supplierId: number;
 }
-

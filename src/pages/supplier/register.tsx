@@ -1,48 +1,44 @@
-import * as React from 'react';
-import SupplierRegisterForm, { IProsSupplier } from '@/components/supplier/supplier.register.component';
-import { Container } from '@mui/system';
-import { parseCookies } from 'nookies';
-import { GetServerSideProps } from 'next';
-import { getSupplierById } from '@/services/SupplierService';
+import * as React from "react";
+import SupplierRegisterForm, {
+  IProsSupplier,
+} from "@/components/supplier/supplier.register.component";
+import { Container } from "@mui/system";
+import { parseCookies } from "nookies";
+import { GetServerSideProps } from "next";
+import { getSupplierById } from "@/services/SupplierService";
 
-const SupplierRegister: React.FunctionComponent<IProsSupplier> = props => {
-
+const SupplierRegister: React.FunctionComponent<IProsSupplier> = (props) => {
   return (
     <React.Fragment>
-      <Container disableGutters maxWidth="sm" component="main" >
+      <Container disableGutters maxWidth="sm" component="main">
         <SupplierRegisterForm supplier={props.supplier} />
       </Container>
     </React.Fragment>
-
   );
-}
+};
 
 export default SupplierRegister;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-
-  const { ['token']: token } = parseCookies(ctx);
+  const { ["token"]: token } = parseCookies(ctx);
 
   if (!token) {
     return {
       redirect: {
         destination: `/signIn`,
         permanent: false,
-      }
-    }
+      },
+    };
   }
 
   const { id } = ctx.query;
   console.log("\n\n supplierId", id);
-  let result  ;
+  let result;
 
-  if(id)
-  {
+  if (id) {
     result = await getSupplierById(Number(id));
-
   } else {
-
-    result =   {
+    result = {
       supplierId: 0,
       name: "",
       phone: "",
@@ -53,14 +49,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       state: "",
       zip: "",
       country: "",
-    }
-    
-  }  
-
-  return { 
-      props : {        
-        supplier: result,
-      }
     };
-}
-
+  }
+  return {
+    props: {
+      supplier: result,
+    },
+  };
+};

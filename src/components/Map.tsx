@@ -6,8 +6,8 @@ import {
   DirectionsService,
   DirectionsRenderer,
 } from "@react-google-maps/api";
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 export interface MapPageProps {}
 
@@ -16,7 +16,7 @@ interface IMapProps {
   addressDestiny: google.maps.LatLngLiteral | undefined;
 }
 
-const Map :React.FC<IMapProps> = ({ addressOrigin, addressDestiny }) => {
+const Map: React.FC<IMapProps> = ({ addressOrigin, addressDestiny }) => {
   const [map, setMap] = React.useState<google.maps.Map>();
   const [origin, setOrigin] = React.useState<google.maps.LatLngLiteral | null>(
     null
@@ -42,7 +42,6 @@ const Map :React.FC<IMapProps> = ({ addressOrigin, addressDestiny }) => {
   };
 
   const traceRoute = async () => {
-
     setOrigin(null);
     setDestination(null);
     setResponse(null);
@@ -60,10 +59,10 @@ const Map :React.FC<IMapProps> = ({ addressOrigin, addressDestiny }) => {
     if (addressOrigin && addressDestiny) {
       setOrigin(addressOrigin);
       setDestination(addressDestiny);
-    } else if(!addressOrigin){
+    } else if (!addressOrigin) {
       setOrigin(null);
       setDestination(null);
-    }   
+    }
   };
 
   const directionsServiceOptions =
@@ -79,7 +78,7 @@ const Map :React.FC<IMapProps> = ({ addressOrigin, addressDestiny }) => {
   // @ts-ignore
   const directionsCallback = React.useCallback((res) => {
     if (res !== null && res.status === "OK") {
-      console.log("\n\n\n\n\n"+JSON.stringify(res));
+      console.log("\n\n\n\n\n" + JSON.stringify(res));
       setDistance(res.routes[0].legs[0].distance.text);
       setDuration(res.routes[0].legs[0].duration.text);
       setResponse(res);
@@ -97,13 +96,13 @@ const Map :React.FC<IMapProps> = ({ addressOrigin, addressDestiny }) => {
   return (
     <div className="map">
       <LoadScript
-        googleMapsApiKey={'AIzaSyC1LdqTsA0TtB0yEJdJg2pGZZf8pXZTnic'}
-        libraries={["places"]}        
+        googleMapsApiKey={"AIzaSyC1LdqTsA0TtB0yEJdJg2pGZZf8pXZTnic"}
+        libraries={["places"]}
       >
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end'}}>                
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button variant="contained" onClick={traceRoute}>
             Tracar Rota
-          </Button>                                   
+          </Button>
         </Box>
 
         <div>
@@ -121,10 +120,10 @@ const Map :React.FC<IMapProps> = ({ addressOrigin, addressDestiny }) => {
           onLoad={onMapLoad}
           mapContainerStyle={{ width: "100%", height: "80%", marginTop: 10 }}
           center={position}
-          zoom={15}        
+          zoom={15}
         >
-          { addressOrigin && <Marker position={addressOrigin} />}
-          { addressDestiny && <Marker position={addressDestiny} />}
+          {addressOrigin && <Marker position={addressOrigin} />}
+          {addressDestiny && <Marker position={addressDestiny} />}
 
           {origin && destination && (
             <DirectionsService

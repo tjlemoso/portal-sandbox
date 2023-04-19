@@ -10,4 +10,3 @@ export interface ISupplier {
   zip: string;
   country: string;
 }
-

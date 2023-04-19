@@ -2,24 +2,22 @@ import WarehouseTable from "@/components/warehouse/warehouse.table.component";
 import { IWarehouse } from "@/interface/IWarehouse";
 import { Typography } from "@mui/material";
 import { Container } from "@mui/system";
-import router from 'next/router';
+import router from "next/router";
 import React from "react";
-import { parseCookies } from 'nookies';
-import { GetServerSideProps } from 'next';
+import { parseCookies } from "nookies";
+import { GetServerSideProps } from "next";
 import { getWarehouses } from "@/services/WarehouseService";
 
-interface Props{
-  warehouses: IWarehouse[],
+interface Props {
+  warehouses: IWarehouse[];
 }
-const WarehousePage: React.FC<Props> = (props:Props) => {
-
+const WarehousePage: React.FC<Props> = (props: Props) => {
   const handleSubmit = async () => {
-    router.push('/warehouse/register');
+    router.push("/warehouse/register");
   };
-  
 
-  return(
-    <React.Fragment>    
+  return (
+    <React.Fragment>
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 6 }}>
         <Typography
           component="h1"
@@ -30,40 +28,35 @@ const WarehousePage: React.FC<Props> = (props:Props) => {
         >
           Depósitos
         </Typography>
-      </Container>    
-      <Container component="main"  sx={{ mb: 4 }}>        
-        <button 
-          className="btn btn-success" 
-          onClick={handleSubmit}
-          >Add
-        </button>   
-      </Container>     
-      <WarehouseTable
-        warehouses={props.warehouses}
-      />    
-    </React.Fragment>    
+      </Container>
+      <Container component="main" sx={{ mb: 4 }}>
+        <button className="btn btn-success" onClick={handleSubmit}>
+          Add
+        </button>
+      </Container>
+      <WarehouseTable warehouses={props.warehouses} />
+    </React.Fragment>
   );
-}
+};
 
 export default WarehousePage;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { ['token']: token } = parseCookies(ctx);
-
+  const { ["token"]: token } = parseCookies(ctx);
 
   if (!token) {
     return {
       redirect: {
         destination: `/signIn`,
         permanent: false,
-      }
-    }
+      },
+    };
   }
 
   const warehouses = await getWarehouses();
   return {
     props: {
-      warehouses
-    }
-  }
-}
+      warehouses,
+    },
+  };
+};

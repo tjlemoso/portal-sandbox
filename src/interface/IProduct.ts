@@ -6,4 +6,3 @@ export interface IProduct {
   warehouseId: number;
   supplierId: number;
 }
-

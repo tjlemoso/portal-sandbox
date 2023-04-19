@@ -1,24 +1,23 @@
 import React from "react";
 import { ICustomer } from "../../interface/ICustomer";
-import Container from '@mui/material/Container';
+import Container from "@mui/material/Container";
 import router from "next/router";
 import { Paper } from "@mui/material";
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { deleteCustomer } from "@/services/CustomerService";
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
 interface IProps {
   customers: ICustomer[] | undefined;
@@ -28,21 +27,18 @@ function Row(props: { row: ICustomer }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
 
-  const handleEdit = async (id : number) => {
+  const handleEdit = async (id: number) => {
     router.push(`/customer/register?id=${id}`);
   };
 
-  const handleDelete= React.useCallback( 
-    async (id : number) => {
-      await deleteCustomer(id);
-      router.reload();
-    },
-    [],
-  );
+  const handleDelete = React.useCallback(async (id: number) => {
+    await deleteCustomer(id);
+    router.reload();
+  }, []);
 
   return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -58,9 +54,19 @@ function Row(props: { row: ICustomer }) {
         <TableCell align="left">{row.phone}</TableCell>
         <TableCell align="left">{row.email}</TableCell>
         <TableCell align="left">
-          <button className="btn btn-primary" onClick={() => handleEdit(row.clientId)}>{<EditIcon/>}</button>
-          <label style={{width: "10px"}}/>              
-          <button className="btn btn-danger" onClick={() => handleDelete(row.clientId)}>{<DeleteIcon />}</button>          
+          <button
+            className="btn btn-primary"
+            onClick={() => handleEdit(row.clientId)}
+          >
+            {<EditIcon />}
+          </button>
+          <label style={{ width: "10px" }} />
+          <button
+            className="btn btn-danger"
+            onClick={() => handleDelete(row.clientId)}
+          >
+            {<DeleteIcon />}
+          </button>
         </TableCell>
       </TableRow>
       <TableRow>
@@ -81,7 +87,7 @@ function Row(props: { row: ICustomer }) {
                     <TableCell align="left">País</TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody>              
+                <TableBody>
                   <TableRow key={row.address}>
                     <TableCell component="th" scope="row">
                       {row.address}
@@ -91,23 +97,20 @@ function Row(props: { row: ICustomer }) {
                     <TableCell align="left">{row.state}</TableCell>
                     <TableCell align="left">{row.zip}</TableCell>
                     <TableCell align="left">{row.country}</TableCell>
-                  </TableRow>                  
+                  </TableRow>
                 </TableBody>
               </Table>
             </Box>
           </Collapse>
-        </TableCell>      
+        </TableCell>
       </TableRow>
     </React.Fragment>
   );
 }
 
-
-
-const CustomerTable: React.FunctionComponent<IProps> = props => {
-
+const CustomerTable: React.FunctionComponent<IProps> = (props) => {
   return (
-    <Container component="main" >
+    <Container component="main">
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
           <TableHead>
@@ -120,25 +123,18 @@ const CustomerTable: React.FunctionComponent<IProps> = props => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {
-              props.customers && props.customers.length > 0 ? 
-                (
-                  props.customers.map((row) => (
-                    <Row key={row.name} row={row} />
-                  ))
-                ):
-                (
-                  <tr>
-                    <td colSpan={3}>no customers</td>
-                  </tr>
-                )
-            }
+            {props.customers && props.customers.length > 0 ? (
+              props.customers.map((row) => <Row key={row.name} row={row} />)
+            ) : (
+              <tr>
+                <td colSpan={3}>no customers</td>
+              </tr>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
     </Container>
   );
 };
-
 
 export default CustomerTable;

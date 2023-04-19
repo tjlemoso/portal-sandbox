@@ -8,8 +8,6 @@ import {
   DirectionsRenderer,
 } from "@react-google-maps/api";
 
-
-
 export interface MapPageProps {}
 
 const MapPage = () => {
@@ -49,7 +47,7 @@ const MapPage = () => {
 
   const onPlacesChangedA = () => {
     const places = searchBoxA!.getPlaces();
-    console.log("places by addres"+JSON.stringify(places));
+    console.log("places by addres" + JSON.stringify(places));
     const place = places![0];
     const location = {
       lat: place?.geometry?.location?.lat() || 0,
@@ -94,10 +92,10 @@ const MapPage = () => {
       };
     }, [origin, destination]);
 
-      // @ts-ignore
+  // @ts-ignore
   const directionsCallback = React.useCallback((res) => {
     if (res !== null && res.status === "OK") {
-      console.log("\n\n\n\n\n"+JSON.stringify(res));
+      console.log("\n\n\n\n\n" + JSON.stringify(res));
       setResponse(res);
     } else {
       console.log(res);
@@ -113,7 +111,7 @@ const MapPage = () => {
   return (
     <div className="map">
       <LoadScript
-        googleMapsApiKey={'AIzaSyC1LdqTsA0TtB0yEJdJg2pGZZf8pXZTnic'}
+        googleMapsApiKey={"AIzaSyC1LdqTsA0TtB0yEJdJg2pGZZf8pXZTnic"}
         libraries={["places"]}
       >
         <GoogleMap

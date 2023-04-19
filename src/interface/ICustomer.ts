@@ -10,4 +10,3 @@ export interface ICustomer {
   zip: string;
   country: string;
 }
-

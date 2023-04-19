@@ -14,7 +14,7 @@ const Input = ({ name, ...rest }: InputProps) => {
     registerField<string>({
       name: fieldName,
       ref: inputRef.current,
-      path: "value"
+      path: "value",
     });
   }, [fieldName, registerField]);
 

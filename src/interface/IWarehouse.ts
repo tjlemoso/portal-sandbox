@@ -7,8 +7,7 @@ export interface IWarehouse {
   address2: string;
   city: string;
   state: string;
-  zip: string;  
+  zip: string;
   country: string;
   supplierId: number;
 }
-

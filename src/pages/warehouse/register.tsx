@@ -1,49 +1,50 @@
-import * as React from 'react';
-import { Container } from '@mui/system';
-import WarehouseRegisterForm, { IProsWarehouse } from '@/components/warehouse/warehouse.register.component';
-import { parseCookies } from 'nookies';
-import { GetServerSideProps } from 'next';
-import { getSuppliers } from '@/services/SupplierService';
-import { getWarehouseById } from '@/services/WarehouseService';
+import * as React from "react";
+import { Container } from "@mui/system";
+import WarehouseRegisterForm, {
+  IProsWarehouse,
+} from "@/components/warehouse/warehouse.register.component";
+import { parseCookies } from "nookies";
+import { GetServerSideProps } from "next";
+import { getSuppliers } from "@/services/SupplierService";
+import { getWarehouseById } from "@/services/WarehouseService";
 
-const WarehouseRegister: React.FunctionComponent<IProsWarehouse> = props => {
+const WarehouseRegister: React.FunctionComponent<IProsWarehouse> = (props) => {
   return (
     <React.Fragment>
-      <Container disableGutters maxWidth="sm" component="main" >
-        <WarehouseRegisterForm warehouse={props.warehouse} suppliers={props.suppliers}/>
+      <Container disableGutters maxWidth="sm" component="main">
+        <WarehouseRegisterForm
+          warehouse={props.warehouse}
+          suppliers={props.suppliers}
+        />
       </Container>
     </React.Fragment>
   );
-}
+};
 
 export default WarehouseRegister;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-
-  const { ['token']: token } = parseCookies(ctx);
+  const { ["token"]: token } = parseCookies(ctx);
 
   if (!token) {
     return {
       redirect: {
         destination: `/signIn`,
         permanent: false,
-      }
-    }
+      },
+    };
   }
 
   const { id } = ctx.query;
   console.log("\n\n warehouseId", id);
-  let result  ;
+  let result;
 
-  const suppliersResult = await getSuppliers();  
+  const suppliersResult = await getSuppliers();
 
-  if(id)
-  {
+  if (id) {
     result = await getWarehouseById(Number(id));
-
   } else {
-
-    result =      {
+    result = {
       warehouseId: 0,
       name: "",
       phone: "",
@@ -54,16 +55,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       state: "",
       zip: "",
       country: "",
-      supplierId: suppliersResult? suppliersResult[0].supplierId : 0,
-    }
-    
+      supplierId: suppliersResult ? suppliersResult[0].supplierId : 0,
+    };
   }
 
-  return { 
-      props : {
-        warehouse: result,
-        suppliers: suppliersResult,
-      }
-    };
-}
-
+  return {
+    props: {
+      warehouse: result,
+      suppliers: suppliersResult,
+    },
+  };
+};
