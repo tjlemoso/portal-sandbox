@@ -13,24 +13,15 @@ import { createCustomer, getCustomerById, updateCustomer } from '@/services/Cust
 import AlertDialog from '../share/message';
 import SimpleBackdrop from '../share/backdrop';
 
-export default function CustomerRegister() {
+export interface IProsCustomer {
+  customer: ICustomer;
+}
+
+const CustomerRegisterForm: React.FunctionComponent<IProsCustomer> = props => {
 
   const formRef = React.useRef<FormHandles>(null); 
   const { query } = useRouter();
-  const [customer, setCustomer] = React.useState<ICustomer>({} as 
-    {
-      clientId: 0;
-      name: "";
-      phone: "";
-      email: "";
-      address: "";
-      address2: "";
-      city: "";
-      state: "";
-      zip: "";
-      country: "";
-    }
-  );
+  const [customer, setCustomer] = React.useState<ICustomer>(props.customer);
   const [open, setOpen] = React.useState(false);
   const [openLoadding, setOpenLoadding] = React.useState(false);
   const handleSubmit= React.useCallback( 
@@ -68,19 +59,6 @@ export default function CustomerRegister() {
     router.push('/customer');
   };
 
-  React.useEffect(() => {
-    async function validation() {
-      if (query.id) {
-        setOpenLoadding(true);
-        const result = await getCustomerById(Number(query.id));
-        if(result){
-          setCustomer(result);
-        }          
-        setOpenLoadding(false);  
-      }
-    };
-    validation();
-  }, [query, setCustomer]);
 
   return (
     <Container component="main">
@@ -182,3 +160,5 @@ export default function CustomerRegister() {
     </Container>
   );
 }
+
+export default CustomerRegisterForm;

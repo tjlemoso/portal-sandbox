@@ -1,22 +1,26 @@
 import * as React from 'react';
 import { Container } from '@mui/system';
-import CustomerRegister from '@/components/customer/customer.register.component';
+import CustomerRegisterFrom, { IProsCustomer } from '@/components/customer/customer.register.component';
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
+import { getCustomerById } from '@/services/CustomerService';
 
-export default function Customer() {
+const CustomerRegister: React.FunctionComponent<IProsCustomer> = props => {
 
   return (
     <React.Fragment>
       <Container disableGutters maxWidth="sm" component="main" >
-        <CustomerRegister />
+        <CustomerRegisterFrom customer={props.customer} />
       </Container>
     </React.Fragment>
   );
 }
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { ['token']: token } = parseCookies(ctx);
 
+export default CustomerRegister;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
+  const { ['token']: token } = parseCookies(ctx);
 
   if (!token) {
     return {
@@ -26,9 +30,35 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     }
   }
-  return {
-    props: {
 
+  const { id } = ctx.query;
+  console.log("\n\n clientId", id);
+  let result  ;
+
+  if(id)
+  {
+    result = await getCustomerById(Number(id));
+
+  } else {
+
+    result =   {
+      clientId: 0,
+      name: "",
+      phone: "",
+      email: "",
+      address: "",
+      address2: "",
+      city: "",
+      state: "",
+      zip: "",
+      country: "",
     }
-  }
+    
+  }  
+
+  return { 
+      props : {        
+        customer: result,
+      }
+    };
 }
