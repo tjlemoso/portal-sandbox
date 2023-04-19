@@ -1,23 +1,26 @@
 import * as React from 'react';
 import { Container } from '@mui/system';
-import WarehouseRegister from '@/components/warehouse/warehouse.register.component';
+import WarehouseRegisterForm, { IProsWarehouse } from '@/components/warehouse/warehouse.register.component';
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
+import { getSuppliers } from '@/services/SupplierService';
+import { getWarehouseById } from '@/services/WarehouseService';
 
-export default function Form() {
-
+const WarehouseRegister: React.FunctionComponent<IProsWarehouse> = props => {
   return (
     <React.Fragment>
       <Container disableGutters maxWidth="sm" component="main" >
-        <WarehouseRegister />
+        <WarehouseRegisterForm warehouse={props.warehouse} suppliers={props.suppliers}/>
       </Container>
     </React.Fragment>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { ['token']: token } = parseCookies(ctx);
+export default WarehouseRegister;
 
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
+  const { ['token']: token } = parseCookies(ctx);
 
   if (!token) {
     return {
@@ -27,9 +30,40 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     }
   }
-  return {
-    props: {
 
+  const { id } = ctx.query;
+  console.log("\n\n warehouseId", id);
+  let result  ;
+
+  if(id)
+  {
+    result = await getWarehouseById(Number(id));
+
+  } else {
+
+    result =      {
+      warehouseId: 0,
+      name: "",
+      phone: "",
+      email: "",
+      address: "",
+      address2: "",
+      city: "",
+      state: "",
+      zip: "",
+      country: "",
+      supplierId: 0,
     }
+    
   }
+  
+  const suppliersResult = await getSuppliers();  
+
+  return { 
+      props : {
+        warehouse: result,
+        suppliers: suppliersResult,
+      }
+    };
 }
+

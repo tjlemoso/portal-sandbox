@@ -12,28 +12,21 @@ import { Backdrop, CircularProgress, Dialog, DialogActions, DialogContent, Dialo
 import { ISupplier } from '@/interface/ISupplier';
 import { createWarehouse, getWarehouseById, updateWarehouse } from '@/services/WarehouseService';
 import { getSuppliers } from '@/services/SupplierService';
+import AlertDialog from '../share/message';
+import SimpleBackdrop from '../share/backdrop';
 
-export default function WarehouseRegister() {
+export interface IProsWarehouse {
+  warehouse: IWarehouse;
+  suppliers: ISupplier[];
+}
+
+const WarehouseRegisterForm: React.FunctionComponent<IProsWarehouse> = props => {
 
   const formRef = React.useRef<FormHandles>(null); 
   const { query } = useRouter();
-  const [warehouse, setWarehouse] = React.useState<IWarehouse>({} as 
-    {
-      warehouseId: 0;
-      name: "";
-      phone: "";
-      email: "";
-      address: "";
-      address2: "";
-      city: "";
-      state: "";
-      zip: "";
-      country: "";
-      supplierId: 0;
-    }
-  );
-  const [selectValue, setSelectValue] = React.useState(1);
-  const [suppliers, setSuppliers] = React.useState<ISupplier[]>();  
+  const [warehouse, setWarehouse] = React.useState<IWarehouse>(props.warehouse);
+  const [selectValue, setSelectValue] = React.useState(props.warehouse.supplierId);
+  const [suppliers, setSuppliers] = React.useState<ISupplier[]>(props.suppliers);  
 
   const [open, setOpen] = React.useState(false);
   const [openLoadding, setOpenLoadding] = React.useState(false);
@@ -71,75 +64,11 @@ export default function WarehouseRegister() {
     router.push('/warehouse');
   };
 
-  const handleClose = () => {
-    setOpen(false);
-    router.push('/warehouse');
-  };
-
-
-  React.useEffect(() => {
-    async function validation() {
-      if (query.id) {
-        const result = await getWarehouseById(Number(query.id));
-        if(result){
-          setWarehouse(result);
-          setSelectValue(result.supplierId);
-        }
-      }
-    };
-    validation();
-  }, [query, setWarehouse]);
-
-  const getSupplierList = React.useCallback(
-    async () => {       
-      const result1 = await getSuppliers();  
-      console.log("suppliers mock", result1)    
-      setSuppliers(result1);       
-    },
-    [],
-  );
-
-  React.useEffect(() => {
-    getSupplierList();
-  }, 
-  [getSupplierList]
-  );
-
   return (
     <Container component="main">
        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-       <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {"Boa entrega"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              As alterações solicitadas foram aplicadas com êxito em nosso sistema. Agradecemos pela sua atualização e pela confiança em nosso serviço.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              variant="contained"
-              type="submit"
-              sx={{ mt: 3, ml: 1 }}
-              autoFocus
-              onClick={handleClose}
-            >
-              OK
-            </Button>  
-          </DialogActions>
-        </Dialog>
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={openLoadding}
-          >
-          <CircularProgress color="inherit" />
-        </Backdrop>         
+        <AlertDialog openDialog={open} handleClose={handleBack}/>
+        <SimpleBackdrop openComponent={openLoadding} />        
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Grid container spacing={1}>          
             <Grid item xs={12} style={{display: 'grid'}}>
@@ -268,3 +197,5 @@ export default function WarehouseRegister() {
     </Container>
   );
 }
+
+export default WarehouseRegisterForm;
