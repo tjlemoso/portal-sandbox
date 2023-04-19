@@ -11,30 +11,27 @@ import { IProduct } from '@/interface/IProduct';
 import { Backdrop, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material';
 import { ISupplier } from '@/interface/ISupplier';
 import { IWarehouse } from '@/interface/IWarehouse';
-import { createProduct, getSProductById, updateProduct } from '@/services/ProductService';
+import { createProduct, getProductById, updateProduct } from '@/services/ProductService';
 import { getSuppliers } from '@/services/SupplierService';
 import { getWarehouses } from '@/services/WarehouseService';
 import AlertDialog from '../share/message';
 import SimpleBackdrop from '../share/backdrop';
 
-export default function ProductRegister() {
+export interface IProsProduct {
+  product: IProduct;
+  suppliers: ISupplier[];
+  warehouses: IWarehouse[];
+}
+
+const ProductRegisterForm: React.FunctionComponent<IProsProduct> = props => {
 
   const formRef = React.useRef<FormHandles>(null); 
   const { query } = useRouter();
-  const [product, setProduct] = React.useState<IProduct>({} as 
-    {
-      productId: 0,
-      name: "",
-      description: "",
-      availableQuantity: 0,
-      warehouseId: 0,
-      supplierId: 0,
-    }
-  );
-  const [selectValueSupplier, setSelectValueSupplier] = React.useState(0);
-  const [selectValueWarehouse, setSelectValueWarehouse] = React.useState(0);
-  const [suppliers, setSuppliers] = React.useState<ISupplier[]>();
-  const [warehouses, setWarehouses] = React.useState<IWarehouse[]>();  
+  const [product, setProduct] = React.useState<IProduct>(props.product);
+  const [selectValueSupplier, setSelectValueSupplier] = React.useState(props.product.supplierId);
+  const [selectValueWarehouse, setSelectValueWarehouse] = React.useState(props.product.warehouseId);
+  const [suppliers, setSuppliers] = React.useState<ISupplier[]>(props.suppliers);
+  const [warehouses, setWarehouses] = React.useState<IWarehouse[]>(props.warehouses);  
 
   const [open, setOpen] = React.useState(false);
   const [openLoadding, setOpenLoadding] = React.useState(false);
@@ -75,50 +72,6 @@ export default function ProductRegister() {
     setOpen(false);
     router.push('/product');
   };
-
-
-  React.useEffect(() => {
-    async function validation() {
-      if (query.id) {
-        setOpenLoadding(true);
-        const result = await getSProductById(Number(query.id));
-        if(result){
-          setProduct(result);
-          setSelectValueSupplier(result.supplierId);
-          setSelectValueWarehouse(result.warehouseId);
-        }
-        setOpenLoadding(false);
-      }
-    };
-    validation();
-  }, [query, setProduct]);
-
-
-  const getWarehouseList = React.useCallback(
-    async () => {       
-      const result1 = await getWarehouses();  
-      console.log("warehouse mock", result1)    
-      setWarehouses(result1);       
-    },
-    [],
-  );
-
-
-  const getSupplierList = React.useCallback(
-    async () => {       
-      const result1 = await getSuppliers();  
-      console.log("suppliers mock", result1)    
-      setSuppliers(result1);       
-    },
-    [],
-  );
-
-  React.useEffect(() => {
-    getSupplierList();
-    getWarehouseList();
-  }, 
-  [getSupplierList, getWarehouseList]
-  );
 
   return (
     <Container component="main">
@@ -238,3 +191,5 @@ export default function ProductRegister() {
     </Container>
   );
 }
+
+export default ProductRegisterForm;

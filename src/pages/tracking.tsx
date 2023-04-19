@@ -14,7 +14,7 @@ import { IProduct } from '@/interface/IProduct';
 import { ICustomer } from '@/interface/ICustomer';
 import { IWarehouse } from '@/interface/IWarehouse';
 import { getCustomerById } from '@/services/CustomerService';
-import { getSProductById } from '@/services/ProductService';
+import { getProductById } from '@/services/ProductService';
 import { getWarehouseById } from '@/services/WarehouseService';
 import { Alert, CircularProgress } from '@mui/material';
 
@@ -52,7 +52,7 @@ export default function Tracking() {
             const customerSearch = await getCustomerById(deliverySearch.clientId);
             setCustomer(customerSearch);
 
-            const productSearch  = await getSProductById(deliverySearch.productId);
+            const productSearch  = await getProductById(deliverySearch.productId);
             setProduct(productSearch);
 
             const warehouseSearch  = await getWarehouseById(deliverySearch.warehouseId);

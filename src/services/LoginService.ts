@@ -5,7 +5,7 @@ import { LINK_LOGIN_SERVICE } from '@/config/constants';
 export async function authenticate(name: string, password: string) {
     try {
       const response = await axiosInstance.post<ILogin>(`${LINK_LOGIN_SERVICE}/authenticator/${name}/password/${password}`);
-      console.log('response', response.data);
+      console.log('response authenticate', response.data);
       return response.data;
     } catch(err) {
       console.error(err);
