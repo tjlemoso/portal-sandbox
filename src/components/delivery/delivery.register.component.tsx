@@ -23,39 +23,37 @@ import { getWarehouseById, getWarehouses } from '@/services/WarehouseService';
 import AlertDialog from '../share/message';
 import SimpleBackdrop from '../share/backdrop';
 
+export interface IProsDelivery {
+  delivery: IDelivery,
+  suppliers: ISupplier[],
+  warehouses: IWarehouse[],
+  customers: ICustomer[],
+  products: IProduct[],
+  addressDestiny:google.maps.LatLngLiteral,
+  addressOrigin:google.maps.LatLngLiteral,
 
-const DeliveryRegister: React.FunctionComponent<any> = props => {
+}
+
+const DeliveryRegisterForm: React.FunctionComponent<IProsDelivery> = props => {
 
   const formRef = React.useRef<FormHandles>(null); 
   const { query } = useRouter();
 
-  const [delivery, setDelivery] = React.useState<IDelivery>({} as 
-    {
-      deliveryId: 0,
-      name: "",
-      quantity: 0,
-      trackingCode: "",
-      status: "",
-      clientId: 0,
-      warehouseId: 0,
-      productId: 0,
-      supplierId: 0
-    }
-  );
-  const [selectValueSupplier, setSelectValueSupplier] = React.useState(1);
-  const [suppliers, setSuppliers] = React.useState<ISupplier[]>();
+  const [delivery, setDelivery] = React.useState<IDelivery>(props.delivery);
+  const [selectValueSupplier, setSelectValueSupplier] = React.useState(props.delivery.supplierId);
+  const [suppliers, setSuppliers] = React.useState<ISupplier[]>(props.suppliers);
 
-  const [selectValueWarehouse, setSelectValueWarehouse] = React.useState(1);
-  const [warehouses, setWarehouses] = React.useState<IWarehouse[]>();  
+  const [selectValueWarehouse, setSelectValueWarehouse] = React.useState(props.delivery.warehouseId);
+  const [warehouses, setWarehouses] = React.useState<IWarehouse[]>(props.warehouses);  
 
-  const [selectValueProduct, setSelectValueProduct] = React.useState(1);
-  const [products, setProduct] = React.useState<IProduct[]>(); 
+  const [selectValueProduct, setSelectValueProduct] = React.useState(props.delivery.productId);
+  const [products, setProduct] = React.useState<IProduct[]>(props.products); 
 
-  const [selectValueCustomer, setSelectValueCustomer] = React.useState(1);
-  const [clients, setCustomer] = React.useState<ICustomer[]>(); 
+  const [selectValueCustomer, setSelectValueCustomer] = React.useState(props.delivery.clientId);
+  const [clients, setCustomer] = React.useState<ICustomer[]>(props.customers); 
 
-  const [addressOrigin, setAddressOrigin] = React.useState<google.maps.LatLngLiteral>();
-  const [addressDestiny, setAddressDestiny] = React.useState<google.maps.LatLngLiteral>();
+  const [addressOrigin, setAddressOrigin] = React.useState<google.maps.LatLngLiteral>(props.addressOrigin);
+  const [addressDestiny, setAddressDestiny] = React.useState<google.maps.LatLngLiteral>(props.addressDestiny);
 
   const [open, setOpen] = React.useState(false);
   const [openLoadding, setOpenLoadding] = React.useState(false);
@@ -95,11 +93,6 @@ const DeliveryRegister: React.FunctionComponent<any> = props => {
     [query.id, delivery, selectValueWarehouse, selectValueSupplier, selectValueCustomer, selectValueProduct],
   );
 
-  const handleClose = () => {
-    setOpen(false);
-    router.push('/delivery');
-  };
-
   const handleGetLocationCustomer = async (clientId: number) => {
     setSelectValueCustomer(clientId);
 
@@ -110,7 +103,10 @@ const DeliveryRegister: React.FunctionComponent<any> = props => {
       lat: clientAddress?.lat,
       lng: clientAddress?.lng,
     });
-    setAddressOrigin(undefined);
+    setAddressOrigin({
+      lat: 0,
+      lng: 0,
+    });
 
   };
 
@@ -129,122 +125,6 @@ const DeliveryRegister: React.FunctionComponent<any> = props => {
   const handleBack = async () => {
     router.push('/delivery');
   };
-
-  // const getWarehouseList = React.useCallback(
-  //   async () => {       
-  //     const result1 = await getWarehouses();  
-  //     console.log("warehouse ", result1)    
-  //     setWarehouses(result1);       
-  //   },
-  //   [],
-  // );
-
-  // const getSupplierList = React.useCallback(
-  //   async () => {       
-  //     const result1 = await getSuppliers();  
-  //     console.log("suppliers ", result1)    
-  //     setSuppliers(result1);       
-  //   },
-  //   [],
-  // );
-
-  // const getProductList = React.useCallback(
-  //   async () => {       
-  //     const result1 = await getProducts();  
-  //     console.log("productList ", result1)    
-  //     setProduct(result1);       
-  //   },
-  //   [],
-  // );
-
-  // const getCustomerList = React.useCallback(
-  //   async () => {       
-  //     const result1 = await getCustomers();  
-  //     console.log("clientList ", result1)    
-  //     setCustomer(result1);       
-  //   },
-  //   [],
-  // );
-
-  const [loadData, setLoadData] = React.useState(true);
-
-  const getData = React.useCallback(
-    async () => {
-
-      setOpenLoadding(true);
-
-      //const warehouseResult = 
-      if(!warehouses){
-        await getWarehouses().then(r => setWarehouses(r)); 
-        console.log("warehouse ", warehouses); 
-      }
-      // console.log("warehouse ", warehouseResult)    
-      // setWarehouses(warehouseResult); 
-
-      //const supplierResult = 
-      await getSuppliers().then(r =>  setSuppliers(r));  
-      //console.log("suppliers ", supplierResult)    
-      //setSuppliers(supplierResult);  
-
-      //const productResult = 
-      await getProducts().then(r => setProduct(r));  
-      //console.log("productList ", productResult)    
-      //setProduct(productResult);  
-
-      //const customerResult = 
-      await getCustomers().then(r => setCustomer(r));  
-      //console.log("clientList ", customerResult)    
-      //setCustomer(customerResult);
-
-      if (query.id) {
-        const result = await getDeliveryById(Number(query.id));
-
-        if(result){
-
-          setDelivery(result);
-          setSelectValueCustomer(result.clientId);
-          setSelectValueProduct(result.productId);
-          setSelectValueSupplier(result.supplierId);
-          setSelectValueWarehouse(result.warehouseId);
-
-          const client = await getCustomerById(result.clientId);
-          console.log("clientAddress",client);  
-          const clientAddress = await processManualLocation(`${client?.address}${client?.address2}${client?.city}${client?.state}${client?.country}${client?.zip}`);
-          setAddressDestiny({
-            lat: clientAddress?.lat,
-            lng: clientAddress?.lng,
-          });
-
-          const warehouse = await getWarehouseById(result.warehouseId);
-          console.log("addressOrigin",client);  
-          const warehouseAddress = await processManualLocation(`${warehouse?.address}${warehouse?.address2}${warehouse?.city}${warehouse?.state}${warehouse?.country}${warehouse?.zip}`);
-          setAddressOrigin({
-            lat: warehouseAddress?.lat,
-            lng: warehouseAddress?.lng,
-          });         
-
-        }
-
-      }  
-
-      console.log("finish load data ")    
-      setLoadData(false);
-      setOpenLoadding(false);
-    },
-    [query.id, warehouses],
-  );
-
-  React.useEffect(() => {
-
-    if(loadData)
-      getData();   
-
-  }, 
-  [query, setDelivery, getData, loadData]
-  );
-
-  // if(loadData)
-  //     getData();
       
   return (
     <Container component="main">
@@ -417,4 +297,4 @@ const DeliveryRegister: React.FunctionComponent<any> = props => {
   );
 }
 
-export default React.memo(DeliveryRegister);
+export default DeliveryRegisterForm;
