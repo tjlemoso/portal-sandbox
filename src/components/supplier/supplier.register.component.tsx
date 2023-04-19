@@ -13,24 +13,15 @@ import { createSupplier, getSupplierById, updateSupplier } from '@/services/Supp
 import SimpleBackdrop from '../share/backdrop';
 import AlertDialog from '../share/message';
 
-export default function SupplierRegister() {
+export interface IProsSupplier {
+  supplier: ISupplier;
+}
+
+const SupplierRegisterForm: React.FunctionComponent<IProsSupplier> = props => {
 
   const formRef = React.useRef<FormHandles>(null); 
   const { query } = useRouter();
-  const [supplier, setSupplier] = React.useState<ISupplier>({} as 
-    {
-      supplierId: 0;
-      name: "";
-      phone: "";
-      email: "";
-      address: "";
-      address2: "";
-      city: "";
-      state: "";
-      zip: "";
-      country: "";
-    }
-  );
+  const [supplier, setSupplier] = React.useState<ISupplier>(props.supplier);
 
   const [open, setOpen] = React.useState(false);
   const [openLoadding, setOpenLoadding] = React.useState(false);
@@ -68,21 +59,6 @@ export default function SupplierRegister() {
   const handleBack = async () => {
     router.push('/supplier');
   };
-
-  React.useEffect(() => {
-    async function validation() {
-      if (query.id) {
-        setOpenLoadding(true);
-        const result = await getSupplierById(Number(query.id));
-        if(result){
-          setSupplier(result);
-        }
-        setOpenLoadding(false);
-      }
-    };
-    validation();
-  }, [query, setSupplier]);
-
 
   return (
     <Container component="main">
@@ -184,3 +160,5 @@ export default function SupplierRegister() {
     </Container>
   );
 }
+
+export default SupplierRegisterForm;
